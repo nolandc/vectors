@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-    import { PropType, ref } from 'vue';
+    import { PropType, computed } from 'vue';
     import Vector from '../vector';
 
     const props = defineProps({
@@ -10,18 +10,22 @@
             required: true
         }
     })
-
-    const vecString = ref(props.vector.x + ", " + props.vector.y)
+    const vecString = computed(() => props.vector.x + ", " + props.vector.y)
 </script>
 
 <template>
-    <label id="vec-label">{{ props.label }} </label>
-    <input type="text" :value="vecString">
+    <div class="container">
+        <label class="vec-label">{{ props.label }} </label>
+        <input type="text" :value="vecString">
+    </div>
 </template>
 
 
 <style>
-    #vec-label {
-        margin-right: 10px;
-    }
+.container {
+    display: block;
+}
+.vec-label {
+    margin-right: 10px;
+}
 </style>

@@ -3,8 +3,8 @@ import SVG from 'svg.js';
 import Vector from "./vector";
 
 let gridStrokeSize = 2
-let lightGray = '#cccccc'
-let darkGray = '#222222'
+let lightGray = '#dddddd'
+let darkGray = '#666666'
 
 class SVGGrid {
     grid: Grid
