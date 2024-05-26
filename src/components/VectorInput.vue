@@ -15,6 +15,13 @@
 </script>
 
 <template>
-    <label>{{ props.label }} </label>
+    <label id="vec-label">{{ props.label }} </label>
     <input type="text" :value="vecString">
 </template>
+
+
+<style>
+    #vec-label {
+        margin-right: 10px;
+    }
+</style>
