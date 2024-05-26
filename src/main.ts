@@ -5,76 +5,51 @@ import SVG from 'svg.js';
 import App from './App.vue'
 import Vector from './vector';
 import Grid from './grid';
+import SVGVector from './SVGVector';
+import SVGGrid from './SVGGrid';
 
 createApp(App).mount('#app')
 
-let lightGray = '#cccccc'
-let darkGray = '#222222'
 
 function createVis() {
-    let gridSize = 10
-
-    let chartPxWidth = 600
-    let chartPxHeight = 600
+    let grid = new Grid(20, 20, 600, 600)
 
 
-    let grid = new Grid(10, 10, 600, 600)
-
-    let unitPxSize = chartPxHeight / gridSize
-
-    let gridStrokeSize = 2
-    let vectorStrokeSize = 3
+    let selectedVector: SVGVector | undefined
 
     let draw = SVG(window.document.getElementById('chart') as HTMLElement).size('100%', '100%')
 
-
-    var gradient = draw.gradient('linear', function(add: SVG.Gradient) {
-        add.at(0, '#333333')
-        add.at(1, 'red')
-      })
-
-   // draw.rect(chartPxWidth, chartPxHeight).fill({ color: '#f00', opacity: 1 })
-    for (let i = 0; i < gridSize+1; i++) {
-        if (i == gridSize / 2)
-            continue;
-        draw
-            .line([0, unitPxSize * i, chartPxWidth, unitPxSize * i])
-            .stroke({color: lightGray, width: gridStrokeSize})
-    }
-
-    for (let i = 0; i < gridSize+1; i++) {
-        if (i == gridSize / 2)
-            continue;
-        draw
-            .line([unitPxSize * i, 0, unitPxSize * i, chartPxHeight])
-            .stroke({color: lightGray, width: gridStrokeSize})
-    }
+    let svgGrid = new SVGGrid(grid, draw)
 
 
-    // Draw middle lines last so they show up on top of backing grid lines
-    let midLine = gridSize / 2
-    draw.line([0, unitPxSize * midLine, chartPxWidth, unitPxSize * midLine]).stroke({color: darkGray, width: gridStrokeSize})
-    draw.line([unitPxSize * midLine, 0, unitPxSize * midLine, chartPxHeight]).stroke({color: darkGray, width: gridStrokeSize}) 
+    let svg1 = new SVGVector(new Vector(3, 1), "v1", grid, draw)
+    let svg2 = new SVGVector(new Vector(1, 3), "v2", grid, draw, new Vector(0, 0), 'green')
 
+    svg1.on('mousedown', function (vec) {
+        selectedVector = vec
+        console.log(selectedVector)
+    })
 
-    let vec1 = new Vector(3, 1)
+    svg2.on('mousedown', function (vec) {
+        selectedVector = vec
+        console.log(selectedVector)
+    })
+
+    draw.on('mousemove', (e: MouseEvent) => {
+        var bounds = (e.currentTarget as Element).getBoundingClientRect()
+        let mx = e.clientX - bounds.left;
+        let my = e.clientY - bounds.top;
+
+        if (selectedVector != undefined) {
+            let newVec = grid.pxToUnit(new Vector(mx, my))
+            console.log(' new vec', newVec)
+            selectedVector.update(newVec)
+        }
+    })
     
-    let v1 = grid.unitToPx(vec1)
-
-    let vecSVG = draw.group()
-
-    //var markerPath = draw.path
-
-    let arrow =draw.marker(10, 10, function(add) {
-        add.path("M 0 8 L 5 4 L 0 0").stroke({color: 'red', width: 1}).fill('none')
-      }).ref(5, 4)
-    let mainArrow = draw
-        .line(grid.lineFromUnitVec(vec1))
-        .stroke({color: 'red', width: vectorStrokeSize})
-        .marker('end', arrow)
-
-
-    vecSVG.add(mainArrow)
+    draw.on('mouseup', () => {
+        selectedVector = undefined
+    })
 }
 
 

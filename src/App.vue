@@ -1,9 +1,22 @@
 <script setup lang="ts">
-  import HelloWorld from './components/HelloWorld.vue'
+  import VectorInput from "./components/VectorInput.vue"
+
+  import { ref } from 'vue'
+  import Vector from "./vector";
+
+  const vec = ref(new Vector(3, 1))
+
 </script>
 
 <template>
-  <HelloWorld msg="Vite + Vue" />
+  <div id="main">
+    <div id="chart">
+      
+    </div>
+    <div id="details">
+      <VectorInput label="v1" :vector="vec"/>
+    </div>
+  </div>
 </template>
 
 <style scoped>

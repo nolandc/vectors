@@ -5,16 +5,18 @@ class Grid {
     gridHeight: number
     pxWidth: number
     pxHeight: number
-    unitPxSize: number
+    snapIncrement: number
 
+    unitPxSize: number
     origin: Vector
 
-    constructor(w: number, h: number, pw: number, ph: number) {
+    constructor(w: number, h: number, pw: number, ph: number, _snapIncrement: number = 0.5) {
         this.gridWidth = w
         this.gridHeight = h
         this.pxWidth = pw
         this.pxHeight = ph
 
+        this.snapIncrement = _snapIncrement
         // Graph must be divisible by 2 - eventually should allow origin to be specified
         this.origin = new Vector(this.gridWidth / 2, this.gridHeight / 2)
 
@@ -33,15 +35,19 @@ class Grid {
 
     pxToUnit(vec: Vector) {
         return new Vector(
-            (vec.x - this.origin.x) / this.unitPxSize, 
-            (vec.y - this.origin.y) / this.unitPxSize
+            (vec.x) / this.unitPxSize, 
+            (vec.y) / this.unitPxSize
         )
+            .minus(this.origin)
+            .invertY()
+            .snap(this.snapIncrement)
+    
     }
 
 
-    lineFromUnitVec(vec: Vector) {
-        let originPx = this.unitToPx(new Vector(0, 0))
-
+    vectorLineFromUnitVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
+        let originPx = this.unitToPx(origin.invertY())
+        console.log('origin', originPx)
         // All user-facing coordinates need to flip the y axis. 
         // I gotta gotta figure out a better solution for this tbh.        
         let vecPx = this.unitToPx(vec.invertY())

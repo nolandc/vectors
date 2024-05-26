@@ -83,3 +83,13 @@ button:focus-visible {
   width: 600px;
   height: 600px;
 }
+
+#main {
+  display: flex;
+}
+
+#details {
+  height: 600px;
+  width: 400px;
+  background: #f2f2f2;
+}
