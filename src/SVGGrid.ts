@@ -2,7 +2,7 @@ import Grid from "./grid"
 import SVG from 'svg.js';
 import Vector from "./vector";
 
-let gridStrokeSize = 2
+let gridStrokeSize = 1
 let lightGray = '#dddddd'
 let darkGray = '#666666'
 

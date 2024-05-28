@@ -1,16 +1,20 @@
 <script setup lang="ts">
   import VectorInput from "./components/VectorInput.vue"
 
-  import { ref } from 'vue'
+  import { Ref, ref } from 'vue'
   import Vector from "./vector";
   import Grid from "./grid";
   import SVGVector from "./SVGVector";
   import SVGGrid from "./SVGGrid";
   import SVG from 'svg.js'
+  import SVGLine from "./SVGLine";
 
   const v1 = ref(new Vector(3, 1))
   const v2 = ref(new Vector(1, 3))
   let v1plusv2 = new Vector(4, 4)
+
+  const svg1: Ref<SVGVector | null> = ref(null)
+  const svg2: Ref<SVGVector | null> = ref(null)
 
   function createVis() {
     let grid = new Grid(20, 20, 600, 600)
@@ -22,24 +26,19 @@
 
     new SVGGrid(grid, draw)
 
-    let svg1m = new SVGVector(v1.value, grid, draw)
+    let svg1m = new SVGLine(v2.value, v1.value, grid, draw)
       .color('#cccccc')
-      .origin(v2.value)
-      .showArrow(false)
       .strokeDashArray("10")
 
-    let svg2m = new SVGVector(v2.value, grid, draw)
+    let svg2m = new SVGLine(v1.value, v2.value, grid, draw)
       .color('#cccccc')
-      .origin(v1.value)
-      .interactable(false)
-      .showArrow(false)
-      .strokeDashArray("10")        
+      .strokeDashArray("10")
 
-    let svg1 = new SVGVector(v1.value, grid, draw, "v1")
+    svg1.value = new SVGVector(v1.value, grid, draw, "v1")
       .color('#f94144')
       .interactable(true)
 
-    let svg2 = new SVGVector(v2.value, grid, draw, "v2")
+    svg2.value = new SVGVector(v2.value, grid, draw, "v2")
       .color('#43aa8b')
       .interactable(true)
 
@@ -50,26 +49,27 @@
     let updateComputedVecs = () => {
       v1plusv2 = v1.value.plus(v2.value)
       sumSVG.update(v1plusv2)
-      svg1m.update(v1plusv2).origin(v2.value)
-      svg2m.update(v1plusv2).origin(v1.value)
+      svg1m.start(v2.value).end(v1plusv2)
+      svg2m.start(v1.value).end(v1plusv2)
     }
 
-    svg1.onChange({update: (vec) => {
+    svg1.value.onChange({update: (vec) => {
+      console.log('vec changed...')
       v1.value = vec
       updateComputedVecs()
     }})
 
-    svg2.onChange({update: (vec) => {
+    svg2.value.onChange({update: (vec) => {
       v2.value = vec
       updateComputedVecs()
     }})
 
-    svg1.on('mousedown', function (vec) {
+    svg1.value.on('mousedown', function (vec) {
         selectedVector = vec
         console.log(selectedVector)
     })
 
-    svg2.on('mousedown', function (vec) {
+    svg2.value.on('mousedown', function (vec) {
         selectedVector = vec
         console.log(selectedVector)
     })
@@ -102,9 +102,9 @@
     <div id="chart">
       
     </div>
-    <div id="details">
-      <VectorInput label="v1" :vector="v1"/>
-      <VectorInput label="v2" :vector="v2"/>
+    <div id="details" v-if="svg1 != undefined && svg2 != undefined">
+      <VectorInput label="v1" :vector="v1" @updated="v => svg1?.update(v)"/>
+      <VectorInput label="v2" :vector="v2" @updated="v => svg2?.update(v)"/>
     </div>
   </div>
 </template>
@@ -124,6 +124,7 @@
 }
 
 #details {
+  box-sizing: border-box;
   padding: 10px;
 }
 </style>
