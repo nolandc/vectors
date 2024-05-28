@@ -54,7 +54,7 @@
     }
 
     svg1.value.onChange({update: (vec) => {
-      console.log('vec changed...')
+      console.log('vec changed...', vec)
       v1.value = vec
       updateComputedVecs()
     }})
