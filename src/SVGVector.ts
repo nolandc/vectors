@@ -45,7 +45,7 @@ class SVGVector {
             .hide()
 
         if (label != undefined) {
-            this.textBackground = this.context.circle(25).fill('white')
+            this.textBackground = this.context.rect(label.length * 12, 18).fill('white').attr('rx', 10)
             this.text = this.context
                 .text(label)
                 .style({'user-select': 'none'})
