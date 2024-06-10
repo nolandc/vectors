@@ -44,6 +44,10 @@ class Vector {
     length() {
         return Math.sqrt(this.x * this.x + this.y * this.y)
     }
+
+    equals(v2: Vector) {
+        return this.x == v2.x && this.y == v2.y
+    }
 }
 
 

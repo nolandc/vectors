@@ -1,3 +1,4 @@
+import { Ref } from "vue";
 import Grid from "./grid";
 import Vector from "./vector";
 import SVG from 'svg.js';
@@ -9,7 +10,7 @@ interface VectorListener {
 class SVGVector {
     vOrigin?: Vector
     grid: Grid
-    vec: Vector
+    vec: Ref<Vector>
     lineColor: string = 'red'
     context: SVG.Doc
     label?: string
@@ -24,9 +25,11 @@ class SVGVector {
 
     listeners: VectorListener[] = []
 
-    constructor(vec: Vector, grid: Grid, context: SVG.Doc, label?: string) {
+    constructor(vec: Ref<Vector>, grid: Grid, context: SVG.Doc, label?: string) {
         this.context = context
         this.vec = vec
+        this.vec.value = vec.value
+
         this.label = label
         this.grid = grid
         this.arrow = this.context.marker(20, 20, (add) => {
@@ -34,7 +37,7 @@ class SVGVector {
           }).ref(4, 4)
 
         this.line = this.context
-          .line(this.grid.vectorLineFromUnitVec(this.vec))
+          .line(this.grid.vectorLineFromUnitVec(this.vec.value))
           .stroke({color: this.lineColor, width: 3})
 
         // TODO: move this to more accurately overlap the triangle
@@ -53,7 +56,7 @@ class SVGVector {
 
         this.line.marker('end', this.arrow)
 
-        this.update(vec)
+       this.update(vec.value)      
     }
 
     color(color: string) {
@@ -66,7 +69,7 @@ class SVGVector {
 
     origin(origin: Vector) {
         this.vOrigin = origin
-        let points = this.grid.vectorLineFromUnitVec(this.vec, this.vOrigin)
+        let points = this.grid.vectorLineFromUnitVec(this.vec.value, this.vOrigin)
         this.line.attr({x1: points[0], y1: points[1]})
         return this
     }
@@ -107,7 +110,10 @@ class SVGVector {
     }
 
     update(newUnitVec: Vector) {
-        this.vec = newUnitVec
+
+        console.log('selected', this.vec)
+        console.log('selected value2', this.vec.value)           
+        this.vec.value = newUnitVec
         let pxVec = this.grid.unitToPx(newUnitVec.invertY())
         this.line.attr({x2: pxVec.x, y2: pxVec.y})
         this.clickProxyCircle.cx(pxVec.x).cy(pxVec.y)
@@ -118,13 +124,15 @@ class SVGVector {
 
         this.listeners.forEach(l => l.update(newUnitVec))
 
-        if (this.vec.length() < 2.5) {
+        if (newUnitVec.length() < 2.5) {
             this.text?.attr('visibility', 'hidden')
             this.textBackground?.attr('visibility', 'hidden')
         } else {
             this.text?.attr('visibility', '')
             this.textBackground?.attr('visibility', '')
         }
+
+        console.log('vec changed 2', this.vec.value)
 
         return this
     }

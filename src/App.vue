@@ -11,10 +11,10 @@
 
   const v1 = ref(new Vector(3, 1))
   const v2 = ref(new Vector(1, 3))
-  let v1plusv2 = ref(new Vector(4, 4))
+  const v1plusv2 = ref(new Vector(4, 4))
 
-  const svg1: Ref<SVGVector | null> = ref(null)
-  const svg2: Ref<SVGVector | null> = ref(null)
+  let svg1: SVGVector | undefined
+  let svg2: SVGVector | undefined
 
   function createVis() {
     let grid = new Grid(20, 20, 600, 600)
@@ -33,15 +33,23 @@
       .color('#cccccc')
       .strokeDashArray("10")
 
-    svg1.value = new SVGVector(v1.value, grid, draw, "v1")
+    svg1 = new SVGVector(v1, grid, draw, "v1")
       .color('#f94144')
       .interactable(true)
 
-    svg2.value = new SVGVector(v2.value, grid, draw, "v2")
+      console.log('app init selected', svg1.vec)
+      console.log('app init selected value', svg1.vec.value)
+
+    
+    svg2 = new SVGVector(v2, grid, draw, "v2")
       .color('#43aa8b')
       .interactable(true)
 
-    let sumSVG = new SVGVector(v1plusv2.value, grid, draw, "v1+v2")
+      console.log('app init selected', svg2.vec)
+      console.log('app init selected value', svg2.vec.value)
+
+
+    let sumSVG = new SVGVector(v1plusv2, grid, draw, "v1+v2")
       .color('#577590')
       .strokeDashArray('8')  
 
@@ -52,23 +60,20 @@
       svg2m.start(v1.value).end(v1plusv2.value)
     }
 
-    svg1.value.onChange({update: (vec) => {
-      console.log('vec changed...', vec)
-      v1.value = vec
+    svg1.onChange({update: (vec) => {
       updateComputedVecs()
     }})
 
-    svg2.value.onChange({update: (vec) => {
-      v2.value = vec
+    svg2.onChange({update: (vec) => {
       updateComputedVecs()
     }})
 
-    svg1.value.on('mousedown', function (vec) {
+    svg1.on('mousedown', function (vec) {
         selectedVector = vec
         console.log(selectedVector)
     })
 
-    svg2.value.on('mousedown', function (vec) {
+    svg2.on('mousedown', function (vec) {
         selectedVector = vec
         console.log(selectedVector)
     })
@@ -79,8 +84,13 @@
         let my = e.clientY - bounds.top;
 
         if (selectedVector != undefined) {
+          console.log('selected', selectedVector.vec)
+          console.log('selected value', selectedVector.vec.value)
             let newVec = grid.pxToUnit(new Vector(mx, my))
-            selectedVector.update(newVec)
+            if (!selectedVector.vec.value.equals(newVec)) {
+              selectedVector.update(newVec)
+            }
+            
         }
     })
     
@@ -112,7 +122,7 @@
     <div id="chart">
       
     </div>
-    <div id="details" v-if="svg1 != undefined && svg2 != undefined">
+    <div id="details" >
       <VectorInput label="v1" color="#f94144" :vector="v1" @updated="v => svg1?.update(v)"/>
       <VectorInput label="v2" color="#43aa8b" :vector="v2" @updated="v => svg2?.update(v)"/>
       <VectorInput label="v1+v2" color="#577590" :vector="v1plusv2" :editable="false"/>

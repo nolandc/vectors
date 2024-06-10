@@ -47,7 +47,6 @@ class Grid {
 
     vectorLineFromUnitVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
         let originPx = this.unitToPx(origin.invertY())
-        console.log('origin', originPx)
         // All user-facing coordinates need to flip the y axis. 
         // I gotta gotta figure out a better solution for this tbh.        
         let vecPx = this.unitToPx(vec.invertY())
