@@ -11,14 +11,13 @@
 
   const v1 = ref(new Vector(3, 1))
   const v2 = ref(new Vector(1, 3))
-  let v1plusv2 = new Vector(4, 4)
+  let v1plusv2 = ref(new Vector(4, 4))
 
   const svg1: Ref<SVGVector | null> = ref(null)
   const svg2: Ref<SVGVector | null> = ref(null)
 
   function createVis() {
     let grid = new Grid(20, 20, 600, 600)
-
 
     let selectedVector: SVGVector | undefined
 
@@ -42,15 +41,15 @@
       .color('#43aa8b')
       .interactable(true)
 
-    let sumSVG = new SVGVector(v1plusv2, grid, draw, "v1+v2")
+    let sumSVG = new SVGVector(v1plusv2.value, grid, draw, "v1+v2")
       .color('#577590')
       .strokeDashArray('8')  
 
     let updateComputedVecs = () => {
-      v1plusv2 = v1.value.plus(v2.value)
-      sumSVG.update(v1plusv2)
-      svg1m.start(v2.value).end(v1plusv2)
-      svg2m.start(v1.value).end(v1plusv2)
+      v1plusv2.value = v1.value.plus(v2.value)
+      sumSVG.update(v1plusv2.value)
+      svg1m.start(v2.value).end(v1plusv2.value)
+      svg2m.start(v1.value).end(v1plusv2.value)
     }
 
     svg1.value.onChange({update: (vec) => {
@@ -99,32 +98,60 @@
 
 <template>
   <div id="main">
+    <div id="nav">
+        <div class="link selected">
+          <a href="#addition">addition</a>
+        </div>
+        <div class="link">
+          <a href="#subtraction">subtraction</a>
+        </div>
+        <div class="link">
+          <a href="#length">length</a>
+        </div>                
+    </div>
     <div id="chart">
       
     </div>
     <div id="details" v-if="svg1 != undefined && svg2 != undefined">
-      <VectorInput label="v1" :vector="v1" @updated="v => svg1?.update(v)"/>
-      <VectorInput label="v2" :vector="v2" @updated="v => svg2?.update(v)"/>
+      <VectorInput label="v1" color="#f94144" :vector="v1" @updated="v => svg1?.update(v)"/>
+      <VectorInput label="v2" color="#43aa8b" :vector="v2" @updated="v => svg2?.update(v)"/>
+      <VectorInput label="v1+v2" color="#577590" :vector="v1plusv2" :editable="false"/>
+      <div id="details-text">
+        Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine
+        simply placing the origin of one vector at the end of another.
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<style lang="scss" scoped>
+
+#nav {
+  padding: 40px;
+  background: #f2f2f2;
+
+  .link {
+    &.selected {
+      a {
+        text-decoration: underline;
+      }
+    }
+    a {
+      color: #333;
+      &:hover {
+        color:#666;
+      }
+    }
+  }
 }
 
 #details {
   box-sizing: border-box;
-  padding: 10px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  #details-text {
+    margin-top: auto;
+  }
 }
 </style>

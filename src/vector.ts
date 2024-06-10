@@ -40,6 +40,10 @@ class Vector {
 
         return new Vector(multx * size, multy * size)
     }
+
+    length() {
+        return Math.sqrt(this.x * this.x + this.y * this.y)
+    }
 }
 
 

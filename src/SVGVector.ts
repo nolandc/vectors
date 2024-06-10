@@ -118,6 +118,14 @@ class SVGVector {
 
         this.listeners.forEach(l => l.update(newUnitVec))
 
+        if (this.vec.length() < 2.5) {
+            this.text?.attr('visibility', 'hidden')
+            this.textBackground?.attr('visibility', 'hidden')
+        } else {
+            this.text?.attr('visibility', '')
+            this.textBackground?.attr('visibility', '')
+        }
+
         return this
     }
 
