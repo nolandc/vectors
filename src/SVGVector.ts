@@ -28,7 +28,6 @@ class SVGVector {
     constructor(vec: Ref<Vector>, grid: Grid, context: SVG.Doc, label?: string) {
         this.context = context
         this.vec = vec
-        this.vec.value = vec.value
 
         this.label = label
         this.grid = grid
@@ -109,10 +108,7 @@ class SVGVector {
         return this
     }
 
-    update(newUnitVec: Vector) {
-
-        console.log('selected', this.vec)
-        console.log('selected value2', this.vec.value)           
+    update(newUnitVec: Vector) {         
         this.vec.value = newUnitVec
         let pxVec = this.grid.unitToPx(newUnitVec.invertY())
         this.line.attr({x2: pxVec.x, y2: pxVec.y})

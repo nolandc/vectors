@@ -37,17 +37,9 @@
       .color('#f94144')
       .interactable(true)
 
-      console.log('app init selected', svg1.vec)
-      console.log('app init selected value', svg1.vec.value)
-
-    
     svg2 = new SVGVector(v2, grid, draw, "v2")
       .color('#43aa8b')
       .interactable(true)
-
-      console.log('app init selected', svg2.vec)
-      console.log('app init selected value', svg2.vec.value)
-
 
     let sumSVG = new SVGVector(v1plusv2, grid, draw, "v1+v2")
       .color('#577590')
@@ -85,7 +77,7 @@
 
         if (selectedVector != undefined) {
           console.log('selected', selectedVector.vec)
-          console.log('selected value', selectedVector.vec.value)
+          console.log('selected dvalue', selectedVector.vec.value)
             let newVec = grid.pxToUnit(new Vector(mx, my))
             if (!selectedVector.vec.value.equals(newVec)) {
               selectedVector.update(newVec)
@@ -104,6 +96,12 @@
   window.onload = () => {
       createVis()
   };
+
+  if (import.meta.hot) {
+    import.meta.hot.accept(() => {
+      createVis()
+    })  
+  }
 </script>
 
 <template>
