@@ -1,4 +1,3 @@
-import { Ref } from "vue";
 import Grid from "./grid";
 import Vector from "./vector";
 import SVG from 'svg.js';
@@ -10,7 +9,7 @@ interface VectorListener {
 class SVGVector {
     vOrigin?: Vector
     grid: Grid
-    vec: Ref<Vector>
+    vec: Vector
     lineColor: string = 'red'
     context: SVG.Doc
     label?: string
@@ -25,7 +24,7 @@ class SVGVector {
 
     listeners: VectorListener[] = []
 
-    constructor(vec: Ref<Vector>, grid: Grid, context: SVG.Doc, label?: string) {
+    constructor(vec: Vector, grid: Grid, context: SVG.Doc, label?: string) {
         this.context = context
         this.vec = vec
 
@@ -36,8 +35,8 @@ class SVGVector {
           }).ref(4, 4)
 
         this.line = this.context
-          .line(this.grid.vectorLineFromUnitVec(this.vec.value))
-          .stroke({color: this.lineColor, width: 3})
+          .line(this.grid.vectorLineFromUnitVec(this.vec))
+          .stroke({color: this.lineColor, width: 3, linecap: 'round'})
 
         // TODO: move this to more accurately overlap the triangle
         this.clickProxyCircle = this.context
@@ -55,7 +54,7 @@ class SVGVector {
 
         this.line.marker('end', this.arrow)
 
-       this.update(vec.value)      
+       this.update(vec)      
     }
 
     color(color: string) {
@@ -68,7 +67,7 @@ class SVGVector {
 
     origin(origin: Vector) {
         this.vOrigin = origin
-        let points = this.grid.vectorLineFromUnitVec(this.vec.value, this.vOrigin)
+        let points = this.grid.vectorLineFromUnitVec(this.vec, this.vOrigin)
         this.line.attr({x1: points[0], y1: points[1]})
         return this
     }
@@ -109,7 +108,7 @@ class SVGVector {
     }
 
     update(newUnitVec: Vector) {         
-        this.vec.value = newUnitVec
+        this.vec = newUnitVec
         let pxVec = this.grid.unitToPx(newUnitVec.invertY())
         this.line.attr({x2: pxVec.x, y2: pxVec.y})
         this.clickProxyCircle.cx(pxVec.x).cy(pxVec.y)
@@ -127,8 +126,6 @@ class SVGVector {
             this.text?.attr('visibility', '')
             this.textBackground?.attr('visibility', '')
         }
-
-        console.log('vec changed 2', this.vec.value)
 
         return this
     }
