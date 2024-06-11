@@ -1,10 +1,7 @@
+import SVGInteractivePoint from "./SVGInteractivePoint";
 import Grid from "./grid";
 import Vector from "./vector";
 import SVG from 'svg.js';
-
-interface VectorListener {
-    update(newVec: Vector): void;
-}
 
 class SVGVector {
     vOrigin?: Vector
@@ -20,9 +17,6 @@ class SVGVector {
     line: SVG.Line
     text?: SVG.Text
     textBackground?: SVG.Rect
-    clickProxyCircle: SVG.Circle
-
-    listeners: VectorListener[] = []
 
     constructor(vec: Vector, grid: Grid, context: SVG.Doc, label?: string) {
         this.context = context
@@ -37,13 +31,6 @@ class SVGVector {
         this.line = this.context
           .line(this.grid.vectorLineFromUnitVec(this.vec))
           .stroke({color: this.lineColor, width: 3, linecap: 'round'})
-
-        // TODO: move this to more accurately overlap the triangle
-        this.clickProxyCircle = this.context
-            .circle(35)
-            .fill('transparent')//.stroke({color: 'black'})
-            .style({cursor: 'grab'})
-            .hide()
 
         if (label != undefined) {
             this.textBackground = this.context.rect(label.length * 12, 18).fill('white').attr('rx', 10)
@@ -76,17 +63,8 @@ class SVGVector {
         this.isInteractable = interactable
         if (this.isInteractable) {
             this.line.style('pointer-events', 'auto')
-            this.clickProxyCircle.show()
             this.line.reference('marker-end').style('pointer-events', 'auto')
-            this.clickProxyCircle.on('mouseenter', () => {
-                this.line.attr({'stroke-width': 4})
-            })
-    
-            this.clickProxyCircle.on('mouseleave', () => {
-                this.line.attr({'stroke-width': 3})
-            })
         } else {
-            this.clickProxyCircle.off('mouseenter').off('mouseleave').hide()
             this.line.style('pointer-events', 'none')
             this.line.reference('marker-end').style('pointer-events', 'none')
         }
@@ -107,17 +85,16 @@ class SVGVector {
         return this
     }
 
-    update(newUnitVec: Vector) {         
+    update(newUnitVec: Vector) {      
+        console.log('udpating vec... so why aint it changing in the UI?')   
         this.vec = newUnitVec
         let pxVec = this.grid.unitToPx(newUnitVec.invertY())
         this.line.attr({x2: pxVec.x, y2: pxVec.y})
-        this.clickProxyCircle.cx(pxVec.x).cy(pxVec.y)
 
         let c = this.line.bbox()
         this.text?.cx(c.x + c.width/2).cy(c.y + c.height/2)
         this.textBackground?.cx(c.x + c.width/2).cy(c.y + c.height/2)
 
-        this.listeners.forEach(l => l.update(newUnitVec))
 
         if (newUnitVec.length() < 2.5) {
             this.text?.attr('visibility', 'hidden')
@@ -130,13 +107,25 @@ class SVGVector {
         return this
     }
 
-    onChange(l: VectorListener) {
-        this.listeners.push(l)
-    }
-    
-    on(event: string, on: (vec: SVGVector) => void) {
-        this.clickProxyCircle.on(event, () => { on(this) }) 
+    attachToPoint(point: SVGInteractivePoint) {
+        point.onChange({
+            update: (newVec) => this.update(newVec)
+        })
         return this
+    }
+
+    attachOriginToPoint(point: SVGInteractivePoint) {
+        point.onChange({
+            update: (newVec) => this.origin(newVec)
+        })
+        return this
+    }
+
+    onPointUpdate(point: SVGInteractivePoint, update: (vec: Vector) => void) {
+        point.onChange({
+            update: update
+        })
+        return this        
     }
 }
 

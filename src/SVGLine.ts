@@ -1,3 +1,4 @@
+import SVGInteractivePoint from "./SVGInteractivePoint";
 import Grid from "./grid";
 import Vector from "./vector";
 import SVG from 'svg.js';
@@ -65,6 +66,28 @@ class SVGLine {
         this.textBackground?.cx(c.x + c.width/2).cy(c.y + c.height/2)
 
         return this
+    }
+
+    // Figure out if there's a way to make this generic between SVGLine and SVGVector
+    attachToPoint(point: SVGInteractivePoint) {
+        point.onChange({
+            update: (newVec) => this.end(newVec)
+        })
+        return this
+    }
+
+    attachOriginToPoint(point: SVGInteractivePoint) {
+        point.onChange({
+            update: (newVec) => this.start(newVec)
+        })
+        return this
+    }
+
+    onPointUpdate(point: SVGInteractivePoint, update: (vec: Vector) => void) {
+        point.onChange({
+            update: update
+        })
+        return this        
     }
 }
 

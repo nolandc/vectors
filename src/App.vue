@@ -12,13 +12,14 @@ import SVGInteractivePoint from "./SVGInteractivePoint";
 
   let svg1: Ref<SVGVector|undefined> = ref()
   let svg2: Ref<SVGVector|undefined> = ref()
+  let p1: Ref<SVGInteractivePoint|undefined> = ref()
+  let p2: Ref<SVGInteractivePoint|undefined> = ref()
+
 
   function createVis() {
     let grid = new Grid(20, 20, 600, 600)
     let v1 = new Vector(3, 1)
     let v2 = new Vector(1, 3)    
-
-    let selectedVector: SVGVector | undefined
 
     let selectedPoint: SVGInteractivePoint | undefined
 
@@ -26,31 +27,58 @@ import SVGInteractivePoint from "./SVGInteractivePoint";
 
     new SVGGrid(grid, draw)
 
-    let svg1m = new SVGLine(v2, v1, grid, draw)
-      .color('#cccccc')
-      .strokeDashArray("10")
+    p1 = new SVGInteractivePoint(v1, grid, draw, (point) => {
+      selectedPoint = point
+    })
 
-    let svg2m = new SVGLine(v1, v2, grid, draw)
-      .color('#cccccc')
-      .strokeDashArray("10")
+    p2 = new SVGInteractivePoint(v2, grid, draw, (point) => {
+      selectedPoint = point
+    })
 
     svg1.value = new SVGVector(v1, grid, draw, "v1")
       .color('#f94144')
-      .interactable(true)
+      .attachToPoint(p1)
 
     svg2.value = new SVGVector(v2, grid, draw, "v2")
       .color('#43aa8b')
-      .interactable(true)
+      .attachToPoint(p2)
 
     let sumSVG = new SVGVector(v1.plus(v2), grid, draw, "v1+v2")
       .color('#577590')
       .strokeDashArray('8')
+      .onPointUpdate(p1, (vec) => {
+        sumSVG.update(p2.vec.plus(vec))
+      })
+      .onPointUpdate(p2, (vec) => {
+        sumSVG.update(p1.vec.plus(vec))
+      })
 
-    let p1 = new SVGInteractivePoint(new Vector(4, 4), grid, draw, (point) => {
-      selectedPoint = point
-      console.log('clicked a point')
-    })
+    let svg1m = new SVGLine(v2, v1, grid, draw)
+      .color('#cccccc')
+      .strokeDashArray("10")
+      .attachOriginToPoint(p1)
+      .onPointUpdate(p2, (vec) => {
+        svg1m.end(p1.vec.plus(vec))
+      })
+      .onPointUpdate(p1, (vec) => {
+        svg1m.end(p2.vec.plus(vec))
+      })
 
+    let svg2m = new SVGLine(v1, v2, grid, draw)
+      .color('#cccccc')
+      .strokeDashArray("10")
+      .attachOriginToPoint(p2)
+      .onPointUpdate(p2, (vec) => {
+        svg2m.end(p1.vec.plus(vec))
+      })
+      .onPointUpdate(p1, (vec) => {
+        svg2m.end(p2.vec.plus(vec))
+      })
+    
+
+
+
+    /*
     let updateComputedVecs = () => {
       if (svg1.value == undefined || svg2.value == undefined) return
 
@@ -75,19 +103,7 @@ import SVGInteractivePoint from "./SVGInteractivePoint";
     svg2.value.on('mousedown', function (vec) {
         selectedVector = vec
     })
-
-    draw.on('mousemove', (e: MouseEvent) => {
-        var bounds = (e.currentTarget as Element).getBoundingClientRect()
-        let mx = e.clientX - bounds.left;
-        let my = e.clientY - bounds.top;
-
-        if (selectedVector != undefined) {
-            let newVec = grid.pxToUnit(new Vector(mx, my))
-            if (!selectedVector.vec.equals(newVec)) {
-              selectedVector.update(newVec)
-            }
-        }
-    })
+    */
 
     draw.on('mousemove', (e: MouseEvent) => {
         var bounds = (e.currentTarget as Element).getBoundingClientRect()
@@ -103,10 +119,8 @@ import SVGInteractivePoint from "./SVGInteractivePoint";
     })    
     
     draw.on('mouseup', () => {
-        selectedVector = undefined
+        selectedPoint = undefined
     })
-
-    updateComputedVecs()
   }
 
   window.onload = () => {
@@ -142,8 +156,8 @@ import SVGInteractivePoint from "./SVGInteractivePoint";
     </div>
     <div id="details" >
       <div v-if="svg1 != undefined && svg2 != undefined">
-        <VectorInput label="v1" color="#f94144" :vector="svg1.vec" @updated="v => svg1?.update(v)"/>
-        <VectorInput label="v2" color="#43aa8b" :vector="svg2.vec" @updated="v => svg2?.update(v)"/>
+        <VectorInput label="v1" color="#f94144" :vector="svg1.vec" @updated="v => p1?.update(v)"/>
+        <VectorInput label="v2" color="#43aa8b" :vector="svg2.vec" @updated="v => p2?.update(v)"/>
         <VectorInput label="v1+v2" color="#577590" :vector="svg1.vec.plus(svg2.vec)" :editable="false"/>
       </div>
       <div id="details-text">
