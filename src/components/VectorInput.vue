@@ -130,7 +130,4 @@ let updateY = (value: string) => {
         }
     }
 }
-
-
-
 </style>
