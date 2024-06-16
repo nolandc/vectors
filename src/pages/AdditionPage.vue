@@ -8,6 +8,7 @@
   import SVG from 'svg.js'
   import SVGLine from "../SVGLine";
   import SVGInteractivePoint from "../SVGInteractivePoint";
+  import { usePointSelection } from '../logic/PointSelection.ts'
 
   const props = defineProps({
     context: {
@@ -20,17 +21,13 @@
   let v1 = ref(new Vector(3, 1))
   let v2 = ref(new Vector(1, 3))
 
-  let selectedPoint: SVGInteractivePoint | undefined
+  let { selectPoint } = usePointSelection(props.context, grid)
 
   new SVGGrid(grid, props.context)
 
-  let p1 = new SVGInteractivePoint(v1, grid, props.context, (point) => {
-    selectedPoint = point
-  })
+  let p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
 
-  let p2 = new SVGInteractivePoint(v2, grid, props.context, (point) => {
-    selectedPoint = point
-  })
+  let p2 = new SVGInteractivePoint(v2, grid, props.context, selectPoint)
 
   let svg1 = new SVGVector(v1.value, grid, props.context, "v1")
     .color('#f94144')
@@ -72,30 +69,16 @@
       svg2m.end(p2.plus(vec))
     })
 
-    props.context.on('mousemove', (e: MouseEvent) => {
-        var bounds = (e.currentTarget as Element).getBoundingClientRect()
-        let mx = e.clientX - bounds.left;
-        let my = e.clientY - bounds.top;
-
-        if (selectedPoint != undefined) {
-            let newVec = grid.pxToUnit(new Vector(mx, my))
-            if (!selectedPoint.vec.value.equals(newVec)) {
-              selectedPoint.update(newVec)
-            }
-        }
-    })    
-    
-    props.context.on('mouseup', () => {
-        selectedPoint = undefined
-    })
-  
     onUnmounted(() => {
       props.context.children().forEach((c) => c.remove())
     })
+
+
+// TODO: genericize mount / unmount behavior for all visualizations
 /*
   onMounted(() => {
     createVis()
-  })
+  })  
 
 
   if (import.meta.hot) {
@@ -116,13 +99,10 @@
       <div>
 
       </div>
-      <div v-if="p1 != undefined && p2 != undefined">
+      <div>
         <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
         <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
         <VectorInput label="v1+v2" color="#577590" :vector="p1.vec.value.plus(p2.vec.value)" :editable="false"/>
-      </div>
-      <div v-else>
-        points are undefined i guess?
       </div>
       <div id="details-text">
         Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine
