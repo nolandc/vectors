@@ -31,7 +31,8 @@ class SVGVector {
         this.line = this.context
           .line(this.grid.vectorLineFromUnitVec(this.vec))
           .stroke({color: this.lineColor, width: 3, linecap: 'round'})
-
+          .style('pointer-events', 'none')
+          
         if (label != undefined) {
             this.textBackground = this.context.rect(label.length * 12, 18).fill('white').attr('rx', 10)
             this.text = this.context
@@ -56,18 +57,6 @@ class SVGVector {
         this.vOrigin = origin
         let points = this.grid.vectorLineFromUnitVec(this.vec, this.vOrigin)
         this.line.attr({x1: points[0], y1: points[1]})
-        return this
-    }
-
-    interactable(interactable: boolean) {
-        this.isInteractable = interactable
-        if (this.isInteractable) {
-            this.line.style('pointer-events', 'auto')
-            this.line.reference('marker-end').style('pointer-events', 'auto')
-        } else {
-            this.line.style('pointer-events', 'none')
-            this.line.reference('marker-end').style('pointer-events', 'none')
-        }
         return this
     }
 

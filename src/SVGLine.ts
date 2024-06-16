@@ -26,7 +26,7 @@ class SVGLine {
         this.line = this.context
           .line(this.grid.vectorLineFromUnitVec(this.from, to))
           .stroke({color: this.lineColor, width: 3, linecap: 'round'})
-    
+          .style('pointer-events', 'none')
 
         if (label != undefined) {
             this.textBackground = this.context.circle(25).fill('white')
