@@ -2,7 +2,10 @@
   import { Ref, onMounted, ref } from 'vue'
   import SVG from 'svg.js'
   import AdditionPage from "./pages/AdditionPage.vue"
+  import { useRouter } from 'vue-router'
 
+  let selectedPage: string = 'addition'
+  const isActivePage = (page: string) => page == selectedPage
 
   const context: Ref<SVG.Doc|undefined> = ref()
   function createVis() {
@@ -13,6 +16,11 @@
     createVis()
   })
 
+
+  const router = useRouter()
+  router.beforeEach(() => {
+    context.value?.clear()
+  })
 
   if (import.meta.hot) {
     import.meta.hot.accept(() => {
@@ -25,22 +33,30 @@
   <div id="main">
     <div id="nav">
         <div class="link selected">
-          <a href="#addition">addition</a>
+          <RouterLink to="addition">addition</RouterLink>
         </div>
         <div class="link">
-          <a href="#subtraction">subtraction</a>
-        </div>
-        <div class="link">
-          <a href="#length">length</a>
+          <RouterLink to="projection">projection</RouterLink>
+        </div>                
+        <div class="link missing">
+          <RouterLink to="addition">subtraction</RouterLink>
+        </div> 
+        <div class="link missing">
+          <RouterLink to="addition">length</RouterLink>
         </div>                
     </div>
     <div id="chart">
       
     </div>
     <div v-if="context != undefined">
-      <AdditionPage :context="context"/>
+      <div id="details" v-if="isActivePage('addition')">
+        
+        <RouterView v-slot="{Component}">
+          <component :is="Component"
+          :context="context"/>
+        </RouterView>
+      </div>    
     </div>
-    
   </div>
 </template>
 
@@ -51,6 +67,11 @@
   background: #f2f2f2;
 
   .link {
+    &.missing {
+      a {
+        color: #aaa;
+      }
+    }    
     &.selected {
       a {
         text-decoration: underline;

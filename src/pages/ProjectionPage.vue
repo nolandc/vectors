@@ -37,27 +37,6 @@
     .color('#43aa8b')
     .attachToPoint(p2)
 
-  let sumSVG = new SVGVector(p1.plus(p2.vec.value), grid, props.context, "v1+v2")
-    .color('#577590')
-    .strokeDashArray('8')
-    .onPointUpdate(p1, (vec) => {
-      sumSVG.update(p2.plus(vec))
-    })
-    .onPointUpdate(p2, (vec) => {
-      sumSVG.update(p1.plus(vec))
-    })
-
-  let svg1m = new SVGLine(v2.value, v1.value.plus(v2.value), grid, props.context)
-    .color('#cccccc')
-    .strokeDashArray("10")
-    .attachOriginToPoint(p2)
-    .onPointUpdate(p2, (vec) => {
-      svg1m.end(p1.plus(vec))
-    })
-    .onPointUpdate(p1, (vec) => {
-      svg1m.end(p2.plus(vec))
-    })
-
   let svg2m = new SVGLine(v1.value, v1.value.plus(v2.value), grid, props.context)
     .color('#cccccc')
     .strokeDashArray("10")
@@ -69,14 +48,7 @@
       svg2m.end(p2.plus(vec))
     })
 
-    onUnmounted(() => {
-      let chart = document.getElementById('chart')
-      if (chart != undefined) {
-        //props.context.clear()
-      }
-    })
 
-    console.log("setting up viz")
 
 
 // TODO: genericize mount / unmount behavior for all visualizations
@@ -99,15 +71,14 @@
 </script>
 
 <template>
-    <div>
-      <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-      <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
-      <VectorInput label="v1+v2" color="#577590" :vector="p1.vec.value.plus(p2.vec.value)" :editable="false"/>
-    </div>
-    <div id="details-text">
-      Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine
-      simply placing the origin of one vector at the end of another.
-    </div>
+  <div>
+    <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
+    <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
+    <VectorInput label="v1+v2" color="#577590" :vector="p1.vec.value.plus(p2.vec.value)" :editable="false"/>
+  </div>
+  <div id="details-text">
+    Projection details
+  </div>
 </template>
 
 <style lang="scss" scoped>

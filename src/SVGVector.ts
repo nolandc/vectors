@@ -32,7 +32,7 @@ class SVGVector {
           .line(this.grid.vectorLineFromUnitVec(this.vec))
           .stroke({color: this.lineColor, width: 3, linecap: 'round'})
           .style('pointer-events', 'none')
-          
+
         if (label != undefined) {
             this.textBackground = this.context.rect(label.length * 12, 18).fill('white').attr('rx', 10)
             this.text = this.context
