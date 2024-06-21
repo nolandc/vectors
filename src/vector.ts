@@ -32,11 +32,15 @@ class Vector {
         return new Vector(this.x * scalar, this.y * scalar)
     }
 
+    divided(scalar: number) {
+        return new Vector(this.x / scalar, this.y / scalar)
+    }
+
     snap(size: number) {
         // (0, 0) => (0, 0)
         // (0.25, 0.25) => (0, 0)
-        let multx = Math.round(this.x / size)
-        let multy = Math.round(this.y / size)
+        const multx = Math.round(this.x / size)
+        const multy = Math.round(this.y / size)
 
         return new Vector(multx * size, multy * size)
     }
@@ -47,6 +51,25 @@ class Vector {
 
     equals(v2: Vector) {
         return this.x == v2.x && this.y == v2.y
+    }
+
+    dotProduct(v2: Vector) {
+        return this.x * v2.x + this.y * v2.y
+    }
+
+    projectOnto(v2: Vector): Vector {
+        console.log('is zero... ', v2.isZero(), v2)
+        if (v2.isZero()) return new Vector(0, 0)
+        // TODO: error handling for div/0?
+
+        const scalarProj = this.dotProduct(v2) / v2.length()
+        const unit = v2.divided(v2.length())
+
+        return unit.times(scalarProj)
+    }
+
+    isZero(): boolean {
+        return this.x == 0 && this.y == 0
     }
 }
 

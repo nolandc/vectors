@@ -79,7 +79,7 @@ let updateY = (value: string) => {
                 @focus="($event.target as HTMLInputElement)?.select()">
         </span>
         <span v-else>
-            {{ x }}, {{  y }}
+            {{ Math.round((Number(x) + Number.EPSILON) * 1000) / 1000 }}, {{ Math.round((Number(y) + Number.EPSILON) * 1000) / 1000 }}
         </span>
         <span class="vector-notation parens">)</span>
     </div>
