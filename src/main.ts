@@ -6,11 +6,13 @@ import App from './App.vue'
 
 import Addition from './pages/AdditionPage.vue'
 import Projection from './pages/ProjectionPage.vue'
+import UnitCirclePage from './pages/UnitCirclePage.vue'
 
 const routes = [
-  {path: "", component: Addition},
+  { path: "", component: Addition },
   { path: '/addition', component: Addition },
   { path: '/projection', component: Projection },
+  { path: '/unit', component: UnitCirclePage }
 ]
 
 const router = createRouter({
@@ -18,5 +20,7 @@ const router = createRouter({
   routes,
 })
     
-createApp(App).use(router).mount('#app')
+createApp(App)
+  .use(router)
+  .mount('#app')
 

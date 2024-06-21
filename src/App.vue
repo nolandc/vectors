@@ -33,24 +33,23 @@
   <div id="main">
     <div id="nav">
         <div class="link selected">
-          <RouterLink to="addition">addition</RouterLink>
+          <RouterLink to="/addition">addition</RouterLink>
         </div>
         <div class="link">
-          <RouterLink to="projection">projection</RouterLink>
+          <RouterLink to="/projection">projection</RouterLink>
         </div>                
         <div class="link missing">
-          <RouterLink to="addition">subtraction</RouterLink>
+          <RouterLink to="/unit">unit vector</RouterLink>
         </div> 
         <div class="link missing">
-          <RouterLink to="addition">length</RouterLink>
+          <RouterLink to="/addition">length</RouterLink>
         </div>                
     </div>
     <div id="chart">
       
     </div>
     <div v-if="context != undefined">
-      <div id="details" v-if="isActivePage('addition')">
-        
+      <div id="details" d>
         <RouterView v-slot="{Component}">
           <component :is="Component"
           :context="context"/>

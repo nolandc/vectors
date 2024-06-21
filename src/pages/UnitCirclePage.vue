@@ -17,13 +17,9 @@
     },
   })
 
-  let grid = new Grid(20, 20, 600, 600)
+  let grid = new Grid(10, 10, 600, 600)
   let v1 = ref(new Vector(3, 1))
   let v2 = ref(new Vector(1, 3))
-
-  let projection: ComputedRef<Vector> = computed(() => {
-    return v1.value.projectOnto(v2.value)
-  })
 
   let { selectPoint } = usePointSelection(props.context, grid)
 
@@ -31,37 +27,18 @@
 
   let p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
 
-  let p2 = new SVGInteractivePoint(v2, grid, props.context, selectPoint)
-
-  let svg2m = new SVGLine(v1.value, projection.value, grid, props.context)
-    .color('#cccccc')
-    .strokeDashArray("10")
-    .attachOriginToPoint(p1)
-    .onPointUpdate(p2, () => {
-      svg2m.end(projection.value)
-    })
-    .onPointUpdate(p1, () => {
-      svg2m.end(projection.value)
-    })  
-
   let svg1 = new SVGVector(v1.value, grid, props.context, "v1")
     .color('#f94144')
     .attachToPoint(p1)
 
-  let svg2 = new SVGVector(v2.value, grid, props.context, "v2")
-    .color('#43aa8b')
-    .attachToPoint(p2)
 
-  let svg3 = new SVGVector(projection.value, grid, props.context, "p")
-    .color('#577590')
-    .onPointUpdate(p2, () => {
-      svg3.update(projection.value)
-    })
-    .onPointUpdate(p1, () => {
-      svg3.update(projection.value)
-    })
+  let origin = grid.unitToPx(new Vector(0, 0))
 
-
+  let circle = props.context.circle(grid.unitPxSize * 2)
+    .cx(origin.x)
+    .cy(origin.y)
+    .stroke({width: 1, color: 'black'})
+    .fill('transparent')
 
 // TODO: genericize mount / unmount behavior for all visualizations
 /*
@@ -85,8 +62,6 @@
 <template>
   <div>
     <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-    <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
-    <VectorInput label="p" color="#577590" :vector="projection" :editable="false"/>
   </div>
   <div id="details-text">
     Projection is...

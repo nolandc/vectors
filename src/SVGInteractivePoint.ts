@@ -25,7 +25,7 @@ export default class SVGInteractivePoint {
 
         this.clickableCircle = context.circle(35)
             .cx(pxVec.x).cy(pxVec.y)
-            .fill('transparent').stroke({color: 'black'})
+            .fill('transparent').stroke({color: 'transparent'})
             .style({cursor: 'grab'})
 
         this.clickableCircle.on('mousedown',  () => {
