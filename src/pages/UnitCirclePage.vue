@@ -17,7 +17,7 @@
     },
   })
 
-  const grid = new Grid(10, 10, 600, 600)
+  const grid = new Grid(6, 6, 600, 600)
   const v1 = ref(new Vector(3, 1))
 
   const { selectPoint } = usePointSelection(props.context, grid)
@@ -39,23 +39,49 @@
     .stroke({width: 1, color: 'black'})
     .fill('transparent')
 
+
+  // TODO: attempt to use extensions elsewhere, see if they're a decent approach
   SVG.extend(SVG.Element, {
-    attachToPoint: function(p: SVGInteractivePoint, f: (p: SVGInteractivePoint, vec: Vector) => void) {
+    attachToPoint: function(p: SVGInteractivePoint, f: (vec: Vector) => void) {
       p.onChange({
-        update: (newVec) => f(p, newVec)
+        update: (newVec) => f(newVec)
       })
       
       return this;
     }
   })
 
+  let unit = v1.value.unit().invertY()
+
+  const tri = props.context.polygon(
+    grid.unitVectorsToPxVectors(
+      [
+        new Vector(0, 0), 
+        new Vector(unit.x, 0), 
+        new Vector(unit.x, unit.y)
+      ]
+    ).flatMap(v => [v.x, v.y])
+  ).fill('#ebb7b7')
+  .stroke({color: 'red', width: 3})
+  .attachToPoint(p1, (v: Vector) => {
+    let unit = v.unit().invertY()
+    tri.attr('points', grid.unitVectorsToPxVectors(
+      [
+        new Vector(0, 0), 
+        new Vector(unit.x, 0), 
+        new Vector(unit.x, unit.y)
+      ]
+    ).flatMap(v => [v.x, v.y]))
+  })
+
+
   const unitVec = grid.unitToPx(v1.value.unit().invertY())
   const unitPoint = props.context.circle(16)
     .cx(unitVec.x)
     .cy(unitVec.y)
-    .fill('red')
-    .attachToPoint(p1, (p: SVGInteractivePoint, v: Vector) => {
-      const unitVec = grid.unitToPx(p1.vec.value.unit().invertY())
+    .fill('blue')
+    .attachToPoint(p1, (v: Vector) => {
+      const unitVec = grid.unitToPx(v.unit().invertY())
       unitPoint.cx(unitVec.x)
       unitPoint.cy(unitVec.y)
     })
@@ -65,6 +91,7 @@
 <template>
   <div>
     <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
+    <VectorInput label="unit" color="blue" :vector="p1.vec.value.unit()" :editable="false"/>
   </div>
   <div id="details-text">
     Projection is...

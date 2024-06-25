@@ -44,6 +44,9 @@ class Grid {
     
     }
 
+    unitVectorsToPxVectors(array: Array<Vector>) {
+        return array.map(u => this.unitToPx(u))
+    }
 
     vectorLineFromUnitVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
         let originPx = this.unitToPx(origin.invertY())
