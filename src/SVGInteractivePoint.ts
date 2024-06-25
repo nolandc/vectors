@@ -10,7 +10,6 @@ interface PointListener {
 }
 
 export default class SVGInteractivePoint {
-    x: string
     vec: Ref<Vector>
     grid: Grid
     clickableCircle: SVG.Circle
@@ -19,7 +18,6 @@ export default class SVGInteractivePoint {
     constructor(v: Ref<Vector>, grid: Grid, context: SVG.Doc,  selected: (point: SVGInteractivePoint) => void) {
         this.vec = v
         this.grid = grid
-        this.x = "hi"
 
         let pxVec = this.grid.unitToPx(v.value.invertY())
 

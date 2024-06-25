@@ -57,6 +57,10 @@ class Vector {
         return this.x * v2.x + this.y * v2.y
     }
 
+    unit() {
+        return this.divided(this.length())
+    }
+
     projectOnto(v2: Vector): Vector {
         console.log('is zero... ', v2.isZero(), v2)
         if (v2.isZero()) return new Vector(0, 0)

@@ -17,46 +17,49 @@
     },
   })
 
-  let grid = new Grid(10, 10, 600, 600)
-  let v1 = ref(new Vector(3, 1))
-  let v2 = ref(new Vector(1, 3))
+  const grid = new Grid(10, 10, 600, 600)
+  const v1 = ref(new Vector(3, 1))
 
-  let { selectPoint } = usePointSelection(props.context, grid)
+  const { selectPoint } = usePointSelection(props.context, grid)
 
   new SVGGrid(grid, props.context)
 
-  let p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
+  const p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
 
-  let svg1 = new SVGVector(v1.value, grid, props.context, "v1")
+  const svg1 = new SVGVector(v1.value, grid, props.context, "v1")
     .color('#f94144')
     .attachToPoint(p1)
 
 
-  let origin = grid.unitToPx(new Vector(0, 0))
+  const origin = grid.unitToPx(new Vector(0, 0))
 
-  let circle = props.context.circle(grid.unitPxSize * 2)
+  const unitCircle = props.context.circle(grid.unitPxSize * 2)
     .cx(origin.x)
     .cy(origin.y)
     .stroke({width: 1, color: 'black'})
     .fill('transparent')
 
-// TODO: genericize mount / unmount behavior for all visualizations
-/*
-  onMounted(() => {
-    createVis()
-  })  
+  SVG.extend(SVG.Element, {
+    attachToPoint: function(p: SVGInteractivePoint, f: (p: SVGInteractivePoint, vec: Vector) => void) {
+      p.onChange({
+        update: (newVec) => f(p, newVec)
+      })
+      
+      return this;
+    }
+  })
 
-
-  if (import.meta.hot) {
-    import.meta.hot.dispose(() => {
-      p1.value = undefined
-      p2.value = undefined
+  const unitVec = grid.unitToPx(v1.value.unit().invertY())
+  const unitPoint = props.context.circle(16)
+    .cx(unitVec.x)
+    .cy(unitVec.y)
+    .fill('red')
+    .attachToPoint(p1, (p: SVGInteractivePoint, v: Vector) => {
+      const unitVec = grid.unitToPx(p1.vec.value.unit().invertY())
+      unitPoint.cx(unitVec.x)
+      unitPoint.cy(unitVec.y)
     })
-    import.meta.hot.accept(() => {
-      createVis()
-    })  
-  }
-  */
+
 </script>
 
 <template>

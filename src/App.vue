@@ -1,11 +1,9 @@
 <script setup lang="ts">
   import { Ref, onMounted, ref } from 'vue'
   import SVG from 'svg.js'
-  import AdditionPage from "./pages/AdditionPage.vue"
   import { useRouter } from 'vue-router'
 
   let selectedPage: string = 'addition'
-  const isActivePage = (page: string) => page == selectedPage
 
   const context: Ref<SVG.Doc|undefined> = ref()
   function createVis() {
