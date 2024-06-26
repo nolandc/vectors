@@ -2,12 +2,12 @@
   import VectorInput from "../components/VectorInput.vue"
   import { ComputedRef, PropType, Ref, computed, onUnmounted, ref } from 'vue'
   import Vector from "../math/vector.ts";
-  import Grid from "../grid";
-  import SVGVector from "../SVGVector";
-  import SVGGrid from "../SVGGrid";
+  import Grid from "../grid.ts";
+  import SVGVector from "../SVGVector.ts";
+  import SVGGrid from "../SVGGrid.ts";
   import SVG from 'svg.js'
-  import SVGLine from "../SVGLine";
-  import SVGInteractivePoint from "../SVGInteractivePoint";
+  import SVGLine from "../SVGLine.ts";
+  import SVGInteractivePoint from "../SVGInteractivePoint.ts";
   import { usePointSelection } from '../logic/PointSelection.ts'
 import Colors from "../constants/Colors.ts";
 
@@ -19,7 +19,7 @@ import Colors from "../constants/Colors.ts";
   })
 
   const grid = new Grid(6, 6, 600, 600, 0.1)
-  const v1 = ref(new Vector(2, 2))
+  const v1 = ref(new Vector(3, 1))
 
   const { selectPoint } = usePointSelection(props.context, grid)
 

@@ -1,10 +1,10 @@
 import SVGInteractivePoint from "./SVGInteractivePoint";
 import Grid from "./grid";
-import Vector from "./vector";
+import Vector from "./math/vector";
 import SVG from 'svg.js';
 
 class SVGVector {
-    vOrigin?: Vector
+    vOrigin: Vector
     grid: Grid
     vec: Vector
     lineColor: string = 'red'
@@ -20,6 +20,7 @@ class SVGVector {
 
     constructor(vec: Vector, grid: Grid, context: SVG.Doc, label?: string) {
         this.context = context
+        this.vOrigin = new Vector(0, 0)        
         this.vec = vec
 
         this.label = label
@@ -34,7 +35,7 @@ class SVGVector {
           .style('pointer-events', 'none')
 
         if (label != undefined) {
-            this.textBackground = this.context.rect(label.length * 12, 18).fill('white').attr('rx', 10)
+            this.textBackground = this.context.rect(Math.max(label.length * 12, 16), 16).fill('white').attr('rx', 10)
             this.text = this.context
                 .text(label)
                 .style({'user-select': 'none'})
@@ -84,8 +85,7 @@ class SVGVector {
         this.text?.cx(c.x + c.width/2).cy(c.y + c.height/2)
         this.textBackground?.cx(c.x + c.width/2).cy(c.y + c.height/2)
 
-
-        if (newUnitVec.length() < 2.5) {
+        if ((this.vec.length() * this.grid.unitPxSize) < 80) {
             this.text?.attr('visibility', 'hidden')
             this.textBackground?.attr('visibility', 'hidden')
         } else {

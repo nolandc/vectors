@@ -2,7 +2,7 @@ import {onMounted, onUnmounted} from 'vue'
 import SVGInteractivePoint from '../SVGInteractivePoint';
 import SVG from 'svg.js'
 import Grid from '../grid';
-import Vector from '../vector';
+import Vector from '../math/vector';
 
 export function usePointSelection(context: SVG.Doc, grid: Grid) {
 

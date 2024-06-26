@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import VectorInput from "../components/VectorInput.vue"
   import { ComputedRef, PropType, Ref, computed, onUnmounted, ref } from 'vue'
-  import Vector from "../vector";
+  import Vector from "../math/vector.ts";
   import Grid from "../grid";
   import SVGVector from "../SVGVector";
   import SVGGrid from "../SVGGrid";
@@ -9,6 +9,7 @@
   import SVGLine from "../SVGLine";
   import SVGInteractivePoint from "../SVGInteractivePoint";
   import { usePointSelection } from '../logic/PointSelection.ts'
+import Colors from "../constants/Colors.ts";
 
   const props = defineProps({
     context: {
@@ -45,15 +46,15 @@
     })  
 
   let svg1 = new SVGVector(v1.value, grid, props.context, "v1")
-    .color('#f94144')
+    .color(Colors.red)
     .attachToPoint(p1)
 
   let svg2 = new SVGVector(v2.value, grid, props.context, "v2")
-    .color('#43aa8b')
+    .color(Colors.green)
     .attachToPoint(p2)
 
   let svg3 = new SVGVector(projection.value, grid, props.context, "p")
-    .color('#577590')
+    .color(Colors.blue)
     .onPointUpdate(p2, () => {
       svg3.update(projection.value)
     })
@@ -84,9 +85,9 @@
 
 <template>
   <div>
-    <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-    <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
-    <VectorInput label="p" color="#577590" :vector="projection" :editable="false"/>
+    <VectorInput label="v1" :color="Colors.red" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
+    <VectorInput label="v2" :color="Colors.green" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
+    <VectorInput label="p" :color="Colors.blue" :vector="projection" :editable="false"/>
   </div>
   <div id="details-text">
     Projection is...

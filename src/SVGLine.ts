@@ -1,6 +1,6 @@
 import SVGInteractivePoint from "./SVGInteractivePoint";
 import Grid from "./grid";
-import Vector from "./vector";
+import Vector from "./math/vector";
 import SVG from 'svg.js';
 
 class SVGLine {

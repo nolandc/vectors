@@ -36,11 +36,11 @@
         <div class="link">
           <RouterLink to="/projection">projection</RouterLink>
         </div>                
-        <div class="link missing">
-          <RouterLink to="/unit">unit vector</RouterLink>
+        <div class="link">
+          <RouterLink to="/unit">unit vec</RouterLink>
         </div> 
-        <div class="link missing">
-          <RouterLink to="/addition">length</RouterLink>
+        <div class="link">
+          <RouterLink to="/transformation">linear transformation</RouterLink>
         </div>                
     </div>
     <div id="chart">
@@ -68,11 +68,9 @@
       a {
         color: #aaa;
       }
-    }    
-    &.selected {
-      a {
-        text-decoration: underline;
-      }
+    }
+    a.active-router-link {
+      text-decoration: underline;
     }
     a {
       color: #333;

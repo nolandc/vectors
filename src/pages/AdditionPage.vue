@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import VectorInput from "../components/VectorInput.vue"
   import { PropType, Ref, onUnmounted, ref } from 'vue'
-  import Vector from "../vector";
+  import Vector from "../math/vector.ts";
   import Grid from "../grid";
   import SVGVector from "../SVGVector";
   import SVGGrid from "../SVGGrid";

@@ -2,7 +2,7 @@
 <script setup lang="ts">
 
 import { PropType, ref, watch } from 'vue';
-import Vector from '../vector';
+import Vector from '../math/vector';
 
 const props = defineProps({
     label: String,

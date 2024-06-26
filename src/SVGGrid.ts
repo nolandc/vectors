@@ -1,6 +1,6 @@
 import Grid from "./grid"
 import SVG from 'svg.js';
-import Vector from "./vector";
+import Vector from "./math/vector";
 
 let gridStrokeSize = 1
 let lightGray = '#dddddd'

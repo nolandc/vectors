@@ -2,7 +2,7 @@
 
 import { Ref, ref, triggerRef } from "vue";
 import Grid from "./grid";
-import Vector from "./vector";
+import Vector from "./math/vector";
 import SVG from 'svg.js'
 
 interface PointListener {
