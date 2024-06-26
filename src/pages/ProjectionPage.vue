@@ -19,8 +19,8 @@ import Colors from "../constants/Colors.ts";
   })
 
   let grid = new Grid(20, 20, 600, 600)
-  let v1 = ref(new Vector(3, 1))
-  let v2 = ref(new Vector(1, 3))
+  let v1 = ref(new Vector(4, 1))
+  let v2 = ref(new Vector(5, 8))
 
   let projection: ComputedRef<Vector> = computed(() => {
     return v1.value.projectOnto(v2.value)

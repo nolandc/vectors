@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import VectorInput from "../components/VectorInput.vue"
+  import MatrixInput from "../components/MatrixInput.vue"
   import { ComputedRef, PropType, Ref, computed, onUnmounted, ref } from 'vue'
   import Vector from "../math/vector.ts";
   import Grid from "../grid.ts";
@@ -10,6 +11,7 @@
   import SVGInteractivePoint from "../SVGInteractivePoint.ts";
   import { usePointSelection } from '../logic/PointSelection.ts'
 import Colors from "../constants/Colors.ts";
+import Matrix2x2 from "../math/matrix.ts";
 
   const props = defineProps({
     context: {
@@ -18,8 +20,9 @@ import Colors from "../constants/Colors.ts";
     },
   })
 
-  const grid = new Grid(6, 6, 600, 600, 0.1)
+  const grid = new Grid(20, 20, 600, 600, 0.5)
   const v1 = ref(new Vector(3, 1))
+  const m1 = ref(new Matrix2x2(0, -1, 1, 0))
 
   const { selectPoint } = usePointSelection(props.context, grid)
 
@@ -28,17 +31,8 @@ import Colors from "../constants/Colors.ts";
   const p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
 
   const svg1 = new SVGVector(v1.value, grid, props.context, "v1")
-    .color('#f94144')
+    .color(Colors.red)
     .attachToPoint(p1)
-
-
-  const origin = grid.unitToPx(new Vector(0, 0))
-
-  const unitCircle = props.context.circle(grid.unitPxSize * 2)
-    .cx(origin.x)
-    .cy(origin.y)
-    .stroke({width: 1, color: 'black'})
-    .fill('transparent')
 
 
   // TODO: attempt to use extensions elsewhere, see if they're a decent approach
@@ -52,38 +46,13 @@ import Colors from "../constants/Colors.ts";
     }
   })
 
-  let unit = v1.value.unit().invertY()
 
-  const tri = props.context.polygon(
-    grid.unitVectorsToPxVectors(
-      [
-        new Vector(0, 0), 
-        new Vector(unit.x, 0), 
-        new Vector(unit.x, unit.y)
-      ]
-    ).flatMap(v => [v.x, v.y])
-  ).fill('#ebb7b7')
-  .stroke({color: Colors.red, width: 3})
-  .attachToPoint(p1, (v: Vector) => {
-    let unit = v.unit().invertY()
-    tri.attr('points', grid.unitVectorsToPxVectors(
-      [
-        new Vector(0, 0), 
-        new Vector(unit.x, 0), 
-        new Vector(unit.x, unit.y)
-      ]
-    ).flatMap(v => [v.x, v.y]))
-  })
+  const svg2 = new SVGVector(v1.value.multiplyByMatrix(m1.value), grid, props.context, "M*v1")
+    .color(Colors.green)
+    .onPointUpdate(p1, (vec) => {
+      svg2.update(vec.multiplyByMatrix(m1.value))
+    })
 
-
-
-  const unitVector = new SVGVector(v1.value.unit(), grid, props.context, "u")
-    .onPointUpdate(p1, (v: Vector) => {
-        //const unitVec = grid.unitToPx(v.unit().invertY())
-        console.log('unit vec: ', v)
-        unitVector.update(v.unit())
-      })
-      .color(Colors.blue)
 
   /*
   const unitPoint = props.context.circle(16)
@@ -102,7 +71,8 @@ import Colors from "../constants/Colors.ts";
 <template>
   <div>
     <VectorInput label="v1" :color="Colors.red" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-    <VectorInput label="u" :color="Colors.blue" :vector="p1.vec.value.unit()" :editable="false"/>
+    <VectorInput label="M * v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+    <MatrixInput :initial-matrix="m1" @updated="newM => {m1 = newM, svg2.update(v1.multiplyByMatrix(newM)) }"/>
   </div>
   <div id="details-text">
     Projection is...

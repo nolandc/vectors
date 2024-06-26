@@ -1,15 +1,9 @@
 import SVG from 'svg.js';
+import Matrix2x2 from './matrix';
 
 class Vector {
     x: number;
     y: number;
-
-    /*
-    svgContext: SVG.Doc
-    line: SVG.Line;
-    leftArrowLine: SVG.Line;
-    rightArrowLine: SVG.Line;
-    */
 
     constructor(_x: number, _y: number) {
         this.x = _x
@@ -75,6 +69,12 @@ class Vector {
     isZero(): boolean {
         return this.x == 0 && this.y == 0
     }
+
+    multiplyByMatrix(matrix: Matrix2x2): Vector {
+        const newX = matrix.x1 * this.x + matrix.y1 * this.y;
+        const newY = matrix.x2 * this.x + matrix.y2 * this.y;
+        return new Vector(newX, newY);
+    }    
 }
 
 
