@@ -10,6 +10,10 @@
        "./*"
       ]
      },
+     
+     "baseUrl": "./",
+     "typeRoots": ["./node_modules/@types", "./src/types"],
+     "types": ["svg.js"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -25,6 +29,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -3,6 +3,7 @@
 
 import { PropType, ref, watch } from 'vue';
 import Vector from '../math/vector';
+import MathUtils from '../math/utils';
 
 const props = defineProps({
     label: String,
@@ -78,7 +79,7 @@ let updateY = (value: string) => {
                 @focus="($event.target as HTMLInputElement)?.select()">
         </span>
         <span v-else>
-            {{ Math.round((Number(x) + Number.EPSILON) * 1000) / 1000 }}, {{ Math.round((Number(y) + Number.EPSILON) * 1000) / 1000 }}
+            {{ MathUtils.round(parseFloat(x), 3) }}, {{ MathUtils.round(parseFloat(y), 3) }}
         </span>
         <span class="vector-notation parens">)</span>
     </div>

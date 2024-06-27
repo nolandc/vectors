@@ -40,7 +40,10 @@
         </div> 
         <div class="link">
           <RouterLink to="/transformation">linear transformation</RouterLink>
-        </div>                
+        </div>
+        <div class="link">
+          <RouterLink to="/determinant">determinant</RouterLink>
+        </div>
     </div>
     <div id="chart">
       

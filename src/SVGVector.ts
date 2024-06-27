@@ -35,7 +35,7 @@ class SVGVector {
           .style('pointer-events', 'none')
 
         if (label != undefined) {
-            this.textBackground = this.context.rect(Math.max(label.length * 12, 16), 16).fill('white').attr('rx', 10)
+            this.textBackground = this.context.rect(Math.max(label.length * 12, 16), 16).fill('white').attr('rx', 3)
             this.text = this.context
                 .text(label)
                 .style({'user-select': 'none'})

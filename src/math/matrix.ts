@@ -43,6 +43,14 @@ class Matrix2x2 {
         return this.x1 * this.y2 - this.y1 * this.x2;
     }
 
+    static interpolate(A: Matrix2x2, B: Matrix2x2, t: number): Matrix2x2 {
+        const x1 = A.x1 * (1 - t) + B.x1 * t;
+        const y1 = A.y1 * (1 - t) + B.y1 * t;
+        const x2 = A.x2 * (1 - t) + B.x2 * t;
+        const y2 = A.y2 * (1 - t) + B.y2 * t;
+        return new Matrix2x2(x1, y1, x2, y2);
+    }    
+
     // Get the matrix data
     getData(): { x1: number, y1: number, x2: number, y2: number } {
         return {

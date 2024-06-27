@@ -46,17 +46,6 @@ import MathUtils from "../math/utils.ts";
     .fill('transparent')
 
 
-  // TODO: attempt to use extensions elsewhere, see if they're a decent approach
-  SVG.extend(SVG.Element, {
-    attachToPoint: function(p: SVGInteractivePoint, f: (vec: Vector) => void) {
-      p.onChange({
-        update: (newVec) => f(newVec)
-      })
-      
-      return this;
-    }
-  })
-
   const tri = props.context.polygon(
     grid.unitVectorsToPxVectors(
       [
