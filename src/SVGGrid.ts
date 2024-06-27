@@ -19,7 +19,7 @@ class SVGGrid {
             if (i == 0 || i == -halfGridSize || i == halfGridSize)
                 continue;
             context
-                .line(grid.vectorLineFromUnitVec(new Vector(-halfGridSize, i), new Vector(halfGridSize, i)))
+                .line(grid.pxLineFromGridVec(new Vector(-halfGridSize, i), new Vector(halfGridSize, i)))
                 .stroke({color: lightGray, width: gridStrokeSize})
         }
     
@@ -28,7 +28,7 @@ class SVGGrid {
             if (i == 0 || i == -halfGridSize || i == halfGridSize)
                 continue;
             context
-                .line(grid.vectorLineFromUnitVec(new Vector(i, -halfGridSize), new Vector(i, halfGridSize)))
+                .line(grid.pxLineFromGridVec(new Vector(i, -halfGridSize), new Vector(i, halfGridSize)))
                 .stroke({color: lightGray, width: gridStrokeSize})
         }
         
@@ -36,8 +36,8 @@ class SVGGrid {
     
         // Draw middle lines last so they show up on top of backing grid lines
         //let midLine = gridSize / 2
-        context.line(grid.vectorLineFromUnitVec(new Vector(0, -halfGridSize), new Vector(0, halfGridSize))).stroke({color: darkGray, width: gridStrokeSize})
-        context.line(grid.vectorLineFromUnitVec(new Vector(-halfGridSize, 0), new Vector(halfGridSize, 0))).stroke({color: darkGray, width: gridStrokeSize}) 
+        context.line(grid.pxLineFromGridVec(new Vector(0, -halfGridSize), new Vector(0, halfGridSize))).stroke({color: darkGray, width: gridStrokeSize})
+        context.line(grid.pxLineFromGridVec(new Vector(-halfGridSize, 0), new Vector(halfGridSize, 0))).stroke({color: darkGray, width: gridStrokeSize}) 
             
     }
 }

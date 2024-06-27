@@ -30,7 +30,7 @@ class SVGVector {
           }).ref(4, 4)
 
         this.line = this.context
-          .line(this.grid.vectorLineFromUnitVec(this.vec))
+          .line(this.grid.pxLineFromGridVec(this.vec))
           .stroke({color: this.lineColor, width: 3, linecap: 'round'})
           .style('pointer-events', 'none')
 
@@ -56,7 +56,7 @@ class SVGVector {
 
     origin(origin: Vector) {
         this.vOrigin = origin
-        let points = this.grid.vectorLineFromUnitVec(this.vec, this.vOrigin)
+        let points = this.grid.pxLineFromGridVec(this.vec, this.vOrigin)
         this.line.attr({x1: points[0], y1: points[1]})
         return this
     }
@@ -76,9 +76,8 @@ class SVGVector {
     }
 
     update(newUnitVec: Vector) {      
-        console.log('udpating vec... so why aint it changing in the UI?')   
         this.vec = newUnitVec
-        let pxVec = this.grid.unitToPx(newUnitVec.invertY())
+        let pxVec = this.grid.gridToPx(newUnitVec.invertY())
         this.line.attr({x2: pxVec.x, y2: pxVec.y})
 
         let c = this.line.bbox()

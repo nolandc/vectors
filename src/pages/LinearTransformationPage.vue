@@ -9,7 +9,7 @@
   import SVG from 'svg.js'
   import SVGLine from "../SVGLine.ts";
   import SVGInteractivePoint from "../SVGInteractivePoint.ts";
-  import { usePointSelection } from '../logic/PointSelection.ts'
+  import { usePointSelection } from '../logic/usePointSelection.ts'
 import Colors from "../constants/Colors.ts";
 import Matrix2x2 from "../math/matrix.ts";
 

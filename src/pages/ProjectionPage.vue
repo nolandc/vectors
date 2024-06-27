@@ -8,7 +8,7 @@
   import SVG from 'svg.js'
   import SVGLine from "../SVGLine";
   import SVGInteractivePoint from "../SVGInteractivePoint";
-  import { usePointSelection } from '../logic/PointSelection.ts'
+  import { usePointSelection } from '../logic/usePointSelection.ts'
 import Colors from "../constants/Colors.ts";
 
   const props = defineProps({
@@ -61,26 +61,7 @@ import Colors from "../constants/Colors.ts";
     .onPointUpdate(p1, () => {
       svg3.update(projection.value)
     })
-
-
-
-// TODO: genericize mount / unmount behavior for all visualizations
-/*
-  onMounted(() => {
-    createVis()
-  })  
-
-
-  if (import.meta.hot) {
-    import.meta.hot.dispose(() => {
-      p1.value = undefined
-      p2.value = undefined
-    })
-    import.meta.hot.accept(() => {
-      createVis()
-    })  
-  }
-  */
+    
 </script>
 
 <template>

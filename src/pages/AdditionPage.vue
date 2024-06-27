@@ -8,7 +8,7 @@
   import SVG from 'svg.js'
   import SVGLine from "../SVGLine";
   import SVGInteractivePoint from "../SVGInteractivePoint";
-  import { usePointSelection } from '../logic/PointSelection.ts'
+  import { usePointSelection } from '../logic/usePointSelection.ts'
 
   const props = defineProps({
     context: {

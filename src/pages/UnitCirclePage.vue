@@ -8,7 +8,7 @@
   import SVG from 'svg.js'
   import SVGLine from "../SVGLine";
   import SVGInteractivePoint from "../SVGInteractivePoint";
-  import { usePointSelection } from '../logic/PointSelection.ts'
+  import { usePointSelection } from '../logic/usePointSelection.ts'
 import Colors from "../constants/Colors.ts";
 
   const props = defineProps({
@@ -32,7 +32,7 @@ import Colors from "../constants/Colors.ts";
     .attachToPoint(p1)
 
 
-  const origin = grid.unitToPx(new Vector(0, 0))
+  const origin = grid.gridToPx(new Vector(0, 0))
 
   const unitCircle = props.context.circle(grid.unitPxSize * 2)
     .cx(origin.x)

@@ -19,7 +19,7 @@ export default class SVGInteractivePoint {
         this.vec = v
         this.grid = grid
 
-        let pxVec = this.grid.unitToPx(v.value.invertY())
+        let pxVec = this.grid.gridToPx(v.value.invertY())
 
         this.clickableCircle = context.circle(35)
             .cx(pxVec.x).cy(pxVec.y)
@@ -37,9 +37,8 @@ export default class SVGInteractivePoint {
 
     update(v: Vector) {
         this.vec.value = v
-        console.log('updating the point vec')
         // updated the point...
-        let pxVec = this.grid.unitToPx(v.invertY())
+        let pxVec = this.grid.gridToPx(v.invertY())
         this.clickableCircle.cx(pxVec.x).cy(pxVec.y)
 
         // Run the update things right here

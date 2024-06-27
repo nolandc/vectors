@@ -26,14 +26,21 @@ class Grid {
     }
 
 
-    unitToPx(vec: Vector): Vector {
+    gridToPx(vec: Vector): Vector {
         return new Vector(
             this.unitPxSize * (vec.x + this.origin.x), 
             this.unitPxSize * (vec.y + this.origin.y)
         )
     }
+    
+    gridUnitsToPxUnits(vec: Vector): Vector {
+        return new Vector(
+            this.unitPxSize * vec.x,
+            this.unitPxSize * vec.y
+        )
+    }
 
-    pxToUnit(vec: Vector) {
+    pxToGrid(vec: Vector) {
         return new Vector(
             (vec.x) / this.unitPxSize, 
             (vec.y) / this.unitPxSize
@@ -45,20 +52,28 @@ class Grid {
     }
 
     unitVectorsToPxVectors(array: Array<Vector>) {
-        return array.map(u => this.unitToPx(u))
+        return array.map(u => this.gridToPx(u))
     }
 
-    vectorLineFromUnitVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
-        let originPx = this.unitToPx(origin.invertY())
+    pxLineFromGridVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
+        let originPx = this.gridToPx(origin.invertY())
         // All user-facing coordinates need to flip the y axis. 
         // I gotta gotta figure out a better solution for this tbh.        
-        let vecPx = this.unitToPx(vec.invertY())
+        let vecPx = this.gridToPx(vec.invertY())
         return [
             originPx.x,
             originPx.y,
             vecPx.x,
             vecPx.y
         ]
+    }
+
+    minBounds() {
+        return new Vector(-this.gridWidth/2.0, -this.gridHeight/2.0)
+    }
+
+    maxBounds() {
+        return new Vector(this.gridWidth/2.0, this.gridHeight/2.0)
     }
 }
 

@@ -3,8 +3,6 @@
   import SVG from 'svg.js'
   import { useRouter } from 'vue-router'
 
-  let selectedPage: string = 'addition'
-
   const context: Ref<SVG.Doc|undefined> = ref()
   function createVis() {
     context.value = SVG(window.document.getElementById('chart') as HTMLElement).size('100%', '100%')
@@ -21,8 +19,9 @@
   })
 
   if (import.meta.hot) {
-    import.meta.hot.accept(() => {
-      createVis()
+    import.meta.hot.on('vite:beforeUpdate', () => {
+      console.log('clearing via hot reload')
+      context.value?.clear()      
     })  
   }
 </script>

@@ -24,7 +24,7 @@ class SVGLine {
         this.grid = grid
 
         this.line = this.context
-          .line(this.grid.vectorLineFromUnitVec(this.from, to))
+          .line(this.grid.pxLineFromGridVec(this.from, to))
           .stroke({color: this.lineColor, width: 3, linecap: 'round'})
           .style('pointer-events', 'none')
 
@@ -51,14 +51,14 @@ class SVGLine {
 
     start(origin: Vector) {
         this.from = origin
-        let points = this.grid.unitToPx(this.from.invertY())
+        let points = this.grid.gridToPx(this.from.invertY())
         this.line.attr({x1: points.x, y1: points.y})
         return this
     }    
 
     end(to: Vector) {
         this.to = to
-        let pxVec = this.grid.unitToPx(to.invertY())
+        let pxVec = this.grid.gridToPx(to.invertY())
         this.line.attr({x2: pxVec.x, y2: pxVec.y})
 
         let c = this.line.bbox()

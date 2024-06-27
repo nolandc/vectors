@@ -23,7 +23,6 @@ const props = defineProps({
 watch(() => props.vector, (newvec, _) => {
     x.value = newvec.x.toString()
     y.value = newvec.y.toString()
-    console.log('vector has been updated, no?')
 })
 
 
