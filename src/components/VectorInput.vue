@@ -92,6 +92,7 @@ let updateY = (value: string) => {
     margin-bottom: 10px;
     font-size: 24px;
     display: block;
+    font-family: Courier;
 
     input {
         vertical-align: middle;

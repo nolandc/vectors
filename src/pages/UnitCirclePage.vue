@@ -10,6 +10,7 @@
   import SVGInteractivePoint from "../SVGInteractivePoint";
   import { usePointSelection } from '../logic/usePointSelection.ts'
 import Colors from "../constants/Colors.ts";
+import MathUtils from "../math/utils.ts";
 
   const props = defineProps({
     context: {
@@ -20,6 +21,9 @@ import Colors from "../constants/Colors.ts";
 
   const grid = new Grid(6, 6, 600, 600, 0.1)
   const v1 = ref(new Vector(2, 2))
+  const unitVec: ComputedRef<Vector> = computed(() => {
+    return v1.value.unit().invertY()
+  })
 
   const { selectPoint } = usePointSelection(props.context, grid)
 
@@ -37,7 +41,8 @@ import Colors from "../constants/Colors.ts";
   const unitCircle = props.context.circle(grid.unitPxSize * 2)
     .cx(origin.x)
     .cy(origin.y)
-    .stroke({width: 1, color: 'black'})
+    .stroke({width: 2, color: 'black'})
+    .attr({'stroke-dasharray': "7"})
     .fill('transparent')
 
 
@@ -52,25 +57,22 @@ import Colors from "../constants/Colors.ts";
     }
   })
 
-  let unit = v1.value.unit().invertY()
-
   const tri = props.context.polygon(
     grid.unitVectorsToPxVectors(
       [
         new Vector(0, 0), 
-        new Vector(unit.x, 0), 
-        new Vector(unit.x, unit.y)
+        new Vector(unitVec.value.x, 0), 
+        new Vector(unitVec.value.x, unitVec.value.y)
       ]
     ).flatMap(v => [v.x, v.y])
-  ).fill('#ebb7b7')
-  .stroke({color: Colors.red, width: 3})
+  ).fill('#A6C4E2')
+  .stroke({color: Colors.blue, width: 3})
   .attachToPoint(p1, (v: Vector) => {
-    let unit = v.unit().invertY()
     tri.attr('points', grid.unitVectorsToPxVectors(
       [
         new Vector(0, 0), 
-        new Vector(unit.x, 0), 
-        new Vector(unit.x, unit.y)
+        new Vector(unitVec.value.x, 0), 
+        new Vector(unitVec.value.x, unitVec.value.y)
       ]
     ).flatMap(v => [v.x, v.y]))
   })
@@ -105,7 +107,13 @@ import Colors from "../constants/Colors.ts";
     <VectorInput label="u" :color="Colors.blue" :vector="p1.vec.value.unit()" :editable="false"/>
   </div>
   <div id="details-text">
-    Projection is...
+    <div>
+      u<sub>1</sub><sup>2</sup> + u<sub>2</sub><sup>2</sup> = ||u||
+    </div>
+    <div>
+      ({{ MathUtils.round(unitVec.x) }})<sup>2</sup> + ({{ MathUtils.round(unitVec.y) }})<sup>2</sup> = 1
+    </div>
+
   </div>
 </template>
 

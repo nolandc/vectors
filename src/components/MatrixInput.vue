@@ -13,10 +13,6 @@
           <input v-model.number="matrix.y2" type="number" class="matrix-input" />
         </div>
       </div>
-      <div>
-        <h3>Matrix</h3>
-        <pre>{{ matrix.toString() }}</pre>
-      </div>
     </div>
   </template>
   
