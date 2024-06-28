@@ -11,7 +11,7 @@
       ]
      },
      
-     "baseUrl": "./",
+     "baseUrl": ".",
      "typeRoots": ["./node_modules/@types", "./src/types"],
      "types": ["svg.js"],
 

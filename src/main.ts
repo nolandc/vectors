@@ -46,6 +46,14 @@ SVG.extend(SVG.Element, {
 })
 
 SVG.extend(SVG.Element, {
+  attachToVector: function(v: Vector, f: (v: Vector) => void) {
+    v.onChange({
+      update: (newVec) => f(newVec)
+    })
+  }
+})
+
+SVG.extend(SVG.Element, {
   removeMouseInteraction: function() {
     (this as SVG.Element).style('pointer-events', 'none')
     return this
