@@ -17,22 +17,6 @@ const pxVector = computed(() => props.grid.gridToPx(props.vector.invertY()))
 
 
 <template>
-  <defs>
-    <marker
-      id="arrow"
-      viewBox="0 0 20 20"
-      refX="4"
-      refY="4"
-      markerWidth="20"
-      markerHeight="20"
-      orient="auto"
-      stroke="blue"
-      stroke-width="1"
-      fill="none"
-      style="pointer-events: none;">
-      <path d="M 0 8 L 4 4 L 0 0" />
-    </marker>
-  </defs>
-  <line :x1="pxOrigin.x" :y1="pxOrigin.y" :x2="pxVector.x" :y2="pxVector.y" stroke="blue" stroke-width="3" marker-end="url(#arrow)"></line>
+
 </template>
 
