@@ -74,8 +74,8 @@
 
 <template>
     <div>
-      <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-      <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
+      <VectorInput label="v1" color="#f94144" :vector="v1" @updated="v => p1?.update(v)"/>
+      <VectorInput label="v2" color="#43aa8b" :vector="v2" @updated="v => p2?.update(v)"/>
       <VectorInput label="v1+v2" color="#577590" :vector="p1.vec.value.plus(p2.vec.value)" :editable="false"/>
     </div>
     <div id="details-text">
