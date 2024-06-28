@@ -5,7 +5,7 @@
 
   const context: Ref<SVG.Doc|undefined> = ref()
   function createVis() {
-    context.value = SVG(window.document.getElementById('chart') as HTMLElement).size('100%', '100%')
+    //context.value = SVG(window.document.getElementById('chart') as HTMLElement).size('100%', '100%')
   }
 
   onMounted(() => {
@@ -15,13 +15,13 @@
 
   const router = useRouter()
   router.beforeEach(() => {
-    context.value?.clear()
+    //context.value?.clear()
   })
 
   if (import.meta.hot) {
     import.meta.hot.on('vite:beforeUpdate', () => {
       console.log('clearing via hot reload')
-      context.value?.clear()      
+      //context.value?.clear()      
     })  
   }
 </script>
@@ -45,17 +45,11 @@
           <RouterLink to="/determinant">determinant</RouterLink>
         </div>
     </div>
-    <div id="chart">
-      
-    </div>
-    <div v-if="context != undefined">
-      <div id="details" d>
-        <RouterView v-slot="{Component}">
-          <component :is="Component"
-          :context="context"/>
-        </RouterView>
-      </div>    
-    </div>
+
+    <RouterView v-slot="{Component}">
+      <component :is="Component"
+      :context="context"/>
+    </RouterView>
   </div>
 </template>
 

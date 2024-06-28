@@ -13,6 +13,8 @@ import DeterminantPage from './pages/DeterminantPage.vue'
 import SVG from 'svg.js'
 import SVGInteractivePoint from './SVGInteractivePoint'
 import Vector from './math/vector'
+import VueTestPage from './pages/VueTestPage.vue'
+import GridView from './components/GridView.vue'
 
 const routes = [
   { path: "", component: Addition },
@@ -21,7 +23,8 @@ const routes = [
   { path: '/unit', component: UnitCirclePage },
   { path: '/transformation', component: LinearTransformationPage },
   { path: '/determinant', component: DeterminantPage},
-  { path: '/test', component: TestPage }
+  { path: '/test', component: TestPage },
+  { path: '/vuetest', component: VueTestPage },
 ]
 
 const router = createRouter({
@@ -45,13 +48,6 @@ SVG.extend(SVG.Element, {
   }
 })
 
-SVG.extend(SVG.Element, {
-  attachToVector: function(v: Vector, f: (v: Vector) => void) {
-    v.onChange({
-      update: (newVec) => f(newVec)
-    })
-  }
-})
 
 SVG.extend(SVG.Element, {
   removeMouseInteraction: function() {
