@@ -38,8 +38,10 @@
     </GridView>
   </Visualization>
   <VizDetails>
-    <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
-    <VectorInput label="u" :color="Colors.blue" :vector="v1.unit()" :editable="false"/>
+    <div>
+      <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+      <VectorInput label="u" :color="Colors.blue" :vector="v1.unit()" :editable="false"/>
+    </div>
     <div id="details-text">
       <div>
         u<sub>1</sub><sup>2</sup> + u<sub>2</sub><sup>2</sup> = ||u||
