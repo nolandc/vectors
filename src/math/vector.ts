@@ -10,6 +10,11 @@ class Vector {
     this.y = _y
   }
 
+  set(newVec: Vector) {
+    this.x = newVec.x
+    this.y = newVec.y
+  }
+
   invertY() {
     return new Vector(this.x, this.y * -1)
   }

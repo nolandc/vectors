@@ -2,12 +2,12 @@
   import VectorInput from "../components/svg/LineView.vue"
   import { PropType, Ref, onUnmounted, ref } from 'vue'
   import Vector from "../math/vector.ts";
-  import Grid from "../grid";
-  import SVGVector from "../SVGVector";
-  import SVGGrid from "../SVGGrid";
+  import Grid from "../grid.ts";
+  import SVGVector from "../SVGVector.ts";
+  import SVGGrid from "../SVGGrid.ts";
   import SVG from 'svg.js'
-  import SVGLine from "../SVGLine";
-  import SVGInteractivePoint from "../SVGInteractivePoint";
+  import SVGLine from "../SVGLine.ts";
+  import SVGInteractivePoint from "../SVGInteractivePoint.ts";
   import { usePointSelection } from '../logic/usePointSelection.ts'
 
   const props = defineProps({
@@ -29,30 +29,6 @@
 
   let p2 = new SVGInteractivePoint(v2, grid, props.context, selectPoint)
 
-  let shape = props.context.polygon(
-    grid.unitVectorsToPxVectors(
-      [
-        new Vector(0, 0), 
-        v1.value.invertY(),
-        v1.value.plus(v2.value).invertY(),
-        v2.value.invertY(),
-      ]
-    ).flatMap(v => [v.x, v.y])    
-  )
-  .fill('gray')
-  .removeMouseInteraction()
-  .attachToPoint(p1, (v: Vector) => {
-      const points = grid.unitVectorsToPxVectors(
-        [
-          new Vector(0, 0), 
-          v1.value.invertY(),
-          v1.value.plus(v2.value).invertY(),
-          v2.value.invertY(),
-        ]
-      ).flatMap(v => [v.x, v.y])
-      shape.attr('points', points)
-    })
-
   let svg1 = new SVGVector(v1.value, grid, props.context, "v1")
     .color('#f94144')
     .attachToPoint(p1)
@@ -61,8 +37,19 @@
     .color('#43aa8b')
     .attachToPoint(p2)
 
+  let sumSVG = new SVGVector(p1.plus(p2.vec.value), grid, props.context, "v1+v2")
+    .color('#577590')
+    .strokeDashArray('8')
+    .onPointUpdate(p1, (vec) => {
+      sumSVG.update(p2.plus(vec))
+    })
+    .onPointUpdate(p2, (vec) => {
+      sumSVG.update(p1.plus(vec))
+    })
+
   let svg1m = new SVGLine(v2.value, v1.value.plus(v2.value), grid, props.context)
     .color('#cccccc')
+    .strokeDashArray("10")
     .attachOriginToPoint(p2)
     .onPointUpdate(p2, (vec) => {
       svg1m.end(p1.plus(vec))
@@ -73,6 +60,7 @@
 
   let svg2m = new SVGLine(v1.value, v1.value.plus(v2.value), grid, props.context)
     .color('#cccccc')
+    .strokeDashArray("10")
     .attachOriginToPoint(p1)
     .onPointUpdate(p2, (vec) => {
       svg2m.end(p1.plus(vec))
@@ -82,22 +70,13 @@
     })
 
 
-    onUnmounted(() => {
-        let chart = document.getElementById('chart')
-        if (chart != undefined) {
-        //props.context.clear()
-        }
-    })
-
-    console.log("setting up viz")
-
-
 </script>
 
 <template>
     <div>
-      <VectorInput label="v1" color="#f94144" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-      <VectorInput label="v2" color="#43aa8b" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
+      <VectorInput label="v1" color="#f94144" :vector="v1" @updated="v => p1?.update(v)"/>
+      <VectorInput label="v2" color="#43aa8b" :vector="v2" @updated="v => p2?.update(v)"/>
+      <VectorInput label="v1+v2" color="#577590" :vector="p1.vec.value.plus(p2.vec.value)" :editable="false"/>
     </div>
     <div id="details-text">
       Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine

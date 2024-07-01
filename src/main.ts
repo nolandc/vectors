@@ -13,7 +13,7 @@ import DeterminantPage from './pages/DeterminantPage.vue'
 import SVG from 'svg.js'
 import SVGInteractivePoint from './SVGInteractivePoint'
 import Vector from './math/vector'
-import VueTestPage from './pages/VueTestPage.vue'
+import VueTestPage from './pages/AdditionPage.vue'
 import GridView from './components/GridView.vue'
 
 const routes = [

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import VectorInput from "../components/VectorInput.vue"
+  import VectorInput from "../components/svg/LineView.vue"
   import { ComputedRef, PropType, computed, ref, watch } from 'vue'
   import Vector from "../math/vector.ts";
   import Grid from "../grid.ts";
