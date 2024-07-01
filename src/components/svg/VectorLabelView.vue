@@ -15,20 +15,12 @@ const props = defineProps({
 const grid = inject('grid') as Grid
 const pxVector = computed(() => grid.gridToPx(props.vector.invertY()))
 
-/*
-            this.textBackground = this.context.rect(Math.max(label.length * 12, 16), 16).fill('white').attr('rx', 3)
-            this.text = this.context
-                .text(label)
-                .style({'user-select': 'none'})
-*/
-watch(pxVector, () => {
-  console.log('pxvector', pxVector)
-})
+const textLength = Math.max(props.text.length * 11, 16)
 </script>
 
 
 <template>
-  <rect :width="Math.max(text.length * 12, 16)" height="16" fill="white" rx="3" :x="pxVector.x -12" :y="pxVector.y - 8"/>
-  <text :text="text" style="user-select: none" :x="pxVector.x + 1" :y="pxVector.y + 4" :fill="color" text-anchor="middle" font-size="14">{{ text }}</text>
+  <rect :width="textLength" height="17" fill="white" rx="3" :x="pxVector.x -textLength/2.0" :y="pxVector.y - 8"/>
+  <text :text="text" style="user-select: none" :x="pxVector.x + 1" :y="pxVector.y + 6" :fill="color" text-anchor="middle" font-size="15">{{ text }}</text>
 </template>
 

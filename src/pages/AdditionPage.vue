@@ -29,6 +29,7 @@
 
     <VectorLabelView text="v1" :vector="vec.divided(2)" :color="Colors.red"/>
     <VectorLabelView text="v2" :vector="vec2.divided(2)" :color="Colors.green"/>
+    <VectorLabelView text="v1+v2" :vector="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
   </GridView>
   <div id="details">
     <div>
