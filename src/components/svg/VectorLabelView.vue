@@ -12,15 +12,17 @@ const props = defineProps({
   color: { type: String, default: 'blue' }
 })
 
+const textLength = Math.max(props.text.length * 11, 16)
+
 const grid = inject('grid') as Grid
 const pxVector = computed(() => grid.gridToPx(props.vector.invertY()))
+const visible = computed(() => (props.vector.length() * grid.unitPxSize) > 40)
 
-const textLength = Math.max(props.text.length * 11, 16)
 </script>
 
 
 <template>
-  <rect :width="textLength" height="17" fill="white" rx="3" :x="pxVector.x -textLength/2.0" :y="pxVector.y - 8"/>
-  <text :text="text" style="user-select: none" :x="pxVector.x + 1" :y="pxVector.y + 6" :fill="color" text-anchor="middle" font-size="15">{{ text }}</text>
+  <rect :width="textLength" height="17" fill="white" rx="3" :x="pxVector.x -textLength/2.0" :y="pxVector.y - 8" v-if="visible"/>
+  <text :text="text" style="user-select: none" :x="pxVector.x + 1" :y="pxVector.y + 6" :fill="color" text-anchor="middle" font-size="15" v-if="visible">{{ text }}</text>
 </template>
 
