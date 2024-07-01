@@ -13,12 +13,9 @@
   import Grid from "../grid";
   import PolygonView from "../components/svg/PolygonView.vue"
   import CircleView from "../components/svg/CircleView.vue"
-  const v1 = ref(new Vector(2, 2))
-  const unitVec = computed(() => {
-    return v1.value.unit()
-  })
 
-//  const origin = grid.gridToPx(new Vector(0, 0))
+  const v1 = ref(new Vector(2, 2))
+  const unitVec = computed(() => v1.value.unit())
 
   const pointVectors = computed(() => {
       return [
@@ -28,44 +25,20 @@
       ]
   })
 
-  /*
-  const tri = props.context.polygon(
-
-  ).fill('#A6C4E2')
-  .stroke({color: Colors.blue, width: 3})
-  .attachToPoint(p1, (v: Vector) => {
-    tri.attr('points', grid.unitVectorsToPxVectors(
-      [
-        new Vector(0, 0), 
-        new Vector(unitVec.value.x, 0), 
-        new Vector(unitVec.value.x, unitVec.value.y)
-      ]
-    ).flatMap(v => [v.x, v.y]))
-  })
-
-
-  const unitCircle = props.context.circle(grid.unitPxSize * 2)
-    .cx(origin.x)
-    .cy(origin.y)
-    .stroke({width: 2, color: 'black'})
-    .attr({'stroke-dasharray': "7"})
-    .fill('transparent')      
-    */
-
 </script>
 
 <template>
   <Visualization>
-    <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600">
+    <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600" :snap-increment="0.1">
       <PolygonView :points="pointVectors" color="#A6C4E2"/>
       <VectorView :vector="v1" :color="Colors.red"/>
-      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1.set(v)"/>
+      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1 = v"/>
       <VectorView :vector="unitVec" :color="Colors.blue"/>
       <CircleView :radius="1"/>
     </GridView>
   </Visualization>
   <VizDetails>
-    <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1.set(v)"/>
+    <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
     <VectorInput label="u" :color="Colors.blue" :vector="v1.unit()" :editable="false"/>
     <div id="details-text">
       <div>

@@ -44,6 +44,7 @@ let updateX = (value: string) => {
     
     if (!isNaN(Number(value)) && value.charAt(value.length-1) != ".") {
         let numValue = Number(value)
+        console.log('updating x', x.value)
         emit('updated', new Vector(numValue, props.vector.y))
     }
 }
@@ -72,8 +73,7 @@ let updateY = (value: string) => {
                 inputmode="numeric" 
                 :value="x" 
                 @input="event => updateX((event.target as HTMLInputElement).value)"
-                @focus="($event.target as HTMLInputElement)?.select()"
-                >
+                @focus="($event.target as HTMLInputElement)?.select()">
             <span class="vector-notation">,</span>
             <input 
                 type="text" 

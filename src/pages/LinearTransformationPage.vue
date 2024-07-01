@@ -1,84 +1,44 @@
 <script setup lang="ts">
-  import VectorInput from "../components/svg/LineView.vue"
   import MatrixInput from "../components/MatrixInput.vue"
-  import { ComputedRef, PropType, Ref, computed, onUnmounted, ref } from 'vue'
+  import { ref } from 'vue'
   import Vector from "../math/vector.ts";
-  import Grid from "../grid.ts";
-  import SVGVector from "../SVGVector.ts";
-  import SVGGrid from "../SVGGrid.ts";
-  import SVG from 'svg.js'
-  import SVGLine from "../SVGLine.ts";
-  import SVGInteractivePoint from "../SVGInteractivePoint.ts";
-  import { usePointSelection } from '../logic/usePointSelection.ts'
-import Colors from "../constants/Colors.ts";
-import Matrix2x2 from "../math/matrix.ts";
+  import Colors from "../constants/Colors.ts";
+  import Matrix2x2 from "../math/matrix.ts";
+  import Visualization from "../components/layout/Visualization.vue";
+  import VizDetails from "../components/layout/VizDetails.vue";
+  import GridView from "../components/svg/GridView.vue";
+  import VectorView from "../components/svg/VectorView.vue";
+  import VectorInput from "../components/VectorInput.vue";
+import DraggableCircleView from "../components/DraggableCircleView.vue";
+import VectorLabelView from "../components/svg/VectorLabelView.vue";
 
-  const props = defineProps({
-    context: {
-      type: SVG.Doc as PropType<SVG.Doc>,
-      required: true
-    },
-  })
-
-  const grid = new Grid(20, 20, 600, 600, 0.5)
-  const v1 = ref(new Vector(3, 1))
+  const v1 = ref(new Vector(1, 3))
   const m1 = ref(new Matrix2x2(0, -1, 1, 0))
-
-  const { selectPoint } = usePointSelection(props.context, grid)
-
-  new SVGGrid(grid, props.context)
-
-  const p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
-
-  const svg1 = new SVGVector(v1.value, grid, props.context, "v1")
-    .color(Colors.red)
-    .attachToPoint(p1)
-
-
-  // TODO: attempt to use extensions elsewhere, see if they're a decent approach
-  SVG.extend(SVG.Element, {
-    attachToPoint: function(p: SVGInteractivePoint, f: (vec: Vector) => void) {
-      p.onChange({
-        update: (newVec) => f(newVec)
-      })
-      
-      return this;
-    }
-  })
-
-
-  const svg2 = new SVGVector(v1.value.multiplyByMatrix(m1.value), grid, props.context, "M*v1")
-    .color(Colors.green)
-    .onPointUpdate(p1, (vec) => {
-      svg2.update(vec.multiplyByMatrix(m1.value))
-    })
-
-
-  /*
-  const unitPoint = props.context.circle(16)
-    .cx(unitVec.x)
-    .cy(unitVec.y)
-    .fill(Colors.blue)
-    .attachToPoint(p1, (v: Vector) => {
-      const unitVec = grid.unitToPx(v.unit().invertY())
-      unitPoint.cx(unitVec.x)
-      unitPoint.cy(unitVec.y)
-    })
-    */
 
 </script>
 
 <template>
-  <div>
-    <VectorInput label="v1" :color="Colors.red" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-    <VectorInput label="M * v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
-    <MatrixInput :initial-matrix="m1" @updated="newM => {m1 = newM, svg2.update(v1.multiplyByMatrix(newM)) }"/>
-  </div>
-  <div id="details-text">
-    Projection is...
-  </div>
+  <Visualization>
+    <GridView :width="20" :height="20" :px-width="600" :px-height="600">
+      <VectorView :vector="v1" :color="Colors.red"/>
+      <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
+
+      <DraggableCircleView :vector="v1" @on-changed="v => v1 = v"/>
+
+      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
+      <VectorLabelView text="M*v1" :vector="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+    
+    </GridView>
+    <VizDetails>
+      <div>
+        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+        <VectorInput label="M * v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+        <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
+      </div>
+      <div id="details-text">
+        Projection is...
+      </div>
+    </VizDetails>
+  </Visualization>
 </template>
 
-<style lang="scss" scoped>
-
-</style>

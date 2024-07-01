@@ -22,10 +22,10 @@
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="p" :origin="v1" :color="Colors.lightGray" strokeDashArray="10"/>
 
-      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1.set(v)"/>
+      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1=v"/>
       <VectorView :vector="v1" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="v2" @onChanged="(v: Vector) => v2.set(v)"/>
+      <DraggableCircleView :vector="v2" @onChanged="(v: Vector) => v2=v"/>
       <VectorView :vector="v2" :color="Colors.green"/>
 
       <VectorView :vector="p" :color="Colors.blue"/>
@@ -36,8 +36,8 @@
     </GridView>  
     <VizDetails>
       <div>
-        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1.set(v)"/>
-        <VectorInput label="v2" :color="Colors.green" :vector="v2" @updated="v => v2.set(v)"/>
+        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+        <VectorInput label="v2" :color="Colors.green" :vector="v2" @updated="v => v2 = v"/>
         <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
       </div>
       <div id="details-text">
