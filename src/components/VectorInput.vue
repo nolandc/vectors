@@ -16,15 +16,11 @@ const props = defineProps({
         default: true
     },
     vector: {
-        type: Object as PropType<Vector>,
+        type: Vector as PropType<Vector>,
         required: true,
     },
 })
 
-watch(() => props.vector, (newvec, _) => {
-    x.value = newvec.x.toString()
-    y.value = newvec.y.toString()
-})
 
 
 const emit = defineEmits(['updated'])
@@ -34,6 +30,14 @@ const emit = defineEmits(['updated'])
 // a valid value for the vector
 const x = ref(props.vector.x.toString())
 const y = ref(props.vector.y.toString())
+
+watch(() => props.vector, (newvec, _) => {
+    console.log('changing things....', newvec)
+    x.value = newvec.x.toString()
+    y.value = newvec.y.toString()
+    console.log('x', x)
+})
+
 
 let updateX = (value: string) => {
     x.value = value

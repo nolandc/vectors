@@ -15,6 +15,7 @@ const props = defineProps({
 })
 
 const grid = new Grid(props.width, props.height, props.pxWidth, props.pxHeight, props.snapIncrement)
+console.log('injecting grid', grid)
 const halfGridSize = props.width / 2.0
 
 const container = ref<HTMLDivElement>()

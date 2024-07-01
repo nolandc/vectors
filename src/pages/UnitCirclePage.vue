@@ -1,59 +1,36 @@
 <script setup lang="ts">
-  import VectorInput from "../components/svg/LineView.vue"
-  import { ComputedRef, PropType, Ref, computed, onUnmounted, ref } from 'vue'
-  import Vector from "../math/vector.ts";
+  import { computed, inject, ref } from "vue";
+  import GridView from "../components/svg/GridView.vue"
+  import Vector from "../math/vector";
+  import VectorView from "../components/svg/VectorView.vue";
+  import DraggableCircleView from "../components/DraggableCircleView.vue"
+  import VectorInput from "../components/VectorInput.vue";
+  import Colors from "../constants/Colors";
+  import VectorLabelView from "../components/svg/VectorLabelView.vue"
+  import Visualization from "../components/layout/Visualization.vue";
+  import VizDetails from "../components/layout/VizDetails.vue"
+  import MathUtils from "../math/utils";
   import Grid from "../grid";
-  import SVGVector from "../SVGVector";
-  import SVGGrid from "../SVGGrid";
-  import SVG from 'svg.js'
-  import SVGLine from "../SVGLine";
-  import SVGInteractivePoint from "../SVGInteractivePoint";
-  import { usePointSelection } from '../logic/usePointSelection.ts'
-import Colors from "../constants/Colors.ts";
-import MathUtils from "../math/utils.ts";
-
-  const props = defineProps({
-    context: {
-      type: SVG.Doc as PropType<SVG.Doc>,
-      required: true
-    },
-  })
-
-  const grid = new Grid(6, 6, 600, 600, 0.1)
+  import PolygonView from "../components/svg/PolygonView.vue"
+  import CircleView from "../components/svg/CircleView.vue"
   const v1 = ref(new Vector(2, 2))
-  const unitVec: ComputedRef<Vector> = computed(() => {
-    return v1.value.unit().invertY()
+  const unitVec = computed(() => {
+    return v1.value.unit()
   })
 
-  const { selectPoint } = usePointSelection(props.context, grid)
+//  const origin = grid.gridToPx(new Vector(0, 0))
 
-  new SVGGrid(grid, props.context)
-
-  const p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
-
-  const svg1 = new SVGVector(v1.value, grid, props.context, "v1")
-    .color('#f94144')
-    .attachToPoint(p1)
-
-
-  const origin = grid.gridToPx(new Vector(0, 0))
-
-  const unitCircle = props.context.circle(grid.unitPxSize * 2)
-    .cx(origin.x)
-    .cy(origin.y)
-    .stroke({width: 2, color: 'black'})
-    .attr({'stroke-dasharray': "7"})
-    .fill('transparent')
-
-
-  const tri = props.context.polygon(
-    grid.unitVectorsToPxVectors(
-      [
+  const pointVectors = computed(() => {
+      return [
         new Vector(0, 0), 
         new Vector(unitVec.value.x, 0), 
-        new Vector(unitVec.value.x, unitVec.value.y)
+        new Vector(unitVec.value.x, unitVec.value.y).invertY()
       ]
-    ).flatMap(v => [v.x, v.y])
+  })
+
+  /*
+  const tri = props.context.polygon(
+
   ).fill('#A6C4E2')
   .stroke({color: Colors.blue, width: 3})
   .attachToPoint(p1, (v: Vector) => {
@@ -67,45 +44,37 @@ import MathUtils from "../math/utils.ts";
   })
 
 
-
-  const unitVector = new SVGVector(v1.value.unit(), grid, props.context, "u")
-    .onPointUpdate(p1, (v: Vector) => {
-        //const unitVec = grid.unitToPx(v.unit().invertY())
-        console.log('unit vec: ', v)
-        unitVector.update(v.unit())
-      })
-      .color(Colors.blue)
-
-  /*
-  const unitPoint = props.context.circle(16)
-    .cx(unitVec.x)
-    .cy(unitVec.y)
-    .fill(Colors.blue)
-    .attachToPoint(p1, (v: Vector) => {
-      const unitVec = grid.unitToPx(v.unit().invertY())
-      unitPoint.cx(unitVec.x)
-      unitPoint.cy(unitVec.y)
-    })
+  const unitCircle = props.context.circle(grid.unitPxSize * 2)
+    .cx(origin.x)
+    .cy(origin.y)
+    .stroke({width: 2, color: 'black'})
+    .attr({'stroke-dasharray': "7"})
+    .fill('transparent')      
     */
 
 </script>
 
 <template>
-  <div>
-    <VectorInput label="v1" :color="Colors.red" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-    <VectorInput label="u" :color="Colors.blue" :vector="p1.vec.value.unit()" :editable="false"/>
-  </div>
-  <div id="details-text">
-    <div>
-      u<sub>1</sub><sup>2</sup> + u<sub>2</sub><sup>2</sup> = ||u||
-    </div>
-    <div>
-      ({{ MathUtils.round(unitVec.x) }})<sup>2</sup> + ({{ MathUtils.round(unitVec.y) }})<sup>2</sup> = 1
-    </div>
-
-  </div>
+  <Visualization>
+    <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600">
+      <PolygonView :points="pointVectors" color="#A6C4E2"/>
+      <VectorView :vector="v1" :color="Colors.red"/>
+      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1.set(v)"/>
+      <VectorView :vector="unitVec" :color="Colors.blue"/>
+      <CircleView :radius="1"/>
+    </GridView>
+  </Visualization>
+  <VizDetails>
+    <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1.set(v)"/>
+    <VectorInput label="u" :color="Colors.blue" :vector="v1.unit()" :editable="false"/>
+    <div id="details-text">
+      <div>
+        u<sub>1</sub><sup>2</sup> + u<sub>2</sub><sup>2</sup> = ||u||
+      </div>
+      <div>
+        ({{ MathUtils.round(unitVec.x) }})<sup>2</sup> + ({{ MathUtils.round(unitVec.y) }})<sup>2</sup> = 1
+      </div>
+    </div>    
+  </VizDetails>
 </template>
 
-<style lang="scss" scoped>
-
-</style>

@@ -14,7 +14,6 @@ import SVG from 'svg.js'
 import SVGInteractivePoint from './SVGInteractivePoint'
 import Vector from './math/vector'
 import VueTestPage from './pages/AdditionPage.vue'
-import GridView from './components/GridView.vue'
 
 const routes = [
   { path: "", component: Addition },

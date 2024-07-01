@@ -1,80 +1,48 @@
 <script setup lang="ts">
-  import VectorInput from "../components/svg/LineView.vue"
-  import { ComputedRef, PropType, Ref, computed, onUnmounted, ref } from 'vue'
-  import Vector from "../math/vector.ts";
-  import Grid from "../grid";
-  import SVGVector from "../SVGVector";
-  import SVGGrid from "../SVGGrid";
-  import SVG from 'svg.js'
-  import SVGLine from "../SVGLine";
-  import SVGInteractivePoint from "../SVGInteractivePoint";
-  import { usePointSelection } from '../logic/usePointSelection.ts'
-import Colors from "../constants/Colors.ts";
+  import { computed, ref } from "vue";
+  import GridView from "../components/svg/GridView.vue"
+  import Vector from "../math/vector";
+  import VectorView from "../components/svg/VectorView.vue";
+  import DraggableCircleView from "../components/DraggableCircleView.vue"
+  import VectorInput from "../components/VectorInput.vue";
+  import LineView from "../components/svg/LineView.vue";
+  import Colors from "../constants/Colors";
+  import VectorLabelView from "../components/svg/VectorLabelView.vue"
+  import Visualization from "../components/layout/Visualization.vue";
+  import VizDetails from "../components/layout/VizDetails.vue";
 
-  const props = defineProps({
-    context: {
-      type: SVG.Doc as PropType<SVG.Doc>,
-      required: true
-    },
-  })
 
-  let grid = new Grid(20, 20, 600, 600)
-  let v1 = ref(new Vector(4, 1))
-  let v2 = ref(new Vector(5, 8))
-
-  let projection: ComputedRef<Vector> = computed(() => {
-    return v1.value.projectOnto(v2.value)
-  })
-
-  let { selectPoint } = usePointSelection(props.context, grid)
-
-  new SVGGrid(grid, props.context)
-
-  let p1 = new SVGInteractivePoint(v1, grid, props.context, selectPoint)
-
-  let p2 = new SVGInteractivePoint(v2, grid, props.context, selectPoint)
-
-  let svg2m = new SVGLine(v1.value, projection.value, grid, props.context)
-    .color('#cccccc')
-    .strokeDashArray("10")
-    .attachOriginToPoint(p1)
-    .onPointUpdate(p2, () => {
-      svg2m.end(projection.value)
-    })
-    .onPointUpdate(p1, () => {
-      svg2m.end(projection.value)
-    })  
-
-  let svg1 = new SVGVector(v1.value, grid, props.context, "v1")
-    .color(Colors.red)
-    .attachToPoint(p1)
-
-  let svg2 = new SVGVector(v2.value, grid, props.context, "v2")
-    .color(Colors.green)
-    .attachToPoint(p2)
-
-  let svg3 = new SVGVector(projection.value, grid, props.context, "p")
-    .color(Colors.blue)
-    .onPointUpdate(p2, () => {
-      svg3.update(projection.value)
-    })
-    .onPointUpdate(p1, () => {
-      svg3.update(projection.value)
-    })
-    
+  const v1 = ref(new Vector(4, 1))
+  const v2 = ref(new Vector(5, 8))
+  const p = computed(() => v1.value.projectOnto(v2.value))
 </script>
 
 <template>
-  <div>
-    <VectorInput label="v1" :color="Colors.red" :vector="p1.vec.value" @updated="v => p1?.update(v)"/>
-    <VectorInput label="v2" :color="Colors.green" :vector="p2.vec.value" @updated="v => p2?.update(v)"/>
-    <VectorInput label="p" :color="Colors.blue" :vector="projection" :editable="false"/>
-  </div>
-  <div id="details-text">
-    Projection is...
-  </div>
+  <Visualization>
+    <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
+      <LineView :vector="p" :origin="v1" :color="Colors.lightGray" strokeDashArray="10"/>
+
+      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1.set(v)"/>
+      <VectorView :vector="v1" :color="Colors.red"/>
+
+      <DraggableCircleView :vector="v2" @onChanged="(v: Vector) => v2.set(v)"/>
+      <VectorView :vector="v2" :color="Colors.green"/>
+
+      <VectorView :vector="p" :color="Colors.blue"/>
+
+      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
+      <VectorLabelView text="v2" :vector="v2.divided(2)" :color="Colors.green"/>
+      <VectorLabelView text="p" :vector="p.divided(2)" :color="Colors.blue"/>
+    </GridView>  
+    <VizDetails>
+      <div>
+        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1.set(v)"/>
+        <VectorInput label="v2" :color="Colors.green" :vector="v2" @updated="v => v2.set(v)"/>
+        <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
+      </div>
+      <div id="details-text">
+        Projection is...
+      </div>
+    </VizDetails>
+  </Visualization>
 </template>
-
-<style lang="scss" scoped>
-
-</style>
