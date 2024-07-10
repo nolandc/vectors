@@ -42,6 +42,9 @@
           <RouterLink to="/transformation">linear transformation</RouterLink>
         </div>
         <div class="link">
+          <RouterLink to="/eigen">eigen vectors</RouterLink>
+        </div>        
+          <div class="link">
           <RouterLink to="/determinant">determinant</RouterLink>
         </div>
     </div>
@@ -56,7 +59,6 @@
 
 #nav {
   padding: 40px;
-  background: #f2f2f2;
 
   .link {
     &.missing {

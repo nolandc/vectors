@@ -1,3 +1,5 @@
+import Vector from "./vector";
+
 class Matrix2x2 {
     x1: number;
     y1: number;
@@ -59,6 +61,64 @@ class Matrix2x2 {
             x2: this.x2,
             y2: this.y2
         };
+    }
+
+
+    trace(): number {
+        return this.x1 + this.y2;
+    }
+
+    eigenvalues(): number[] {
+        const T = this.trace();
+        const D = this.determinant();
+        const discriminant = T * T - 4 * D;
+        return [
+            (T + Math.sqrt(discriminant)) / 2,
+            (T - Math.sqrt(discriminant)) / 2
+        ];
+    }
+
+    eigenvectors(): Vector[] {
+        const eigenvalues = this.eigenvalues();
+        const [l1, l2] = this.eigenvalues()
+        if (this.y1 === 0 && this.x2 === 0) {
+            return [
+                new Vector(1, 0),
+                new Vector(0, 1)
+            ]
+        } else if (this.y1 !== 0) {
+            return [
+                new Vector(l1-this.y2, this.y1),
+                new Vector(l2-this.y2, this.y1)
+            ]   
+        } else {
+            return [
+                new Vector(this.x2, l1-this.x1),
+                new Vector(this.x2, l2-this.x1)
+            ]
+        }
+    }
+
+    findEigenvector(lambda: number): Vector {
+        // Solving (A - lambda * I)v = 0
+        // Leads to the system:
+        // (x1 - lambda) * x + x2 * y = 0
+        // y1 * x + (y2 - lambda) * y = 0
+
+        // Assuming x = 1, solving for y when x2 is not zero
+        if (this.x2 !== 0) {
+            const y = -(this.x1 - lambda) / this.x2;
+            return new Vector(1, y);
+        }
+
+        // If x2 = 0, check y1
+        if (this.y1 !== 0) {
+            const x = -(this.y2 - lambda) / this.y1;
+            return new Vector(x, 1);
+        }
+
+        // Handle special cases where direct solution might not be straightforward
+        return new Vector(1, 0); // Choosing a default eigenvector when the above conditions don't apply
     }
 
     // Print the matrix in a readable format

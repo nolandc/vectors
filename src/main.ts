@@ -14,13 +14,17 @@ import SVG from 'svg.js'
 import SVGInteractivePoint from './SVGInteractivePoint'
 import Vector from './math/vector'
 import VueTestPage from './pages/AdditionPage.vue'
+import EigenvectorPage from './pages/EigenvectorPage.vue'
+import DotProductPage from './pages/DotProductPage.vue'
 
 const routes = [
   { path: "", component: Addition },
   { path: '/addition', component: Addition },
   { path: '/projection', component: Projection },
   { path: '/unit', component: UnitCirclePage },
+  { path: '/dot', component: DotProductPage },
   { path: '/transformation', component: LinearTransformationPage },
+  { path: '/eigen', component: EigenvectorPage },  
   { path: '/determinant', component: DeterminantPage},
   { path: '/test', component: TestPage },
   { path: '/vuetest', component: VueTestPage },

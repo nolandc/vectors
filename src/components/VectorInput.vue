@@ -32,10 +32,8 @@ const x = ref(props.vector.x.toString())
 const y = ref(props.vector.y.toString())
 
 watch(() => props.vector, (newvec, _) => {
-    console.log('changing things....', newvec)
-    x.value = newvec.x.toString()
-    y.value = newvec.y.toString()
-    console.log('x', x)
+    x.value = MathUtils.round(newvec.x, 4).toString()
+    y.value = MathUtils.round(newvec.y, 4).toString()
 })
 
 
@@ -44,7 +42,6 @@ let updateX = (value: string) => {
     
     if (!isNaN(Number(value)) && value.charAt(value.length-1) != ".") {
         let numValue = Number(value)
-        console.log('updating x', x.value)
         emit('updated', new Vector(numValue, props.vector.y))
     }
 }
@@ -82,8 +79,13 @@ let updateY = (value: string) => {
                 @input="event => updateY((event.target as HTMLInputElement).value)"
                 @focus="($event.target as HTMLInputElement)?.select()">
         </span>
-        <span v-else>
-            {{ MathUtils.round(parseFloat(x), 3) }}, {{ MathUtils.round(parseFloat(y), 3) }}
+        <span v-else class="non-editable-vector">
+            <span class="vector-value">
+                {{ MathUtils.round(parseFloat(x), 3) }}
+            </span>,
+            <span class="vector-value">
+                {{ MathUtils.round(parseFloat(y), 3) }}
+            </span>            
         </span>
         <span class="vector-notation parens">)</span>
     </div>
@@ -95,14 +97,14 @@ let updateY = (value: string) => {
 .vector-input {
     display: block;
     margin-bottom: 10px;
-    font-size: 24px;
+    font-size: 20px;
     display: block;
     font-family: Courier;
 
     input {
         vertical-align: middle;
         display: inline-block;
-        width: 36px;
+        width: 60px;
         font-size: 15px;
         padding: 10px 4px;
         margin: 0 5px;
@@ -116,6 +118,9 @@ let updateY = (value: string) => {
         margin-right: 10px;
         vertical-align: middle;
         display: inline-block;
+        width: 100px;
+        text-align: right;
+        font-size: 17px;
 
         .provided-label {
             border-radius: 4px;
@@ -132,6 +137,12 @@ let updateY = (value: string) => {
         &.parens {
             margin-top: -4px;
             display: inline-block;
+        }
+    }
+    .non-editable-vector {
+        .vector-value {
+            display: inline-block;
+            width: 80px;
         }
     }
 }

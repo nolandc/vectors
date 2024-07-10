@@ -42,7 +42,7 @@ const onMouseMoved = (e: MouseEvent) => {
     if (selectedPoint != undefined) {
         let newVec = grid.pxToGrid(new Vector(x, y))
             
-        let clampedVec = newVec.intersectWithSquare(boundsRect)
+        let clampedVec = newVec.intersectWithSquare(boundsRect).snap(grid.snapIncrement)
         let sel = selectedPoint
         listeners.forEach(l => l.onChange(sel, clampedVec))
     } 

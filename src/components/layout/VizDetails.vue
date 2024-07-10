@@ -7,7 +7,7 @@
 <style lang="scss">
  #details {
   box-sizing: border-box;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-direction: column;  
  }

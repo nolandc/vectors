@@ -10,8 +10,6 @@
   import VectorLabelView from "../components/svg/VectorLabelView.vue"
   import Visualization from "../components/layout/Visualization.vue";
   import VizDetails from "../components/layout/VizDetails.vue"
-  import KatexComponent from "../components/KatexComponent.vue";
-
   const vec = ref(new Vector(3, 2))
   const vec2 = ref(new Vector(-1, -2))
 
@@ -31,23 +29,18 @@
 
       <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>
 
-      <VectorLabelView text="v" :vector="vec.divided(2)" :color="Colors.red"/>
-      <VectorLabelView text="w" :vector="vec2.divided(2)" :color="Colors.green"/>
-      <VectorLabelView text="v+w" :vector="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
+      <VectorLabelView text="v1" :vector="vec.divided(2)" :color="Colors.red"/>
+      <VectorLabelView text="v2" :vector="vec2.divided(2)" :color="Colors.green"/>
+      <VectorLabelView text="v1+v2" :vector="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
     </GridView>
     <VizDetails>
       <div>
-        <VectorInput label="v" color="#f94144" :vector="vec" @updated="v => vec = v"/>
-        <VectorInput label="w" color="#43aa8b" :vector="vec2" @updated="v => vec2 = v"/>
-        <VectorInput label="v+w" color="#577590" :vector="vec.plus(vec2)" :editable="false"/>
+        <VectorInput label="v1" color="#f94144" :vector="vec" @updated="v => vec = v"/>
+        <VectorInput label="v2" color="#43aa8b" :vector="vec2" @updated="v => vec2 = v"/>
+        <VectorInput label="v1+v2" color="#577590" :vector="vec.plus(vec2)" :editable="false"/>
       </div>
       <div id="details-text">
-        Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine
-        simply placing the origin of one vector at the end of another.
-        <KatexComponent>
-          \begin{bmatrix} {{ vec.x }} \\ {{ vec.y }} \end{bmatrix} + \begin{bmatrix} {{ vec2.x }} \\ {{  vec2.y }} \end{bmatrix} 
-          = \begin{bmatrix} {{vec.x}} + {{vec2.x}} \\ {{ vec.y }} + {{ vec2.y }} \end{bmatrix} 
-          = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>
+        Dot Product: {{  vec.dotProduct(vec2) }}
       </div>
     </VizDetails>
   </Visualization>

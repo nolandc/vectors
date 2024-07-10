@@ -76,8 +76,8 @@ class Vector {
   }
 
   multiplyByMatrix(matrix: Matrix2x2): Vector {
-    const newX = matrix.x1 * this.x + matrix.y1 * this.y;
-    const newY = matrix.x2 * this.x + matrix.y2 * this.y;
+    const newX = matrix.x1 * this.x + matrix.x2 * this.y;
+    const newY = matrix.y1 * this.x + matrix.y2 * this.y;
     return new Vector(newX, newY);
   }
 

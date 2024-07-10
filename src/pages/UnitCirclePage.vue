@@ -13,6 +13,7 @@
   import Grid from "../grid";
   import PolygonView from "../components/svg/PolygonView.vue"
   import CircleView from "../components/svg/CircleView.vue"
+  import KatexComponent from "../components/KatexComponent.vue"
 
   const v1 = ref(new Vector(2, 2))
   const unitVec = computed(() => v1.value.unit())
@@ -34,21 +35,31 @@
       <VectorView :vector="v1" :color="Colors.red"/>
       <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1 = v"/>
       <VectorView :vector="unitVec" :color="Colors.blue"/>
+      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
+
       <CircleView :radius="1"/>
     </GridView>
   </Visualization>
   <VizDetails>
     <div>
-      <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
-      <VectorInput label="u" :color="Colors.blue" :vector="v1.unit()" :editable="false"/>
+      <VectorInput label="v" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+      <VectorInput label="v̂" :color="Colors.blue" :vector="v1.unit()" :editable="false"/>
     </div>
     <div id="details-text">
-      <div>
-        u<sub>1</sub><sup>2</sup> + u<sub>2</sub><sup>2</sup> = ||u||
-      </div>
-      <div>
-        ({{ MathUtils.round(unitVec.x) }})<sup>2</sup> + ({{ MathUtils.round(unitVec.y) }})<sup>2</sup> = 1
-      </div>
+      <KatexComponent>
+        \hat{v} = \frac{\overrightarrow{v}}{\|\overrightarrow{v}\|}
+      </KatexComponent>
+      <KatexComponent>
+        \hat{v} = \frac{\overrightarrow{v}}{ {{ MathUtils.round(v1.length(), 3) }} } 
+        = \begin{bmatrix} 
+          \frac{ {{ MathUtils.round(v1.x, 2) }} }{ {{ MathUtils.round(v1.length(), 3) }} } \\ 
+          \frac{ {{ MathUtils.round(v1.y, 2) }} }{ {{ MathUtils.round(v1.length(), 3) }} }
+        \end{bmatrix}
+        = \begin{bmatrix}
+          {{ MathUtils.round(v1.x / v1.length(), 3) }} \\
+          {{ MathUtils.round(v1.y / v1.length(), 3) }}
+        \end{bmatrix}      
+      </KatexComponent>      
     </div>    
   </VizDetails>
 </template>
