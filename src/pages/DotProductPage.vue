@@ -7,7 +7,7 @@
   import VectorInput from "../components/VectorInput.vue";
   import LineView from "../components/svg/LineView.vue";
   import Colors from "../constants/Colors";
-  import VectorLabelView from "../components/svg/VectorLabelView.vue"
+  import LabelView from "../components/svg/LabelView.vue"
   import Visualization from "../components/layout/Visualization.vue";
   import VizDetails from "../components/layout/VizDetails.vue"
   const vec = ref(new Vector(3, 2))
@@ -29,9 +29,9 @@
 
       <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>
 
-      <VectorLabelView text="v1" :vector="vec.divided(2)" :color="Colors.red"/>
-      <VectorLabelView text="v2" :vector="vec2.divided(2)" :color="Colors.green"/>
-      <VectorLabelView text="v1+v2" :vector="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
+      <LabelView text="v1" :position="vec.divided(2)" :color="Colors.red"/>
+      <LabelView text="v2" :position="vec2.divided(2)" :color="Colors.green"/>
+      <LabelView text="v1+v2" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
     </GridView>
     <VizDetails>
       <div>

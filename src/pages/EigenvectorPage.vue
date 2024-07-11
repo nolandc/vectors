@@ -10,7 +10,7 @@
   import VectorView from "../components/svg/VectorView.vue";
   import VectorInput from "../components/VectorInput.vue";
   import DraggableCircleView from "../components/DraggableCircleView.vue";
-  import VectorLabelView from "../components/svg/VectorLabelView.vue";
+  import LabelView from "../components/svg/LabelView.vue";
   import LineView from "../components/svg/LineView.vue";
 
   const v1 = ref(new Vector(1, 3))
@@ -29,10 +29,10 @@
       </template>
 
       <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
-      <VectorLabelView text="M*v1" :vector="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+      <LabelView text="M*v1" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
 
       <VectorView :vector="v1" :color="Colors.red"/>
-      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
+      <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
 
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v"/>
 

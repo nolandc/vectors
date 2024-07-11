@@ -7,9 +7,10 @@
   import VectorInput from "../components/VectorInput.vue";
   import LineView from "../components/svg/LineView.vue";
   import Colors from "../constants/Colors";
-  import VectorLabelView from "../components/svg/VectorLabelView.vue"
+  import LabelView from "../components/svg/LabelView.vue"
   import Visualization from "../components/layout/Visualization.vue";
   import VizDetails from "../components/layout/VizDetails.vue";
+import KatexComponent from "../components/KatexComponent.vue";
 
 
   const v1 = ref(new Vector(4, 1))
@@ -30,18 +31,21 @@
 
       <VectorView :vector="p" :color="Colors.blue"/>
 
-      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
-      <VectorLabelView text="v2" :vector="v2.divided(2)" :color="Colors.green"/>
-      <VectorLabelView text="p" :vector="p.divided(2)" :color="Colors.blue"/>
+      <LabelView text="v" :position="v1.divided(2)" :color="Colors.red"/>
+      <LabelView text="w" :position="v2.divided(2)" :color="Colors.green"/>
+      <LabelView text="p" :position="p.divided(2)" :color="Colors.blue"/>
     </GridView>  
     <VizDetails>
       <div>
-        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
-        <VectorInput label="v2" :color="Colors.green" :vector="v2" @updated="v => v2 = v"/>
+        <VectorInput label="v" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+        <VectorInput label="w" :color="Colors.green" :vector="v2" @updated="v => v2 = v"/>
         <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
       </div>
       <div id="details-text">
-        Projection is...
+        The projection of v onto w is the operation of finding the component of vector v that lies parallel with vector w.
+        <KatexComponent>
+          \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
+        </KatexComponent>
       </div>
     </VizDetails>
   </Visualization>

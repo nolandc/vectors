@@ -1,14 +1,13 @@
 
 <script setup lang="ts">
-import { PropType, computed, inject, ref } from 'vue';
+import { computed, inject } from 'vue';
 import Grid from '../../grid';
 import Vector from '../../math/vector';
-import { v4 as uuidv4 } from 'uuid';
 
 
 
 const props = defineProps({
-  points: {type: Array, default: []},
+  points: {type: Array<Vector>, default: []},
   color: { type: String, default: 'blue' }
 })
 

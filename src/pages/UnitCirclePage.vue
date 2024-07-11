@@ -6,7 +6,7 @@
   import DraggableCircleView from "../components/DraggableCircleView.vue"
   import VectorInput from "../components/VectorInput.vue";
   import Colors from "../constants/Colors";
-  import VectorLabelView from "../components/svg/VectorLabelView.vue"
+  import LabelView from "../components/svg/LabelView.vue"
   import Visualization from "../components/layout/Visualization.vue";
   import VizDetails from "../components/layout/VizDetails.vue"
   import MathUtils from "../math/utils";
@@ -35,7 +35,7 @@
       <VectorView :vector="v1" :color="Colors.red"/>
       <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1 = v"/>
       <VectorView :vector="unitVec" :color="Colors.blue"/>
-      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
+      <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
 
       <CircleView :radius="1"/>
     </GridView>

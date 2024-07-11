@@ -9,25 +9,21 @@
   import GridView from "../components/svg/GridView.vue";
   import VectorView from "../components/svg/VectorView.vue";
   import VectorInput from "../components/VectorInput.vue";
-import DraggableCircleView from "../components/DraggableCircleView.vue";
-import VectorLabelView from "../components/svg/VectorLabelView.vue";
-import LineView from "../components/svg/LineView.vue";
+  import DraggableCircleView from "../components/DraggableCircleView.vue";
+  import LabelView from "../components/svg/LabelView.vue";
 
   const v1 = ref(new Vector(1, 3))
   const m1 = ref(new Matrix2x2(-5, -7, 2, 4))
-  const eigenvectors = computed(() => {
-    return m1.value.eigenvectors().map(v => v.unit().times(20))
-  })
 </script>
 
 <template>
   <Visualization>
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
-      <VectorLabelView text="M*v1" :vector="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+      <LabelView text="M*v1" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
 
       <VectorView :vector="v1" :color="Colors.red"/>
-      <VectorLabelView text="v1" :vector="v1.divided(2)" :color="Colors.red"/>
+      <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
 
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v"/>
     </GridView>
