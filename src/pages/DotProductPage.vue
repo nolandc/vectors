@@ -1,48 +1,98 @@
 <script setup lang="ts">
-  import { ref } from "vue";
-  import GridView from "../components/svg/GridView.vue"
-  import Vector from "../math/vector";
-  import VectorView from "../components/svg/VectorView.vue";
-  import DraggableCircleView from "../components/DraggableCircleView.vue"
-  import VectorInput from "../components/VectorInput.vue";
-  import LineView from "../components/svg/LineView.vue";
-  import Colors from "../constants/Colors";
-  import LabelView from "../components/svg/LabelView.vue"
-  import Visualization from "../components/layout/Visualization.vue";
-  import VizDetails from "../components/layout/VizDetails.vue"
-  const vec = ref(new Vector(3, 2))
-  const vec2 = ref(new Vector(-1, -2))
+import { ref, computed } from 'vue'
+import Vector from "../math/vector.ts"
+import Colors from "../constants/Colors.ts"
+import Visualization from "../components/layout/Visualization.vue"
+import VizDetails from "../components/layout/VizDetails.vue"
+import GridView from "../components/svg/GridView.vue"
+import VectorView from "../components/svg/VectorView.vue"
+import VectorInput from "../components/VectorInput.vue"
+import DraggableCircleView from "../components/DraggableCircleView.vue"
+import LabelView from "../components/svg/LabelView.vue"
+import ArcView from "../components/svg/ArcView.vue"
+import MathUtils from "../math/utils.ts"
 
+const a = ref(new Vector(5, 2))
+const b = ref(new Vector(2, 4))
+
+const dotProduct = computed(() => a.value.dotProduct(b.value))
+const magnitudeProduct = computed(() => a.value.length() * b.value.length())
+const cosTheta = computed(() => dotProduct.value / magnitudeProduct.value)
+const angle = computed(() => Math.acos(MathUtils.clamp(cosTheta.value, -1, 1)))
+const angleDegrees = computed(() => angle.value * 180 / Math.PI)
+
+const arcCenter = computed(() => new Vector(0, 0))
+const arcRadius = computed(() => Math.min(a.value.length(), b.value.length()) / 3)
+
+// Calculate the midpoint angle, considering the correct direction
+const midpointAngle = computed(() => {
+  const startAngle = Math.atan2(-a.value.y, a.value.x)
+  const endAngle = Math.atan2(-b.value.y, b.value.x)
+  let diff = endAngle - startAngle
+  
+  // Ensure we're taking the shorter arc
+  if (diff > Math.PI) diff -= 2 * Math.PI
+  if (diff < -Math.PI) diff += 2 * Math.PI
+  
+  let midAngle = startAngle + diff / 2
+  
+  // Normalize the angle to be between -π and π
+  if (midAngle > Math.PI) midAngle -= 2 * Math.PI
+  if (midAngle < -Math.PI) midAngle += 2 * Math.PI
+  
+  return midAngle
+})
+
+// Position for the angle label
+const anglePosition = computed(() => {
+  const radius = arcRadius.value * 1.5 // Slightly larger radius for the label
+  return new Vector(
+    radius * Math.cos(midpointAngle.value),
+    -radius * Math.sin(midpointAngle.value)
+  )
+})
+
+const angleText = computed(() => `${MathUtils.round(Math.abs(angleDegrees.value), 0)}°`)
 </script>
 
 <template>
   <Visualization>
-    <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
-      <LineView :vector="vec.plus(vec2)" :origin="vec" :color="Colors.lightGray" strokeDashArray="10"/>
-      <LineView :vector="vec.plus(vec2)" :origin="vec2" :color="Colors.lightGray" strokeDashArray="10"/>
+    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
 
-      <DraggableCircleView :vector="vec" @onChanged="v => vec = v"/>
-      <VectorView :vector="vec" :color="Colors.red"/>
+      <!-- Angle arc -->
+      <ArcView 
+        :start="a.invertY()" 
+        :end="b.invertY()" 
+        :center="arcCenter" 
+        :radius="arcRadius" 
+        color="#D3D3D3"
+        :stroke-width="3" 
+      />
+      <LabelView :position="anglePosition" :text="angleText" color="#888" background="white" /> <!-- Darker gray for the angle text -->
 
-      <DraggableCircleView :vector="vec2" @onChanged="v => vec2 = v"/>
-      <VectorView :vector="vec2" :color="Colors.green"/>
 
-      <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>
+      <!-- Vector a -->
+      <VectorView :vector="a" :color="Colors.red" />
+      <LabelView :position="a.divided(2)" text="a" :color="Colors.red" />
 
-      <LabelView text="v1" :position="vec.divided(2)" :color="Colors.red"/>
-      <LabelView text="v2" :position="vec2.divided(2)" :color="Colors.green"/>
-      <LabelView text="v1+v2" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
+      <!-- Vector b -->
+      <VectorView :vector="b" :color="Colors.blue" />
+      <LabelView :position="b.divided(2)" text="b" :color="Colors.blue" />
+
+      <DraggableCircleView :vector="a" @on-changed="newA => a = newA" />
+      <DraggableCircleView :vector="b" @on-changed="newB => b = newB" />
     </GridView>
     <VizDetails>
       <div>
-        <VectorInput label="v1" color="#f94144" :vector="vec" @updated="v => vec = v"/>
-        <VectorInput label="v2" color="#43aa8b" :vector="vec2" @updated="v => vec2 = v"/>
-        <VectorInput label="v1+v2" color="#577590" :vector="vec.plus(vec2)" :editable="false"/>
+        <VectorInput label="a" :color="Colors.red" :vector="a" @updated="newA => a = newA" />
+        <VectorInput label="b" :color="Colors.blue" :vector="b" @updated="newB => b = newB" />
       </div>
       <div id="details-text">
-        Dot Product: {{  vec.dotProduct(vec2) }}
+        <p>Dot Product (a · b): {{ MathUtils.round(dotProduct, 2) }}</p>
+        <p>|a| * |b|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
+        <p>cos(θ): {{ MathUtils.round(cosTheta, 2) }}</p>
+        <p>Angle θ: {{ MathUtils.round(Math.abs(angle), 2) }} radians ({{ MathUtils.round(Math.abs(angleDegrees), 2) }}°)</p>
       </div>
     </VizDetails>
   </Visualization>
 </template>
-

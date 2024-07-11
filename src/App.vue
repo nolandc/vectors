@@ -37,7 +37,10 @@
         </div>                
         <div class="link">
           <RouterLink to="/unit">unit vec</RouterLink>
-        </div> 
+        </div>
+        <div class="link">
+          <RouterLink to="/dot">dot product</RouterLink>
+        </div>         
         <div class="link">
           <RouterLink to="/transformation">linear transformation</RouterLink>
         </div>
