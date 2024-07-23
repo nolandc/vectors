@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import './style.css'
-import { createWebHistory, createRouter } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import App from './App.vue'
 
@@ -27,7 +27,7 @@ const routes = [
 
 const router = createRouter({
   linkActiveClass: 'active-router-link',
-  history: createWebHistory(),
+  history: createWebHashHistory("/vectors/"),
   routes,
 })
     

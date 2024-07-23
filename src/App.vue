@@ -28,25 +28,25 @@
   <div id="main">
     <div id="nav">
         <div class="link selected">
-          <RouterLink to="/addition">addition</RouterLink>
+          <RouterLink to="./addition">addition</RouterLink>
         </div>
         <div class="link">
-          <RouterLink to="/projection">projection</RouterLink>
+          <RouterLink to="./projection">projection</RouterLink>
         </div>                
         <div class="link">
-          <RouterLink to="/unit">unit vec</RouterLink>
+          <RouterLink to="./unit">unit vec</RouterLink>
         </div>
         <div class="link">
-          <RouterLink to="/dot">dot product</RouterLink>
+          <RouterLink to="./dot">dot product</RouterLink>
         </div>         
         <div class="link">
-          <RouterLink to="/transformation">linear transformation</RouterLink>
+          <RouterLink to="./transformation">linear transformation</RouterLink>
         </div>
         <div class="link">
-          <RouterLink to="/eigen">eigenvectors</RouterLink>
+          <RouterLink to="./eigen">eigenvectors</RouterLink>
         </div>        
           <div class="link">
-          <RouterLink to="/determinant">determinant</RouterLink>
+          <RouterLink to="./determinant">determinant</RouterLink>
         </div>
     </div>
 
