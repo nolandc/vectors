@@ -12,8 +12,8 @@
   import DraggableCircleView from "../components/DraggableCircleView.vue";
   import LabelView from "../components/svg/LabelView.vue";
 
-  const v1 = ref(new Vector(1, 3))
-  const m1 = ref(new Matrix2x2(-5, -7, 2, 4))
+  const v1 = ref(new Vector(-2, 2))
+  const m1 = ref(new Matrix2x2(-1, 2, 2, 3))
 </script>
 
 <template>

@@ -13,8 +13,6 @@
      
      "baseUrl": ".",
      "typeRoots": ["./node_modules/@types", "./src/types"],
-     "types": ["svg.js"],
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

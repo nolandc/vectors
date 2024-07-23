@@ -3,14 +3,14 @@
       <h2>Edit Matrix</h2>
       <div class="matrix-container">
         <div class="matrix-notation">
-          <div>| x1 y1 |</div>
-          <div>| x2 y2 |</div>
+          <div>| a b |</div>
+          <div>| c d |</div>
         </div>
         <div class="matrix-inputs">
-          <input v-model.number="matrix.x1" type="number" class="matrix-input" />
-          <input v-model.number="matrix.y1" type="number" class="matrix-input" />
-          <input v-model.number="matrix.x2" type="number" class="matrix-input" />
-          <input v-model.number="matrix.y2" type="number" class="matrix-input" />
+          <input v-model.number="matrix.a" type="number" class="matrix-input" />
+          <input v-model.number="matrix.b" type="number" class="matrix-input" />
+          <input v-model.number="matrix.c" type="number" class="matrix-input" />
+          <input v-model.number="matrix.d" type="number" class="matrix-input" />
         </div>
       </div>
     </div>
@@ -27,18 +27,18 @@
   const emit = defineEmits(['updated']);
   
   const matrix = ref(new Matrix2x2(
-    props.initialMatrix.x1,
-    props.initialMatrix.y1,
-    props.initialMatrix.x2,
-    props.initialMatrix.y2
+    props.initialMatrix.a,
+    props.initialMatrix.b,
+    props.initialMatrix.c,
+    props.initialMatrix.d
   ));
   
   // Watch for changes in matrix values and emit an update event
   watchEffect(() => {
-    matrix.value.x1;
-    matrix.value.y1;
-    matrix.value.x2;
-    matrix.value.y2;
+    matrix.value.a;
+    matrix.value.b;
+    matrix.value.c;
+    matrix.value.d;
     emit('updated', matrix.value);
   });
   </script>

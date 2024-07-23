@@ -16,8 +16,8 @@ import Grid from "../grid.ts"
 import MathUtils from '../math/utils.ts'
 
 // Define reactive vectors and matrix
-const v = ref(new Vector(3, 1))
-const w = ref(new Vector(1, 2))
+const v = ref(new Vector(2, 2))
+const w = ref(new Vector(-3, 3))
 const m = ref(new Matrix2x2(2, 1, 1, 2))
 
 // Compute transformed vectors
@@ -60,13 +60,13 @@ provide('grid', grid)
 
 <template>
   <Visualization>
-    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
+    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.5">
       <!-- Transformed vectors and parallelogram (in background) -->
       <PolygonView :points="transformedPoints" :color="'rgba(128, 128, 128, 0.1)'" />
       <VectorView :vector="mV" :color="Colors.gray" />
       <VectorView :vector="mW" :color="Colors.gray" />
-      <LabelView :position="mV.divided(2)" text="M*v" :color="Colors.gray" />
-      <LabelView :position="mW.divided(2)" text="M*w" :color="Colors.gray" />
+      <LabelView :position="mV.divided(1.5)" text="M*v" :color="Colors.gray" />
+      <LabelView :position="mW.divided(1.5)" text="M*w" :color="Colors.gray" />
       <LabelView :position="transformedCenter" text="A2" :color="Colors.gray" background="none" />
 
       <!-- Original vectors and parallelogram (in foreground) -->
@@ -75,7 +75,7 @@ provide('grid', grid)
       <VectorView :vector="w" :color="Colors.blue" />
       <LabelView :position="v.divided(2)" text="v" :color="Colors.red" />
       <LabelView :position="w.divided(2)" text="w" :color="Colors.blue" />
-      <LabelView :position="originalCenter" text="A1" :color="Colors.red" background="none" />
+      <LabelView :position="originalCenter" text="A1" color="rgba(255, 0, 0, 0.6)" background="none" />
       
       <DraggableCircleView :vector="v" @on-changed="newV => v = newV" />
       <DraggableCircleView :vector="w" @on-changed="newW => w = newW" />
@@ -84,6 +84,8 @@ provide('grid', grid)
       <div>
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
         <VectorInput label="w" :color="Colors.blue" :vector="w" @updated="newW => w = newW" />
+        <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
+        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
         <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
       </div>
       <div id="details-text">

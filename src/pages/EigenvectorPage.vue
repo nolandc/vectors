@@ -14,7 +14,7 @@
   import LineView from "../components/svg/LineView.vue";
 
   const v1 = ref(new Vector(1, 3))
-  const m1 = ref(new Matrix2x2(-5, -7, 2, 4))
+  const m1 = ref(new Matrix2x2(-1, 1, 1, 3))
   const eigenvectors = computed(() => {
     return m1.value.eigenvectors().map(v => v.unit().times(20))
   })
