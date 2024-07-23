@@ -1,4 +1,3 @@
-import SVG from 'svg.js';
 import Matrix2x2 from './matrix';
 
 class Vector {

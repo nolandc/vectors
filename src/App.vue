@@ -1,9 +1,7 @@
 <script setup lang="ts">
   import { Ref, onMounted, ref } from 'vue'
-  import SVG from 'svg.js'
   import { useRouter } from 'vue-router'
 
-  const context: Ref<SVG.Doc|undefined> = ref()
   function createVis() {
     //context.value = SVG(window.document.getElementById('chart') as HTMLElement).size('100%', '100%')
   }
@@ -45,7 +43,7 @@
           <RouterLink to="/transformation">linear transformation</RouterLink>
         </div>
         <div class="link">
-          <RouterLink to="/eigen">eigen vectors</RouterLink>
+          <RouterLink to="/eigen">eigenvectors</RouterLink>
         </div>        
           <div class="link">
           <RouterLink to="/determinant">determinant</RouterLink>
