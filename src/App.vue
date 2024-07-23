@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { Ref, onMounted, ref } from 'vue'
-  import { useRouter } from 'vue-router'
+  import { onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
 
   function createVis() {
     //context.value = SVG(window.document.getElementById('chart') as HTMLElement).size('100%', '100%')

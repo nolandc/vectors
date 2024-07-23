@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import MatrixInput from "../components/MatrixInput.vue"
-  import { ComputedRef, computed, ref } from 'vue'
+  import { ref } from 'vue'
   import Vector from "../math/vector.ts";
   import Colors from "../constants/Colors.ts";
   import Matrix2x2 from "../math/matrix.ts";

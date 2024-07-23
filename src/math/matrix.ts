@@ -79,7 +79,6 @@ class Matrix2x2 {
     }
 
     eigenvectors(): Vector[] {
-        const eigenvalues = this.eigenvalues();
         const [l1, l2] = this.eigenvalues()
         if (this.b === 0 && this.c === 0) {
             return [

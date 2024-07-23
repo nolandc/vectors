@@ -2,7 +2,6 @@
 import { PropType, computed, inject } from 'vue';
 import Grid from '../../grid';
 import Vector from '../../math/vector';
-import MathUtils from '../../math/utils';
 
 const props = defineProps({
   start: { type: Vector as PropType<Vector>, required: true },

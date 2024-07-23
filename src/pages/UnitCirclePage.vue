@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, inject, ref } from "vue";
+  import { computed, ref } from "vue";
   import GridView from "../components/svg/GridView.vue"
   import Vector from "../math/vector";
   import VectorView from "../components/svg/VectorView.vue";
@@ -10,7 +10,6 @@
   import Visualization from "../components/layout/Visualization.vue";
   import VizDetails from "../components/layout/VizDetails.vue"
   import MathUtils from "../math/utils";
-  import Grid from "../grid";
   import PolygonView from "../components/svg/PolygonView.vue"
   import CircleView from "../components/svg/CircleView.vue"
   import KatexComponent from "../components/KatexComponent.vue"

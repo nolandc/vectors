@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { PropType, computed, inject, ref } from 'vue';
+import { PropType, computed, inject } from 'vue';
 import Grid from '../../grid';
 import Vector from '../../math/vector';
 

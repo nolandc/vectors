@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { PropType, Ref, computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
+import { PropType, computed, inject, onMounted, onUnmounted, ref } from 'vue';
 import Grid from '../grid';
 import Vector from '../math/vector';
 import { useDraggableCircle } from '../logic/useDraggableCircle';

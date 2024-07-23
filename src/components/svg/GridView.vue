@@ -1,8 +1,7 @@
 
 <script setup lang="ts">
-import { PropType, computed, onMounted, provide, ref, watch } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 import Grid from '../../grid';
-import Vector from '../../math/vector';
 import { useDraggableCircle } from '../../logic/useDraggableCircle';
 
 
