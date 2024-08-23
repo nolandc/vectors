@@ -79,8 +79,8 @@ const angleText = computed(() => `${MathUtils.round(Math.abs(angleDegrees.value)
       <VectorView :vector="b" :color="Colors.blue" />
       <LabelView :position="b.divided(2)" text="b" :color="Colors.blue" />
 
-      <DraggableCircleView :vector="a" @on-changed="newA => a = newA" />
-      <DraggableCircleView :vector="b" @on-changed="newB => b = newB" />
+      <DraggableCircleView :vector="a" @on-changed="newA => a = newA" :color="Colors.red"/>
+      <DraggableCircleView :vector="b" @on-changed="newB => b = newB" :color="Colors.green"/>
     </GridView>
     <VizDetails>
       <div>

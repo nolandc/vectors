@@ -32,7 +32,7 @@
     <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600" :snap-increment="0.1">
       <PolygonView :points="pointVectors" color="#A6C4E2"/>
       <VectorView :vector="v1" :color="Colors.red"/>
-      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1 = v"/>
+      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1 = v" :color="Colors.red"/>
       <VectorView :vector="unitVec" :color="Colors.blue"/>
       <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
 

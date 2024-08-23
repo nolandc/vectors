@@ -23,10 +23,10 @@
       <LineView :vector="vec.plus(vec2)" :origin="vec" :color="Colors.lightGray" strokeDashArray="10"/>
       <LineView :vector="vec.plus(vec2)" :origin="vec2" :color="Colors.lightGray" strokeDashArray="10"/>
 
-      <DraggableCircleView :vector="vec" @onChanged="v => vec = v"/>
+      <DraggableCircleView :vector="vec" @onChanged="v => vec = v" :color="Colors.red"/>
       <VectorView :vector="vec" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="vec2" @onChanged="v => vec2 = v"/>
+      <DraggableCircleView :vector="vec2" @onChanged="v => vec2 = v" :color="Colors.green"/>
       <VectorView :vector="vec2" :color="Colors.green"/>
 
       <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>

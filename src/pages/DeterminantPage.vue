@@ -77,8 +77,8 @@ provide('grid', grid)
       <LabelView :position="w.divided(2)" text="w" :color="Colors.blue" />
       <LabelView :position="originalCenter" text="A1" color="rgba(255, 0, 0, 0.6)" background="none" />
       
-      <DraggableCircleView :vector="v" @on-changed="newV => v = newV" />
-      <DraggableCircleView :vector="w" @on-changed="newW => w = newW" />
+      <DraggableCircleView :vector="v" @on-changed="newV => v = newV"  :color="Colors.red"/>
+      <DraggableCircleView :vector="w" @on-changed="newW => w = newW"  :color="Colors.blue"/>
     </GridView>
     <VizDetails>
       <div>

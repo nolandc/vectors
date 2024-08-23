@@ -34,9 +34,7 @@
       <VectorView :vector="v1" :color="Colors.red"/>
       <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="v1" @on-changed="v => v1 = v"/>
-
-  
+      <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
     </GridView>
     <VizDetails>
       <div>

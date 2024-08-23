@@ -23,10 +23,10 @@ import KatexComponent from "../components/KatexComponent.vue";
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="p" :origin="v1" :color="Colors.lightGray" strokeDashArray="10"/>
 
-      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1=v"/>
+      <DraggableCircleView :vector="v1" @onChanged="(v: Vector) => v1=v" :color="Colors.red"/>
       <VectorView :vector="v1" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="v2" @onChanged="(v: Vector) => v2=v"/>
+      <DraggableCircleView :vector="v2" @onChanged="(v: Vector) => v2=v" :color="Colors.green"/>
       <VectorView :vector="v2" :color="Colors.green"/>
 
       <VectorView :vector="p" :color="Colors.blue"/>
