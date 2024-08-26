@@ -11,7 +11,7 @@ const props = defineProps({
   color: { type: String, required: false, default: 'transparent' }
 })
 
-const OFFSET_DISTANCE_PX = 7
+const OFFSET_DISTANCE_PX = 6
 const grid = inject('grid') as Grid
 const pxVector = computed(() => grid.gridToPx(props.vector.invertY()))
 const circlePosition = computed(() => {
@@ -57,8 +57,14 @@ const emit = defineEmits(['onChanged'])
 
 
 <template>
-  <circle ref="el" id="SvgjsCircle1046" r="17.5" :cx="circlePosition.x" :cy="circlePosition.y" :fill="color" stroke="transparent"
-    stroke-width="1" style="cursor: grab;" opacity="0.2"
+  <circle class="draggable-circle" ref="el" id="SvgjsCircle1046" r="20.5" :cx="circlePosition.x" :cy="circlePosition.y" :fill="color" stroke="transparent"
+    stroke-width="1" style="cursor: grab;" opacity="0.15"
     @mousedown="(e) => selectPoint(e.currentTarget as SVGCircleElement)" @mouseup="() => onMouseReleased() "></circle>
 </template>
+
+<style scoped>
+  .draggable-circle:hover {
+    opacity: 0.25;
+  }
+</style>
 
