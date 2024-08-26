@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed, provide } from 'vue'
 import Vector from "../math/vector.ts"
 import Colors from "../constants/Colors.ts"
 import Visualization from "../components/layout/Visualization.vue"
@@ -11,9 +11,13 @@ import DraggableCircleView from "../components/DraggableCircleView.vue"
 import LabelView from "../components/svg/LabelView.vue"
 import ArcView from "../components/svg/ArcView.vue"
 import MathUtils from "../math/utils.ts"
+import Grid from "../grid.ts"
+import { useUrlState } from '../logic/useURLState.ts'
 
-const a = ref(new Vector(5, 2))
-const b = ref(new Vector(2, 4))
+const { a, b } = useUrlState({
+  a: { type: 'vector', default: new Vector(5, 2) },
+  b: { type: 'vector', default: new Vector(2, 4) }
+});
 
 const dotProduct = computed(() => a.value.dotProduct(b.value))
 const magnitudeProduct = computed(() => a.value.length() * b.value.length())
@@ -29,17 +33,17 @@ const midpointAngle = computed(() => {
   const startAngle = Math.atan2(-a.value.y, a.value.x)
   const endAngle = Math.atan2(-b.value.y, b.value.x)
   let diff = endAngle - startAngle
-  
+
   // Ensure we're taking the shorter arc
   if (diff > Math.PI) diff -= 2 * Math.PI
   if (diff < -Math.PI) diff += 2 * Math.PI
-  
+
   let midAngle = startAngle + diff / 2
-  
+
   // Normalize the angle to be between -π and π
   if (midAngle > Math.PI) midAngle -= 2 * Math.PI
   if (midAngle < -Math.PI) midAngle += 2 * Math.PI
-  
+
   return midAngle
 })
 
@@ -53,13 +57,15 @@ const anglePosition = computed(() => {
 })
 
 const angleText = computed(() => `${MathUtils.round(Math.abs(angleDegrees.value), 0)}°`)
+
+// Create and provide grid
+const grid = new Grid(20, 20, 600, 600, 0.1)
+provide('grid', grid)
 </script>
 
 <template>
   <Visualization>
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
-
-      <!-- Angle arc -->
       <ArcView 
         :start="a.invertY()" 
         :end="b.invertY()" 
@@ -68,19 +74,16 @@ const angleText = computed(() => `${MathUtils.round(Math.abs(angleDegrees.value)
         color="#D3D3D3"
         :stroke-width="3" 
       />
-      <LabelView :position="anglePosition" :text="angleText" color="#888" background="white" /> <!-- Darker gray for the angle text -->
+      <LabelView :position="anglePosition" :text="angleText" color="#888" background="white" />
 
-
-      <!-- Vector a -->
       <VectorView :vector="a" :color="Colors.red" />
       <LabelView :position="a.divided(2)" text="a" :color="Colors.red" />
 
-      <!-- Vector b -->
       <VectorView :vector="b" :color="Colors.blue" />
       <LabelView :position="b.divided(2)" text="b" :color="Colors.blue" />
 
       <DraggableCircleView :vector="a" @on-changed="newA => a = newA" :color="Colors.red"/>
-      <DraggableCircleView :vector="b" @on-changed="newB => b = newB" :color="Colors.green"/>
+      <DraggableCircleView :vector="b" @on-changed="newB => b = newB" :color="Colors.blue"/>
     </GridView>
     <VizDetails>
       <div>

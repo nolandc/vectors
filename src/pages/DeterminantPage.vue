@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, provide } from 'vue'
+import { computed, provide } from 'vue'
 import Vector from "../math/vector.ts"
 import Matrix2x2 from "../math/matrix.ts"
 import Colors from "../constants/Colors.ts"
@@ -14,11 +14,14 @@ import MatrixInput from "../components/MatrixInput.vue"
 import PolygonView from "../components/svg/PolygonView.vue"
 import Grid from "../grid.ts"
 import MathUtils from '../math/utils.ts'
+import { useUrlState } from '../logic/useURLState.ts'
 
-// Define reactive vectors and matrix
-const v = ref(new Vector(2, 2))
-const w = ref(new Vector(-3, 3))
-const m = ref(new Matrix2x2(2, 1, 1, 2))
+// Use the composable to manage URL state
+const { v, w, m } = useUrlState({
+  v: { type: 'vector', default: new Vector(2, 2) },
+  w: { type: 'vector', default: new Vector(-3, 3) },
+  m: { type: 'matrix', default: new Matrix2x2(2, 1, 1, 2) }
+});
 
 // Compute transformed vectors
 const mV = computed(() => v.value.multiplyByMatrix(m.value))
@@ -33,10 +36,8 @@ const transformedDeterminant = computed(() => {
   return mV.value.x * mW.value.y - mV.value.y * mW.value.x
 })
 
-
 const originalCenter = computed(() => v.value.plus(w.value).divided(2))
 const transformedCenter = computed(() => mV.value.plus(mW.value).divided(2))
-
 
 const originalPoints = computed(() => [
   new Vector(0, 0),
@@ -52,12 +53,10 @@ const transformedPoints = computed(() => [
   mW.value
 ].map(v => v.invertY()))
 
-
 // Create and provide grid
 const grid = new Grid(20, 20, 600, 600, 0.1)
 provide('grid', grid)
 </script>
-
 <template>
   <Visualization>
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.5">

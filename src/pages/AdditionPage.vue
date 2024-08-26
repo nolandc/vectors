@@ -1,20 +1,28 @@
 <script setup lang="ts">
-  import { ref } from "vue";
-  import GridView from "../components/svg/GridView.vue"
-  import Vector from "../math/vector";
-  import VectorView from "../components/svg/VectorView.vue";
-  import DraggableCircleView from "../components/DraggableCircleView.vue"
-  import VectorInput from "../components/VectorInput.vue";
-  import LineView from "../components/svg/LineView.vue";
-  import Colors from "../constants/Colors";
-  import LabelView from "../components/svg/LabelView.vue"
-  import Visualization from "../components/layout/Visualization.vue";
-  import VizDetails from "../components/layout/VizDetails.vue"
-  import KatexComponent from "../components/KatexComponent.vue";
+import { computed, provide } from "vue";
+import GridView from "../components/svg/GridView.vue"
+import Vector from "../math/vector";
+import VectorView from "../components/svg/VectorView.vue";
+import DraggableCircleView from "../components/DraggableCircleView.vue"
+import VectorInput from "../components/VectorInput.vue";
+import LineView from "../components/svg/LineView.vue";
+import Colors from "../constants/Colors";
+import LabelView from "../components/svg/LabelView.vue"
+import Visualization from "../components/layout/Visualization.vue";
+import VizDetails from "../components/layout/VizDetails.vue"
+import KatexComponent from "../components/KatexComponent.vue";
+import Grid from "../grid";
+import { useUrlState } from '../logic/useURLState.ts'
 
-  const vec = ref(new Vector(3, 2))
-  const vec2 = ref(new Vector(-1, -2))
+// Use the composable to manage URL state
+const { vec, vec2 } = useUrlState({
+  vec: { type: 'vector', default: new Vector(3, 2) },
+  vec2: { type: 'vector', default: new Vector(-1, -2) }
+});
 
+// Create and provide grid
+const grid = new Grid(20, 20, 600, 600, 0.1)
+provide('grid', grid)
 </script>
 
 <template>

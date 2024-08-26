@@ -1,19 +1,27 @@
 <script setup lang="ts">
-  import MatrixInput from "../components/MatrixInput.vue"
-  import { ref } from 'vue'
-  import Vector from "../math/vector.ts";
-  import Colors from "../constants/Colors.ts";
-  import Matrix2x2 from "../math/matrix.ts";
-  import Visualization from "../components/layout/Visualization.vue";
-  import VizDetails from "../components/layout/VizDetails.vue";
-  import GridView from "../components/svg/GridView.vue";
-  import VectorView from "../components/svg/VectorView.vue";
-  import VectorInput from "../components/VectorInput.vue";
-  import DraggableCircleView from "../components/DraggableCircleView.vue";
-  import LabelView from "../components/svg/LabelView.vue";
+import { computed, provide } from 'vue'
+import Vector from "../math/vector.ts";
+import Colors from "../constants/Colors.ts";
+import Matrix2x2 from "../math/matrix.ts";
+import Visualization from "../components/layout/Visualization.vue";
+import VizDetails from "../components/layout/VizDetails.vue";
+import GridView from "../components/svg/GridView.vue";
+import VectorView from "../components/svg/VectorView.vue";
+import VectorInput from "../components/VectorInput.vue";
+import DraggableCircleView from "../components/DraggableCircleView.vue";
+import LabelView from "../components/svg/LabelView.vue";
+import MatrixInput from "../components/MatrixInput.vue";
+import Grid from "../grid";
+import { useUrlState } from '../logic/useURLState.ts'
 
-  const v1 = ref(new Vector(-2, 2))
-  const m1 = ref(new Matrix2x2(-1, 2, 2, 3))
+const { v1, m1 } = useUrlState({
+  v1: { type: 'vector', default: new Vector(-2, 2) },
+  m1: { type: 'matrix', default: new Matrix2x2(-1, 2, 2, 3) }
+});
+
+// Create and provide grid
+const grid = new Grid(20, 20, 600, 600, 0.1)
+provide('grid', grid)
 </script>
 
 <template>
@@ -32,11 +40,9 @@
         <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
         <VectorInput label="M*v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
         <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
-
       </div>
       <div id="details-text">
       </div>
     </VizDetails>
   </Visualization>
 </template>
-
