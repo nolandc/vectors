@@ -13,6 +13,7 @@ import VizDetails from "../components/layout/VizDetails.vue"
 import KatexComponent from "../components/KatexComponent.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
+import MathDetails from './MathDetails.vue'
 
 // Use the composable to manage URL state
 const { vec, vec2 } = useUrlState({
@@ -33,14 +34,7 @@ provide('grid', grid)
         <VectorInput label="w" color="#43aa8b" :vector="vec2" @updated="v => vec2 = v"/>
         <VectorInput label="v+w" color="#577590" :vector="vec.plus(vec2)" :editable="false"/>
       </div>
-      <div id="details-text">
-        Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine
-        simply placing the origin of one vector at the end of another.
-        <KatexComponent>
-          \begin{bmatrix} {{ vec.x }} \\ {{ vec.y }} \end{bmatrix} + \begin{bmatrix} {{ vec2.x }} \\ {{  vec2.y }} \end{bmatrix} 
-          = \begin{bmatrix} {{vec.x}} + {{vec2.x}} \\ {{ vec.y }} + {{ vec2.y }} \end{bmatrix} 
-          = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>
-      </div>
+
     </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="vec.plus(vec2)" :origin="vec" :color="Colors.lightGray" strokeDashArray="10"/>
@@ -57,7 +51,17 @@ provide('grid', grid)
       <LabelView text="v" :position="vec.divided(2)" :color="Colors.red"/>
       <LabelView text="w" :position="vec2.divided(2)" :color="Colors.green"/>
       <LabelView text="v+w" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
-    </GridView>    
+    </GridView>
+    <MathDetails>
+      <div id="details-text">
+	        Notice how dotted gray vectors between v1/v2 and v1+v2 are the same magnitude as v1/v2. To add two vectors, you can imagine
+	        simply placing the origin of one vector at the end of another.
+	        <KatexComponent>
+	          \begin{bmatrix} {{ vec.x }} \\ {{ vec.y }} \end{bmatrix} + \begin{bmatrix} {{ vec2.x }} \\ {{  vec2.y }} \end{bmatrix} 
+	          = \begin{bmatrix} {{vec.x}} + {{vec2.x}} \\ {{ vec.y }} + {{ vec2.y }} \end{bmatrix} 
+	          = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>
+	      </div>
+    </MathDetails>
   </Visualization>
 </template>
 

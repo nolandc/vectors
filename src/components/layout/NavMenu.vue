@@ -10,7 +10,7 @@ const selectedIndex = ref(0);
 const links = [
   { to: './addition', text: 'addition' },
   { to: './projection', text: 'projection' },
-  { to: './unit', text: 'unit vec' },
+  { to: './unit', text: 'unit vectors' },
   { to: './dot', text: 'dot product' },
   { to: './transformation', text: 'linear transformation' },
   { to: './eigen', text: 'eigenvectors' },

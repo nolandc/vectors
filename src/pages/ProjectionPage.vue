@@ -13,6 +13,7 @@ import VizDetails from "../components/layout/VizDetails.vue";
 import KatexComponent from "../components/KatexComponent.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
+import MathDetails from "./MathDetails.vue";
 
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(4, 1) },
@@ -34,12 +35,6 @@ provide('grid', grid)
         <VectorInput label="w" :color="Colors.green" :vector="w" @updated="nv => w = nv"/>
         <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
       </div>
-      <div id="details-text">
-        The projection of v onto w is the operation of finding the component of vector v that lies parallel with vector w.
-        <KatexComponent>
-          \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
-        </KatexComponent>
-      </div>
     </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="p" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
@@ -55,6 +50,14 @@ provide('grid', grid)
       <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
       <LabelView text="w" :position="w.divided(2)" :color="Colors.green"/>
       <LabelView text="p" :position="p.divided(2)" :color="Colors.blue"/>
-    </GridView>     
+    </GridView> 
+    <MathDetails>
+      <div id="details-text">
+        The projection of v onto w is the operation of finding the component of vector v that lies parallel with vector w.
+        <KatexComponent>
+          \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
+        </KatexComponent>
+      </div>      
+    </MathDetails>
   </Visualization>
 </template>
