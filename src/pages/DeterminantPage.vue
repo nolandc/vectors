@@ -59,6 +59,21 @@ provide('grid', grid)
 </script>
 <template>
   <Visualization>
+    <VizDetails>
+      <div>
+        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
+        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
+        <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
+        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
+        <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
+      </div>
+      <div id="details-text">
+        <p>Area(A1): {{ MathUtils.round(Math.abs(determinant), 2) }}</p>
+        <p>Area(A2): {{ MathUtils.round(Math.abs(transformedDeterminant), 2) }}</p>
+        <p>Determinant of matrix (scale factor): {{ MathUtils.round(m.determinant(), 2) }}</p>
+        <p>A2 / A1 = {{ MathUtils.round(Math.abs(transformedDeterminant) / Math.abs(determinant), 2) }}</p>
+      </div>
+    </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.5">
       <!-- Transformed vectors and parallelogram (in background) -->
       <PolygonView :points="transformedPoints" :color="'rgba(128, 128, 128, 0.1)'" />
@@ -79,20 +94,5 @@ provide('grid', grid)
       <DraggableCircleView :vector="v" @on-changed="newV => v = newV"  :color="Colors.red"/>
       <DraggableCircleView :vector="w" @on-changed="newW => w = newW"  :color="Colors.green"/>
     </GridView>
-    <VizDetails>
-      <div>
-        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
-        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
-        <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
-        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
-        <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
-      </div>
-      <div id="details-text">
-        <p>Area(A1): {{ MathUtils.round(Math.abs(determinant), 2) }}</p>
-        <p>Area(A2): {{ MathUtils.round(Math.abs(transformedDeterminant), 2) }}</p>
-        <p>Determinant of matrix (scale factor): {{ MathUtils.round(m.determinant(), 2) }}</p>
-        <p>A2 / A1 = {{ MathUtils.round(Math.abs(transformedDeterminant) / Math.abs(determinant), 2) }}</p>
-      </div>
-    </VizDetails>
   </Visualization>
 </template>

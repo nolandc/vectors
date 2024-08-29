@@ -27,22 +27,6 @@ provide('grid', grid)
 
 <template>
   <Visualization>
-    <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
-      <LineView :vector="vec.plus(vec2)" :origin="vec" :color="Colors.lightGray" strokeDashArray="10"/>
-      <LineView :vector="vec.plus(vec2)" :origin="vec2" :color="Colors.lightGray" strokeDashArray="10"/>
-
-      <DraggableCircleView :vector="vec" @onChanged="v => vec = v" :color="Colors.red"/>
-      <VectorView :vector="vec" :color="Colors.red"/>
-
-      <DraggableCircleView :vector="vec2" @onChanged="v => vec2 = v" :color="Colors.green"/>
-      <VectorView :vector="vec2" :color="Colors.green"/>
-
-      <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>
-
-      <LabelView text="v" :position="vec.divided(2)" :color="Colors.red"/>
-      <LabelView text="w" :position="vec2.divided(2)" :color="Colors.green"/>
-      <LabelView text="v+w" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
-    </GridView>
     <VizDetails>
       <div>
         <VectorInput label="v" color="#f94144" :vector="vec" @updated="v => vec = v"/>
@@ -58,6 +42,22 @@ provide('grid', grid)
           = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>
       </div>
     </VizDetails>
+    <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
+      <LineView :vector="vec.plus(vec2)" :origin="vec" :color="Colors.lightGray" strokeDashArray="10"/>
+      <LineView :vector="vec.plus(vec2)" :origin="vec2" :color="Colors.lightGray" strokeDashArray="10"/>
+
+      <DraggableCircleView :vector="vec" @onChanged="v => vec = v" :color="Colors.red"/>
+      <VectorView :vector="vec" :color="Colors.red"/>
+
+      <DraggableCircleView :vector="vec2" @onChanged="v => vec2 = v" :color="Colors.green"/>
+      <VectorView :vector="vec2" :color="Colors.green"/>
+
+      <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>
+
+      <LabelView text="v" :position="vec.divided(2)" :color="Colors.red"/>
+      <LabelView text="w" :position="vec2.divided(2)" :color="Colors.green"/>
+      <LabelView text="v+w" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
+    </GridView>    
   </Visualization>
 </template>
 

@@ -27,7 +27,20 @@ provide('grid', grid)
 </script>
 
 <template>
-  <Visualization>
+  <Visualization> 
+    <VizDetails>
+      <div>
+        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
+        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="nv => w = nv"/>
+        <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
+      </div>
+      <div id="details-text">
+        The projection of v onto w is the operation of finding the component of vector v that lies parallel with vector w.
+        <KatexComponent>
+          \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
+        </KatexComponent>
+      </div>
+    </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="p" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
 
@@ -42,19 +55,6 @@ provide('grid', grid)
       <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
       <LabelView text="w" :position="w.divided(2)" :color="Colors.green"/>
       <LabelView text="p" :position="p.divided(2)" :color="Colors.blue"/>
-    </GridView>  
-    <VizDetails>
-      <div>
-        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
-        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="nv => w = nv"/>
-        <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
-      </div>
-      <div id="details-text">
-        The projection of v onto w is the operation of finding the component of vector v that lies parallel with vector w.
-        <KatexComponent>
-          \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
-        </KatexComponent>
-      </div>
-    </VizDetails>
+    </GridView>     
   </Visualization>
 </template>

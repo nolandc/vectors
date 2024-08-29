@@ -37,17 +37,7 @@ provide('grid', grid)
 
 <template>
   <Visualization>
-    <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600" :snap-increment="0.1">
-      <PolygonView :points="pointVectors" :color="Colors.lightBlue"/>
-      <VectorView :vector="v" :color="Colors.red"/>
-      <DraggableCircleView :vector="v" @onChanged="newV => v = newV" :color="Colors.red"/>
-      <VectorView :vector="unitVec" :color="Colors.blue"/>
-      <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
-
-      <CircleView :radius="1"/>
-    </GridView>
-  </Visualization>
-  <VizDetails>
+    <VizDetails>
     <div>
       <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV"/>
       <VectorInput label="v̂" :color="Colors.blue" :vector="v.unit()" :editable="false"/>
@@ -68,5 +58,15 @@ provide('grid', grid)
         \end{bmatrix}      
       </KatexComponent>      
     </div>    
-  </VizDetails>
+  </VizDetails>    
+    <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600" :snap-increment="0.1">
+      <PolygonView :points="pointVectors" :color="Colors.lightBlue"/>
+      <VectorView :vector="v" :color="Colors.red"/>
+      <DraggableCircleView :vector="v" @onChanged="newV => v = newV" :color="Colors.red"/>
+      <VectorView :vector="unitVec" :color="Colors.blue"/>
+      <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
+
+      <CircleView :radius="1"/>
+    </GridView>
+  </Visualization>
 </template>

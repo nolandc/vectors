@@ -32,6 +32,19 @@ provide('grid', grid)
 
 <template>
   <Visualization>
+    <VizDetails>
+      <div>
+        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+        <VectorInput label="M*v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+        <VectorInput label="e1" :color="Colors.blue" :vector="eigenvectors[0]" :editable="false"/>
+        <VectorInput label="e2" :color="Colors.blue" :vector="eigenvectors[1]" :editable="false"/>
+
+        <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
+      </div>
+      <div id="details-text">
+        eigenvalues: {{ m1.eigenvalues() }}
+      </div>
+    </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <template v-for="v in eigenvectors">
         <LineView :vector="v" :origin="v.times(-1)" :color="Colors.lightGray"/>
@@ -45,18 +58,5 @@ provide('grid', grid)
 
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
     </GridView>
-    <VizDetails>
-      <div>
-        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
-        <VectorInput label="M*v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
-        <VectorInput label="e1" :color="Colors.blue" :vector="eigenvectors[0]" :editable="false"/>
-        <VectorInput label="e2" :color="Colors.blue" :vector="eigenvectors[1]" :editable="false"/>
-
-        <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
-      </div>
-      <div id="details-text">
-        eigenvalues: {{ m1.eigenvalues() }}
-      </div>
-    </VizDetails>
   </Visualization>
 </template>

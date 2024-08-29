@@ -65,6 +65,18 @@ provide('grid', grid)
 
 <template>
   <Visualization>
+    <VizDetails>
+      <div>
+        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
+        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
+      </div>
+      <div id="details-text">
+        <p>Dot Product (v · w): {{ MathUtils.round(dotProduct, 2) }}</p>
+        <p>|v| * |w|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
+        <p>cos(θ): {{ MathUtils.round(cosTheta, 2) }}</p>
+        <p>Angle θ: {{ MathUtils.round(Math.abs(angle), 2) }} radians ({{ MathUtils.round(Math.abs(angleDegrees), 2) }}°)</p>
+      </div>
+    </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <ArcView 
         :start="v.invertY()" 
@@ -85,17 +97,5 @@ provide('grid', grid)
       <DraggableCircleView :vector="v" @on-changed="newV => v = newV" :color="Colors.red"/>
       <DraggableCircleView :vector="w" @on-changed="newW => w = newW" :color="Colors.green"/>
     </GridView>
-    <VizDetails>
-      <div>
-        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
-        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
-      </div>
-      <div id="details-text">
-        <p>Dot Product (v · w): {{ MathUtils.round(dotProduct, 2) }}</p>
-        <p>|v| * |w|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
-        <p>cos(θ): {{ MathUtils.round(cosTheta, 2) }}</p>
-        <p>Angle θ: {{ MathUtils.round(Math.abs(angle), 2) }} radians ({{ MathUtils.round(Math.abs(angleDegrees), 2) }}°)</p>
-      </div>
-    </VizDetails>
   </Visualization>
 </template>
