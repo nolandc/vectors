@@ -55,21 +55,46 @@ provide('grid', grid)
     </GridView>
     <MathDetails>
       <div id="details-text">
-      <KatexComponent>
-        \hat{v} = \frac{\overrightarrow{v}}{\|\overrightarrow{v}\|}
-      </KatexComponent>
-      <KatexComponent>
-        \hat{v} = \frac{\overrightarrow{v}}{ {{ MathUtils.round(v.length(), 3) }} } 
-        = \begin{bmatrix} 
-          \frac{ {{ MathUtils.round(v.x, 2) }} }{ {{ MathUtils.round(v.length(), 3) }} } \\ 
-          \frac{ {{ MathUtils.round(v.y, 2) }} }{ {{ MathUtils.round(v.length(), 3) }} }
-        \end{bmatrix}
-        = \begin{bmatrix}
-          {{ MathUtils.round(v.x / v.length(), 3) }} \\
-          {{ MathUtils.round(v.y / v.length(), 3) }}
-        \end{bmatrix}      
-      </KatexComponent>      
-    </div>          
+        A unit vector is a vector with a magnitude (length) of 1. This visualization demonstrates how any vector can be 
+        converted to a unit vector.
+
+        <ul>
+          <li>
+            The <InlineColorLabel label="red" :color="Colors.red"/> vector <InlineColorLabel label="v" :color="Colors.red"/> 
+            represents an arbitrary vector in 2D space.
+          </li>
+
+          <li>
+            The blue circle has a radius of 1, centered at the origin. All points on this circle represent unit vectors.
+          </li>
+
+          <li>
+            The light blue triangle shows how <InlineColorLabel label="v" :color="Colors.red"/> is scaled down to create its 
+            unit vector, which lies on the circle.
+          </li>
+
+          <li>
+            The resulting unit vector points in the same direction as <InlineColorLabel label="v" :color="Colors.red"/> but 
+            has a length of exactly 1.
+          </li>
+        </ul>
+
+        This concept is crucial in many applications where only the direction of a vector is important, not its magnitude.        
+        <KatexComponent>
+          \hat{v} = \frac{\overrightarrow{v}}{\|\overrightarrow{v}\|}
+        </KatexComponent>
+        <KatexComponent>
+          \hat{v} = \frac{\overrightarrow{v}}{ {{ MathUtils.round(v.length(), 3) }} } 
+          = \begin{bmatrix} 
+            \frac{ {{ MathUtils.round(v.x, 2) }} }{ {{ MathUtils.round(v.length(), 3) }} } \\ 
+            \frac{ {{ MathUtils.round(v.y, 2) }} }{ {{ MathUtils.round(v.length(), 3) }} }
+          \end{bmatrix}
+          = \begin{bmatrix}
+            {{ MathUtils.round(v.x / v.length(), 3) }} \\
+            {{ MathUtils.round(v.y / v.length(), 3) }}
+          \end{bmatrix}      
+        </KatexComponent>      
+      </div>          
     </MathDetails>
   </Visualization>
 </template>

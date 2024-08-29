@@ -12,24 +12,17 @@ defineProps({
 </script>
 
 <template>
-    <label class="vec-label">
-        <span class="provided-label" :style="{ backgroundColor: color }">{{ label }}</span>
-    </label>
+    <span class="provided-label" :style="{ backgroundColor: color }">{{ label }}</span>
 </template>
 
 <style scoped lang="scss">
-.vec-label {
-    vertical-align: middle;
-    display: inline-block;
-    width: 100px;
-    text-align: right;
-    font-size: 17px;
-
     .provided-label {
+        vertical-align: middle;
+        display: inline;
+        text-align: right;
+        font-size: 17px;
         border-radius: 4px;
-        padding: 5px 6px;
+        padding: 0px 4px 2px 4px;
         color: white;
-        margin-right: 6px;
     }
-}
 </style>

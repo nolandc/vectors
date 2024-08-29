@@ -13,7 +13,7 @@ const links = [
   { to: './unit', text: 'unit vectors' },
   { to: './dot', text: 'dot product' },
   { to: './transformation', text: 'linear transformation' },
-  { to: './eigen', text: 'eigenvectors' },
+  { to: './eigenvectors', text: 'eigenvectors' },
   { to: './determinant', text: 'determinant' },
 ];
 

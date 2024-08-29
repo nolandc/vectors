@@ -20,7 +20,7 @@ const routes = [
   { path: '/unit', component: UnitCirclePage },
   { path: '/dot', component: DotProductPage },
   { path: '/transformation', component: LinearTransformationPage },
-  { path: '/eigen', component: EigenvectorPage },  
+  { path: '/eigenvectors', component: EigenvectorPage },  
   { path: '/determinant', component: DeterminantPage},
   { path: '/vuetest', component: VueTestPage },
 ]

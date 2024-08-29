@@ -46,12 +46,13 @@ watchEffect(() => {
     <div class="matrix-container">
       <div class="matrix-wrapper">
         <InputColorLabel :label="props.label" :color="props.color"/>
+        <span> = </span>
         <div class="matrix-bracket left">[</div>
         <div class="matrix-inputs">
-          <input v-model.number="matrix.a" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
-          <input v-model.number="matrix.b" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
-          <input v-model.number="matrix.c" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
-          <input v-model.number="matrix.d" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.a" inputmode="numeric" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.b" inputmode="numeric" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.c" inputmode="numeric" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.d" inputmode="numeric" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
         </div>
         <div class="matrix-bracket right">]</div>
       </div>
@@ -103,7 +104,6 @@ watchEffect(() => {
   margin: 0 5px;
   border-radius: 3px;
   border: 1px solid gray;
-  background: #f9f9f9;
   text-align: center;
   border: 1px solid #ccc;
   width: 60px;

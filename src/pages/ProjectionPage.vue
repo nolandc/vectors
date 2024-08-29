@@ -14,7 +14,7 @@ import KatexComponent from "../components/KatexComponent.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from "./MathDetails.vue";
-
+import InlineColorLabel from "../components/InlineColorLabel.vue";
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(4, 1) },
   w: { type: 'vector', default: new Vector(5, 8) }
@@ -53,7 +53,31 @@ provide('grid', grid)
     </GridView> 
     <MathDetails>
       <div id="details-text">
-        The projection of v onto w is the operation of finding the component of vector v that lies parallel with vector w.
+        Vector projection is the process of computing the component of a vector which is parallel to a second vector.
+
+        <ul>
+          <li>
+            The projection of <InlineColorLabel label="v" :color="Colors.red"/> onto 
+            <InlineColorLabel label="w" :color="Colors.green"/> finds the component of 
+            <InlineColorLabel label="v" :color="Colors.red"/> parallel to 
+            <InlineColorLabel label="w" :color="Colors.green"/>.
+          </li>
+
+          <li>
+            The projection vector <InlineColorLabel label="p" :color="Colors.blue"/> represents the 'shadow' of 
+            <InlineColorLabel label="v" :color="Colors.red"/> cast onto 
+            <InlineColorLabel label="w" :color="Colors.green"/>'s line.
+          </li>
+
+          <li>
+            A dashed gray line shows the perpendicular component.
+          </li>
+
+          <li>
+            Together, these form a right triangle with 
+            <InlineColorLabel label="v" :color="Colors.red"/> as the hypotenuse.
+          </li>
+        </ul>
         <KatexComponent>
           \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
         </KatexComponent>

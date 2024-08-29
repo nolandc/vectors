@@ -55,6 +55,7 @@ let updateY = (value: string) => {
 <template>
     <div class="vector-input">
         <InputColorLabel :label="props.label" :color="props.color" />
+        <span> = </span>
         <span class="vector-notation parens">(</span>
         <span v-if="editable">
             <input 
@@ -100,7 +101,6 @@ let updateY = (value: string) => {
         margin: 0 5px;
         border-radius: 3px;
         border: 1px solid gray;
-        background: #f9f9f9;
         text-align: center;
         border: 1px solid #ccc;
     }

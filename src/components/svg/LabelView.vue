@@ -21,10 +21,10 @@ const visible = computed(() => (props.position.length() * grid.unitPxSize) > 40)
 <template>
   <g pointer-events="none">
     <rect 
-      v-if="background !== 'none' && visible"
+      v-if="color !== 'none' && visible"
       :width="textLength" 
       height="17" 
-      :fill="background" 
+      :fill="color" 
       rx="3" 
       :x="pxPosition.x - textLength/2.0" 
       :y="pxPosition.y - 8" 
@@ -34,7 +34,7 @@ const visible = computed(() => (props.position.length() * grid.unitPxSize) > 40)
       style="user-select: none" 
       :x="pxPosition.x" 
       :y="pxPosition.y + 5" 
-      :fill="color" 
+      :fill="background" 
       text-anchor="middle" 
       font-size="15" 
       v-if="visible"
