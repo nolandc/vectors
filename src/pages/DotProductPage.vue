@@ -14,24 +14,24 @@ import MathUtils from "../math/utils.ts"
 import Grid from "../grid.ts"
 import { useUrlState } from '../logic/useURLState.ts'
 
-const { a, b } = useUrlState({
-  a: { type: 'vector', default: new Vector(5, 2) },
-  b: { type: 'vector', default: new Vector(2, 4) }
+const { v, w } = useUrlState({
+  v: { type: 'vector', default: new Vector(2, 4) },
+  w: { type: 'vector', default: new Vector(5, 2) }
 });
 
-const dotProduct = computed(() => a.value.dotProduct(b.value))
-const magnitudeProduct = computed(() => a.value.length() * b.value.length())
+const dotProduct = computed(() => v.value.dotProduct(w.value))
+const magnitudeProduct = computed(() => v.value.length() * w.value.length())
 const cosTheta = computed(() => dotProduct.value / magnitudeProduct.value)
 const angle = computed(() => Math.acos(MathUtils.clamp(cosTheta.value, -1, 1)))
 const angleDegrees = computed(() => angle.value * 180 / Math.PI)
 
 const arcCenter = computed(() => new Vector(0, 0))
-const arcRadius = computed(() => Math.min(a.value.length(), b.value.length()) / 3)
+const arcRadius = computed(() => Math.min(v.value.length(), w.value.length()) / 3)
 
 // Calculate the midpoint angle, considering the correct direction
 const midpointAngle = computed(() => {
-  const startAngle = Math.atan2(-a.value.y, a.value.x)
-  const endAngle = Math.atan2(-b.value.y, b.value.x)
+  const startAngle = Math.atan2(-v.value.y, v.value.x)
+  const endAngle = Math.atan2(-w.value.y, w.value.x)
   let diff = endAngle - startAngle
 
   // Ensure we're taking the shorter arc
@@ -67,8 +67,8 @@ provide('grid', grid)
   <Visualization>
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <ArcView 
-        :start="a.invertY()" 
-        :end="b.invertY()" 
+        :start="v.invertY()" 
+        :end="w.invertY()" 
         :center="arcCenter" 
         :radius="arcRadius" 
         color="#D3D3D3"
@@ -76,23 +76,23 @@ provide('grid', grid)
       />
       <LabelView :position="anglePosition" :text="angleText" color="#888" background="white" />
 
-      <VectorView :vector="a" :color="Colors.red" />
-      <LabelView :position="a.divided(2)" text="a" :color="Colors.red" />
+      <VectorView :vector="v" :color="Colors.red" />
+      <LabelView :position="v.divided(2)" text="v" :color="Colors.red" />
 
-      <VectorView :vector="b" :color="Colors.blue" />
-      <LabelView :position="b.divided(2)" text="b" :color="Colors.blue" />
+      <VectorView :vector="w" :color="Colors.green" />
+      <LabelView :position="w.divided(2)" text="w" :color="Colors.green" />
 
-      <DraggableCircleView :vector="a" @on-changed="newA => a = newA" :color="Colors.red"/>
-      <DraggableCircleView :vector="b" @on-changed="newB => b = newB" :color="Colors.blue"/>
+      <DraggableCircleView :vector="v" @on-changed="newV => v = newV" :color="Colors.red"/>
+      <DraggableCircleView :vector="w" @on-changed="newW => w = newW" :color="Colors.green"/>
     </GridView>
     <VizDetails>
       <div>
-        <VectorInput label="a" :color="Colors.red" :vector="a" @updated="newA => a = newA" />
-        <VectorInput label="b" :color="Colors.blue" :vector="b" @updated="newB => b = newB" />
+        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
+        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
       </div>
       <div id="details-text">
-        <p>Dot Product (a · b): {{ MathUtils.round(dotProduct, 2) }}</p>
-        <p>|a| * |b|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
+        <p>Dot Product (v · w): {{ MathUtils.round(dotProduct, 2) }}</p>
+        <p>|v| * |w|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
         <p>cos(θ): {{ MathUtils.round(cosTheta, 2) }}</p>
         <p>Angle θ: {{ MathUtils.round(Math.abs(angle), 2) }} radians ({{ MathUtils.round(Math.abs(angleDegrees), 2) }}°)</p>
       </div>

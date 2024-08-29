@@ -1,83 +1,117 @@
+
+<script setup lang="ts">
+import { PropType, ref, watchEffect } from 'vue';
+import Matrix2x2 from '../math/matrix';
+import InputColorLabel from './InputColorLabel.vue';
+import Colors from '../constants/Colors';
+
+const props = defineProps({
+  initialMatrix: {
+    type: Matrix2x2 as PropType<Matrix2x2>,
+    required: true
+  },
+  label: {
+    type: String,
+    required: false,
+    default: 'M'
+  },
+  color: {
+    type: String,
+    default: Colors.blue
+  }
+});
+
+const emit = defineEmits(['updated']);
+
+const matrix = ref(new Matrix2x2(
+  props.initialMatrix.a,
+  props.initialMatrix.b,
+  props.initialMatrix.c,
+  props.initialMatrix.d
+));
+
+// Watch for changes in matrix values and emit an update event
+watchEffect(() => {
+  matrix.value.a;
+  matrix.value.b;
+  matrix.value.c;
+  matrix.value.d;
+  emit('updated', matrix.value);
+});
+</script>
+
+
 <template>
-    <div>
-      <h2>Edit Matrix</h2>
-      <div class="matrix-container">
-        <div class="matrix-notation">
-          <div>| a b |</div>
-          <div>| c d |</div>
-        </div>
+  <div>
+    <div class="matrix-container">
+      <div class="matrix-wrapper">
+        <InputColorLabel :label="props.label" :color="props.color"/>
+        <div class="matrix-bracket left">[</div>
         <div class="matrix-inputs">
-          <input v-model.number="matrix.a" type="number" class="matrix-input" />
-          <input v-model.number="matrix.b" type="number" class="matrix-input" />
-          <input v-model.number="matrix.c" type="number" class="matrix-input" />
-          <input v-model.number="matrix.d" type="number" class="matrix-input" />
+          <input v-model.number="matrix.a" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.b" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.c" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
+          <input v-model.number="matrix.d" type="number" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
         </div>
+        <div class="matrix-bracket right">]</div>
       </div>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
-  import Matrix2x2 from '../math/matrix';
-  
-  const props = defineProps<{
-    initialMatrix: Matrix2x2
-  }>();
-  
-  const emit = defineEmits(['updated']);
-  
-  const matrix = ref(new Matrix2x2(
-    props.initialMatrix.a,
-    props.initialMatrix.b,
-    props.initialMatrix.c,
-    props.initialMatrix.d
-  ));
-  
-  // Watch for changes in matrix values and emit an update event
-  watchEffect(() => {
-    matrix.value.a;
-    matrix.value.b;
-    matrix.value.c;
-    matrix.value.d;
-    emit('updated', matrix.value);
-  });
-  </script>
-  
-  <style scoped>
-  .matrix-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .matrix-notation {
-    font-family: monospace;
-    margin-right: 20px;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    align-items: center;
-    justify-items: end;
-  }
-  
-  .matrix-inputs {
-    display: grid;
-    grid-template-columns: repeat(2, 100px);
-    gap: 10px;
-  }
-  
-  .matrix-input {
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    -moz-appearance: textfield;
-    -webkit-appearance: none;
-  }
-  
-  .matrix-input::-webkit-outer-spin-button,
-  .matrix-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  </style>
-  
+  </div>
+</template>
+
+
+<style scoped>
+.matrix-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.matrix-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.matrix-bracket {
+  font-size: 140px;
+  font-weight: lighter;
+  line-height: 140px;
+  font-family: "Advent Pro";
+}
+
+.matrix-bracket.left {
+  margin-right: -6px;
+}
+
+.matrix-bracket.right {
+  margin-left: -6px;
+}
+
+.matrix-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+  margin-top: 3px;
+}
+
+.matrix-input {
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 15px;
+  padding: 10px 4px;
+  margin: 0 5px;
+  border-radius: 3px;
+  border: 1px solid gray;
+  background: #f9f9f9;
+  text-align: center;
+  border: 1px solid #ccc;
+  width: 60px;
+}
+
+.matrix-input::-webkit-outer-spin-button,
+.matrix-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>

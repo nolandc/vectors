@@ -1,8 +1,7 @@
 
 <script setup lang="ts">
-import { onMounted, provide, ref } from 'vue';
+import { provide, ref } from 'vue';
 import Grid from '../../grid';
-import { useDraggableCircle } from '../../logic/useDraggableCircle';
 
 
 const props = defineProps({
@@ -20,15 +19,9 @@ const halfGridSize = props.width / 2.0
 const container = ref<HTMLDivElement>()
 
 provide('grid', grid)
+provide('container', container)
 
 const emit = defineEmits(['updated'])
-
-const { setupDraggableCircle } = useDraggableCircle()
-
-onMounted(() => {
-  setupDraggableCircle(container.value!, grid)
-})
-
 </script>
 
 <template>

@@ -1,9 +1,8 @@
-
 <script setup lang="ts">
-
 import { PropType, ref, watch } from 'vue';
 import Vector from '../math/vector';
 import MathUtils from '../math/utils';
+import InputColorLabel from './InputColorLabel.vue';
 
 const props = defineProps({
     label: String,
@@ -21,8 +20,6 @@ const props = defineProps({
     },
 })
 
-
-
 const emit = defineEmits(['updated'])
 
 // We keep separate x/y values in this component because they may diverge briefly
@@ -36,10 +33,9 @@ watch(() => props.vector, (newvec, _) => {
     y.value = MathUtils.round(newvec.y, 4).toString()
 })
 
-
 let updateX = (value: string) => {
     x.value = value
-    
+
     if (!isNaN(Number(value)) && value.charAt(value.length-1) != ".") {
         let numValue = Number(value)
         emit('updated', new Vector(numValue, props.vector.y))
@@ -54,15 +50,11 @@ let updateY = (value: string) => {
         emit('updated', new Vector(props.vector.x, numValue))
     }
 }
-
 </script>
 
 <template>
     <div class="vector-input">
-        <label class="vec-label">
-            <span class="provided-label" style="background-color: {{props.color}};">{{ props.label }}</span>
-            <span> =</span>
-        </label>
+        <InputColorLabel :label="props.label" :color="props.color" />
         <span class="vector-notation parens">(</span>
         <span v-if="editable">
             <input 
@@ -91,9 +83,7 @@ let updateY = (value: string) => {
     </div>
 </template>
 
-
 <style lang="scss">
-
 .vector-input {
     display: block;
     margin-bottom: 10px;
@@ -113,22 +103,6 @@ let updateY = (value: string) => {
         background: #f9f9f9;
         text-align: center;
         border: 1px solid #ccc;
-    }
-    .vec-label {
-        margin-right: 10px;
-        vertical-align: middle;
-        display: inline-block;
-        width: 100px;
-        text-align: right;
-        font-size: 17px;
-
-        .provided-label {
-            border-radius: 4px;
-            padding: 5px 6px;
-            color: white;
-            background-color: v-bind('color');
-            margin-right: 6px;
-        }
     }
     .vector-notation {
         font-size: 30px;

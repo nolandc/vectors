@@ -19,25 +19,27 @@ const visible = computed(() => (props.position.length() * grid.unitPxSize) > 40)
 </script>
 
 <template>
-  <rect 
-    v-if="background !== 'none' && visible"
-    :width="textLength" 
-    height="17" 
-    :fill="background" 
-    rx="3" 
-    :x="pxPosition.x - textLength/2.0" 
-    :y="pxPosition.y - 8" 
-  />
-  <text 
-    :text="text" 
-    style="user-select: none" 
-    :x="pxPosition.x" 
-    :y="pxPosition.y + 6" 
-    :fill="color" 
-    text-anchor="middle" 
-    font-size="15" 
-    v-if="visible"
-  >
-    {{ text }}
-  </text>
+  <g pointer-events="none">
+    <rect 
+      v-if="background !== 'none' && visible"
+      :width="textLength" 
+      height="17" 
+      :fill="background" 
+      rx="3" 
+      :x="pxPosition.x - textLength/2.0" 
+      :y="pxPosition.y - 8" 
+    />
+    <text 
+      :text="text" 
+      style="user-select: none" 
+      :x="pxPosition.x" 
+      :y="pxPosition.y + 5" 
+      :fill="color" 
+      text-anchor="middle" 
+      font-size="15" 
+      v-if="visible"
+    >
+      {{ text }}
+    </text>
+  </g>
 </template>

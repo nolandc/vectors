@@ -69,20 +69,20 @@ provide('grid', grid)
       <LabelView :position="transformedCenter" text="A2" :color="Colors.gray" background="none" />
 
       <!-- Original vectors and parallelogram (in foreground) -->
-      <PolygonView :points="originalPoints" :color="'rgba(255, 0, 0, 0.2)'" />
+      <PolygonView :points="originalPoints" :color="Colors.lightBlue" />
       <VectorView :vector="v" :color="Colors.red" />
-      <VectorView :vector="w" :color="Colors.blue" />
+      <VectorView :vector="w" :color="Colors.green" />
       <LabelView :position="v.divided(2)" text="v" :color="Colors.red" />
-      <LabelView :position="w.divided(2)" text="w" :color="Colors.blue" />
-      <LabelView :position="originalCenter" text="A1" color="rgba(255, 0, 0, 0.6)" background="none" />
+      <LabelView :position="w.divided(2)" text="w" :color="Colors.green" />
+      <LabelView :position="originalCenter" text="A1" color="rgba(41, 41, 94, 0.5)" background="none" />
       
       <DraggableCircleView :vector="v" @on-changed="newV => v = newV"  :color="Colors.red"/>
-      <DraggableCircleView :vector="w" @on-changed="newW => w = newW"  :color="Colors.blue"/>
+      <DraggableCircleView :vector="w" @on-changed="newW => w = newW"  :color="Colors.green"/>
     </GridView>
     <VizDetails>
       <div>
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
-        <VectorInput label="w" :color="Colors.blue" :vector="w" @updated="newW => w = newW" />
+        <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
         <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
         <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
         <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
