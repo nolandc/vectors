@@ -54,7 +54,7 @@ provide('grid', grid)
       <CircleView :radius="1"/>
     </GridView>
     <MathDetails>
-      <div id="details-text">
+      <template #notes>
         A unit vector is a vector with a magnitude (length) of 1. This visualization demonstrates how any vector can be 
         converted to a unit vector.
 
@@ -79,7 +79,9 @@ provide('grid', grid)
           </li>
         </ul>
 
-        This concept is crucial in many applications where only the direction of a vector is important, not its magnitude.        
+        This concept is crucial in many applications where only the direction of a vector is important, not its magnitude.            
+      </template>
+      <template #math>
         <KatexComponent>
           \hat{v} = \frac{\overrightarrow{v}}{\|\overrightarrow{v}\|}
         </KatexComponent>
@@ -93,8 +95,8 @@ provide('grid', grid)
             {{ MathUtils.round(v.x / v.length(), 3) }} \\
             {{ MathUtils.round(v.y / v.length(), 3) }}
           \end{bmatrix}      
-        </KatexComponent>      
-      </div>          
+        </KatexComponent>
+      </template>
     </MathDetails>
   </Visualization>
 </template>

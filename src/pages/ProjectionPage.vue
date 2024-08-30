@@ -52,7 +52,7 @@ provide('grid', grid)
       <LabelView text="p" :position="p.divided(2)" :color="Colors.blue"/>
     </GridView> 
     <MathDetails>
-      <div id="details-text">
+      <template #notes>
         Vector projection is the process of computing the component of a vector which is parallel to a second vector.
 
         <ul>
@@ -78,10 +78,12 @@ provide('grid', grid)
             <InlineColorLabel label="v" :color="Colors.red"/> as the hypotenuse.
           </li>
         </ul>
+      </template>
+      <template #math>
         <KatexComponent>
           \text{proj}_{\vec{w}} \vec{v} = \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w}
-        </KatexComponent>
-      </div>      
+        </KatexComponent>        
+      </template>
     </MathDetails>
   </Visualization>
 </template>

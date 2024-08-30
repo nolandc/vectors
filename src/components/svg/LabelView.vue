@@ -22,11 +22,11 @@ const visible = computed(() => (props.position.length() * grid.unitPxSize) > 40)
   <g pointer-events="none">
     <rect 
       v-if="color !== 'none' && visible"
-      :width="textLength" 
+      :width="textLength+2" 
       height="17" 
       :fill="color" 
       rx="3" 
-      :x="pxPosition.x - textLength/2.0" 
+      :x="pxPosition.x - textLength/2.0 - 1" 
       :y="pxPosition.y - 8" 
     />
     <text 

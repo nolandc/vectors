@@ -15,6 +15,7 @@ import LineView from "../components/svg/LineView.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from './MathDetails.vue';
+import InlineColorLabel from '../components/InlineColorLabel.vue';
 
 const { v1, m1 } = useUrlState({
   v1: { type: 'vector', default: new Vector(1, 3) },
@@ -35,9 +36,9 @@ provide('grid', grid)
   <Visualization>
     <VizDetails>
       <div>
-        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+        <VectorInput label="v" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
         <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
-        <VectorInput label="M*v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+        <VectorInput label="Mv" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
         <VectorInput label="e1" :color="Colors.blue" :vector="eigenvectors[0]" :editable="false"/>
         <VectorInput label="e2" :color="Colors.blue" :vector="eigenvectors[1]" :editable="false"/>
       </div>
@@ -48,17 +49,44 @@ provide('grid', grid)
       </template>
 
       <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
-      <LabelView text="M*v1" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+      <LabelView text="Mv" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
 
       <VectorView :vector="v1" :color="Colors.red"/>
-      <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
+      <LabelView text="v" :position="v1.divided(2)" :color="Colors.red"/>
 
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
     </GridView>
     <MathDetails>
-      <div id="details-text">
+      <template #notes>
+        Eigenvector Visualization
+
+        Eigenvectors are special vectors that, when transformed, only change in magnitude, not direction.
+
+        <ul>
+            <li>
+                <InlineColorLabel label="Mv" :color="Colors.green"/> shows the result of applying 
+                <InlineColorLabel label="M" :color="Colors.blue"/> to <InlineColorLabel label="v" :color="Colors.red"/>.
+            </li>
+
+            <li>
+                The gray lines represent the eigenvector's span before and after transformation.
+            </li>
+
+            <li>
+                Note how when <InlineColorLabel label="v" :color="Colors.red"/> is along the spans of the eigenvectors,
+                <InlineColorLabel label="Mv" :color="Colors.green"/> remains on the same line, only changing in length.
+            </li>
+        </ul>
+
+        This visualization demonstrates how eigenvectors maintain their direction under linear transformations, 
+        scaling by their corresponding eigenvalues.
+
+        <br/><br/>
+        
+      </template>
+      <template #math>
         eigenvalues: {{ m1.eigenvalues() }}
-      </div>      
+      </template>      
     </MathDetails>
   </Visualization>
 </template>

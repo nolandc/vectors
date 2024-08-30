@@ -8,7 +8,7 @@
  #details {
   box-sizing: border-box;
     width: 400px;
-    padding: 20px;
+    padding: 10px 20px;
     display: flex;
     flex-direction: column;  
  }

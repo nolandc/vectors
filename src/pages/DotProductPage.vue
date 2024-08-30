@@ -14,7 +14,7 @@ import MathUtils from "../math/utils.ts"
 import Grid from "../grid.ts"
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from './MathDetails.vue'
-
+import InlineColorLabel from '../components/InlineColorLabel.vue'
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(2, 4) },
   w: { type: 'vector', default: new Vector(5, 2) }
@@ -81,7 +81,7 @@ provide('grid', grid)
         color="#D3D3D3"
         :stroke-width="3" 
       />
-      <LabelView :position="anglePosition" :text="angleText" color="#888" background="white" />
+      <LabelView :position="anglePosition" :text="angleText" color="white" background="#888" />
 
       <VectorView :vector="v" :color="Colors.red" />
       <LabelView :position="v.divided(2)" text="v" :color="Colors.red" />
@@ -92,13 +92,28 @@ provide('grid', grid)
       <DraggableCircleView :vector="v" @on-changed="newV => v = newV" :color="Colors.red"/>
       <DraggableCircleView :vector="w" @on-changed="newW => w = newW" :color="Colors.green"/>
     </GridView>
-    <MathDetails>
-      <div id="details-text">
+    <MathDetails>      
+      <template #notes>
+        Dot Product Visualization
+
+        The dot product is a fundamental operation in vector mathematics, providing a scalar result that relates two vectors.
+        <ul>
+            <li>
+                The angle between <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>  is visualized,
+                illustrating that the dot product depends on both the magnitudes of the vectors and the angle between them.
+            </li>
+
+            <li>
+                As the angle between vectors approaches 90°, the dot product approaches zero, indicating perpendicularity.
+            </li>
+        </ul>    
+      </template>
+      <template #math>
         <p>Dot Product (v · w): {{ MathUtils.round(dotProduct, 2) }}</p>
         <p>|v| * |w|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
         <p>cos(θ): {{ MathUtils.round(cosTheta, 2) }}</p>
         <p>Angle θ: {{ MathUtils.round(Math.abs(angle), 2) }} radians ({{ MathUtils.round(Math.abs(angleDegrees), 2) }}°)</p>
-      </div>      
+      </template>
     </MathDetails>
   </Visualization>
 </template>

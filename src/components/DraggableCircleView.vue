@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { PropType, Ref, computed, inject, onMounted, onUnmounted, ref } from 'vue';
+import { PropType, Ref, computed, inject, ref, onUnmounted } from 'vue';
 import Grid from '../grid';
 import Vector from '../math/vector';
+import { useDragStyles } from '../logic/useDragStyles';
+
+const { enableDragStyling, disableDragStyling } = useDragStyles()
 
 const props = defineProps({
   vector: { type: Vector as PropType<Vector>, required: true },
@@ -24,6 +27,8 @@ const el = ref<SVGCircleElement>()
 let isDragging = false
 
 const startDrag = (e: MouseEvent | TouchEvent) => {
+  enableDragStyling()
+
   isDragging = true
   document.addEventListener('mousemove', onDrag)
   document.addEventListener('touchmove', onDrag, { passive: false })
@@ -56,6 +61,8 @@ const onDrag = (e: MouseEvent | TouchEvent) => {
 }
 
 const stopDrag = () => {
+  disableDragStyling()
+  
   isDragging = false
   document.removeEventListener('mousemove', onDrag)
   document.removeEventListener('touchmove', onDrag)

@@ -14,6 +14,7 @@ import MatrixInput from "../components/MatrixInput.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from './MathDetails.vue';
+import InlineColorLabel from '../components/InlineColorLabel.vue';
 
 const { v1, m1 } = useUrlState({
   v1: { type: 'vector', default: new Vector(-2, 2) },
@@ -29,24 +30,48 @@ provide('grid', grid)
   <Visualization>
     <VizDetails>
       <div>
-        <VectorInput label="v1" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
+        <VectorInput label="v" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
         <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
-        <VectorInput label="M*v1" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+        <VectorInput label="Mv" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
-      <LabelView text="M*v1" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+      <LabelView text="Mv" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
 
       <VectorView :vector="v1" :color="Colors.red"/>
-      <LabelView text="v1" :position="v1.divided(2)" :color="Colors.red"/>
+      <LabelView text="v" :position="v1.divided(2)" :color="Colors.red"/>
 
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
     </GridView>
     <MathDetails>
-      <div id="details-text">
-        Some details about linear transformation here.
-      </div>
+      <template #notes>
+        Linear Transformation Visualization
+
+        Linear transformations are operations that map vectors while preserving vector addition and scalar multiplication.
+
+        <ul>
+            <li>
+                <InlineColorLabel label="v" :color="Colors.red"/> represents an input vector.
+            </li>
+
+            <li>
+                <InlineColorLabel label="Mv" :color="Colors.green"/> shows the result of applying 
+                the linear transformation M to v1.
+            </li>
+
+            <li>
+                The transformation preserves the origin (the point where both vectors start).
+            </li>
+
+            <li>
+                Changes in direction and magnitude of the vector illustrate how M affects v1.
+            </li>
+        </ul>
+
+        This visualization demonstrates how linear transformations can stretch, rotate, or reflect vectors, 
+        maintaining linearity throughout the process.
+      </template>
     </MathDetails>
   </Visualization>
 </template>

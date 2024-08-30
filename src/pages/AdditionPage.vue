@@ -54,16 +54,18 @@ provide('grid', grid)
       <LabelView text="v+w" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
     </GridView>
     <MathDetails>
-      <div id="details-text">
+      <template #notes>
 	        Notice how dotted gray vectors extending from <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>
           to <InlineColorLabel label="v+w" :color="Colors.blue"/> are the same magnitude as 
           <InlineColorLabel label="w" :color="Colors.green"/> and <InlineColorLabel label="v" :color="Colors.red"/> respectively. 
           To add two vectors, you can imagine simply placing the origin of the first vector at the tip of the second.	        
-	        <KatexComponent>
+      </template>
+      <template #math>
+        <KatexComponent>
 	          \begin{bmatrix} {{ vec.x }} \\ {{ vec.y }} \end{bmatrix} + \begin{bmatrix} {{ vec2.x }} \\ {{  vec2.y }} \end{bmatrix} 
 	          = \begin{bmatrix} {{vec.x}} + {{vec2.x}} \\ {{ vec.y }} + {{ vec2.y }} \end{bmatrix} 
-	          = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>
-	      </div>
+	          = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>        
+      </template>
     </MathDetails>
   </Visualization>
 </template>

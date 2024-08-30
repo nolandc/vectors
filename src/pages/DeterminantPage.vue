@@ -16,6 +16,7 @@ import Grid from "../grid.ts"
 import MathUtils from '../math/utils.ts'
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from './MathDetails.vue'
+import InlineColorLabel from '../components/InlineColorLabel.vue'
 
 // Use the composable to manage URL state
 const { v, w, m } = useUrlState({
@@ -74,9 +75,9 @@ provide('grid', grid)
       <PolygonView :points="transformedPoints" :color="'rgba(128, 128, 128, 0.1)'" />
       <VectorView :vector="mV" :color="Colors.gray" />
       <VectorView :vector="mW" :color="Colors.gray" />
-      <LabelView :position="mV.divided(1.5)" text="M*v" :color="Colors.gray" />
-      <LabelView :position="mW.divided(1.5)" text="M*w" :color="Colors.gray" />
-      <LabelView :position="transformedCenter" text="A2" :color="Colors.gray" background="none" />
+      <LabelView :position="mV.divided(1.5)" text="Mv" :color="Colors.gray" />
+      <LabelView :position="mW.divided(1.5)" text="Mw" :color="Colors.gray" />
+      <LabelView :position="transformedCenter" text="A2" color="none" background="#777" />
 
       <!-- Original vectors and parallelogram (in foreground) -->
       <PolygonView :points="originalPoints" :color="Colors.lightBlue" />
@@ -84,18 +85,47 @@ provide('grid', grid)
       <VectorView :vector="w" :color="Colors.green" />
       <LabelView :position="v.divided(2)" text="v" :color="Colors.red" />
       <LabelView :position="w.divided(2)" text="w" :color="Colors.green" />
-      <LabelView :position="originalCenter" text="A1" color="rgba(41, 41, 94, 0.5)" background="none" />
+      <LabelView :position="originalCenter" text="A1" color="none" background="rgba(41, 41, 94, 0.5)" />
       
       <DraggableCircleView :vector="v" @on-changed="newV => v = newV"  :color="Colors.red"/>
       <DraggableCircleView :vector="w" @on-changed="newW => w = newW"  :color="Colors.green"/>
     </GridView>
     <MathDetails>
-      <div id="details-text">
+      <template #notes>
+        Determinant Visualization
+
+        The determinant of a matrix represents how it scales area or volume in linear transformations.
+
+        <ul>
+            <li>
+                <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/> 
+                are input vectors.
+            </li>
+
+            <li>
+                <InlineColorLabel label="Mv" :color="Colors.gray"/> and <InlineColorLabel label="Mw" :color="Colors.gray"/> 
+                show the transformed vectors.
+            </li>
+
+            <li>
+                A1 represents the area of the parallelogram formed by <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/> .
+            </li>
+
+            <li>
+                A2 shows the area after transformation, illustrating the scaling effect of the determinant.
+            </li>
+        </ul>
+
+        This visualization demonstrates how the determinant quantifies the factor by which a linear transformation 
+        changes areas, with the sign indicating orientation preservation or reversal.
+      </template>
+      <template #math>
+
         <p>Area(A1): {{ MathUtils.round(Math.abs(determinant), 2) }}</p>
         <p>Area(A2): {{ MathUtils.round(Math.abs(transformedDeterminant), 2) }}</p>
         <p>Determinant of matrix (scale factor): {{ MathUtils.round(m.determinant(), 2) }}</p>
         <p>A2 / A1 = {{ MathUtils.round(Math.abs(transformedDeterminant) / Math.abs(determinant), 2) }}</p>
-      </div>      
+      </template>
     </MathDetails>
   </Visualization>
 </template>
