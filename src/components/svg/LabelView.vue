@@ -13,7 +13,7 @@ const props = defineProps({
 const textLength = Math.max(props.text.length * 11, 16)
 
 const grid = inject('grid') as Grid
-const pxPosition = computed(() => grid.gridToPx(props.position.invertY()))
+const pxPosition = computed(() => grid.gridToPx(props.position))
 const visible = computed(() => (props.position.length() * grid.unitPxSize) > 40)
 
 </script>

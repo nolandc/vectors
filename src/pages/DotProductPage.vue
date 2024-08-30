@@ -78,8 +78,8 @@ provide('grid', grid)
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <ArcView 
-        :start="v.invertY()" 
-        :end="w.invertY()" 
+        :start="v" 
+        :end="w" 
         :center="arcCenter" 
         :radius="arcRadius" 
         color="#D3D3D3"

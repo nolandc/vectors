@@ -14,8 +14,8 @@ const props = defineProps({
 
 const grid = inject('grid') as Grid
 
-const pxOrigin = computed(() => grid.gridToPx(props.origin.invertY()))
-const pxVector = computed(() => grid.gridToPx(props.vector.invertY()))
+const pxOrigin = computed(() => grid.gridToPx(props.origin))
+const pxVector = computed(() => grid.gridToPx(props.vector))
 
 </script>
 

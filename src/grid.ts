@@ -29,26 +29,24 @@ class Grid {
   gridToPx(vec: Vector): Vector {
       return new Vector(
           this.unitPxSize * (vec.x + this.origin.x), 
-          this.unitPxSize * (vec.y + this.origin.y)
+          this.unitPxSize * (vec.invertY().y + this.origin.y)
       )
   }
   
   gridUnitsToPxUnits(vec: Vector): Vector {
       return new Vector(
           this.unitPxSize * vec.x,
-          this.unitPxSize * vec.y
+          this.unitPxSize * vec.invertY().y
       )
   }
 
   pxToGrid(vec: Vector) {
       return new Vector(
           (vec.x) / this.unitPxSize, 
-          (vec.y) / this.unitPxSize
+          (vec.invertY().y) / this.unitPxSize
       )
-          .minus(this.origin)
-          .invertY()
+          .minus(this.origin.invertY())
           .snap(this.snapIncrement)
-  
   }
 
   unitVectorsToPxVectors(array: Array<Vector>) {
@@ -56,10 +54,10 @@ class Grid {
   }
 
   pxLineFromGridVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
-      const originPx = this.gridToPx(origin.invertY())
+      const originPx = this.gridToPx(origin)
       // All user-facing coordinates need to flip the y axis. 
       // I gotta gotta figure out a better solution for this tbh.        
-      const vecPx = this.gridToPx(vec.invertY())
+      const vecPx = this.gridToPx(vec)
       return [
           originPx.x,
           originPx.y,

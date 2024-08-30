@@ -27,7 +27,7 @@ const pointVectors = computed(() => {
   return [
     new Vector(0, 0), 
     new Vector(unitVec.value.x, 0), 
-    new Vector(unitVec.value.x, unitVec.value.y).invertY()
+    new Vector(unitVec.value.x, unitVec.value.y)
   ]
 })
 

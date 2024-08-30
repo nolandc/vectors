@@ -14,20 +14,25 @@ const props = defineProps({
 
 const grid = inject('grid') as Grid
 
-const pxCenter = computed(() => grid.gridToPx(props.center.invertY()))
+const pxCenter = computed(() => grid.gridToPx(props.center))
 const pxRadius = computed(() => props.radius * grid.unitPxSize)
 
-const startAngle = computed(() => Math.atan2(props.start.y - props.center.y, props.start.x - props.center.x))
-const endAngle = computed(() => Math.atan2(props.end.y - props.center.y, props.end.x - props.center.x))
+// Here we invert the Y coordinates to accounts for the SVG axes
+// being the opposite of our mathematical axes
+const start = computed(() => props.start.invertY())
+const end = computed(() => props.end.invertY())
+
+const startAngle = computed(() => Math.atan2(start.value.y - props.center.y, start.value.x - props.center.x))
+const endAngle = computed(() => Math.atan2(end.value.y - props.center.y, end.value.x - props.center.x))
 
 const crossProduct = computed(() => 
-  (props.start.x - props.center.x) * (props.end.y - props.center.y) - 
-  (props.start.y - props.center.y) * (props.end.x - props.center.x)
+  (start.value.x - props.center.x) * (end.value.y - props.center.y) - 
+  (start.value.y - props.center.y) * (end.value.x - props.center.x)
 )
 const isClockwise = computed(() => crossProduct.value < 0)
 
 const arcPath = computed(() => {
-  const sweepAngle = endAngle.value - startAngle.value
+  let sweepAngle = endAngle.value - startAngle.value
   
   if (isClockwise.value) {
     if (sweepAngle > 0) sweepAngle -= 2 * Math.PI

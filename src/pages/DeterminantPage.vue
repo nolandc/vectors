@@ -46,14 +46,14 @@ const originalPoints = computed(() => [
   v.value,
   new Vector(v.value.x + w.value.x, v.value.y + w.value.y),
   w.value
-].map(v => v.invertY()))
+].map(v => v))
 
 const transformedPoints = computed(() => [
   new Vector(0, 0),
   mV.value,
   new Vector(mV.value.x + mW.value.x, mV.value.y + mW.value.y),
   mW.value
-].map(v => v.invertY()))
+].map(v => v))
 
 // Create and provide grid
 const grid = new Grid(20, 20, 600, 600, 0.1)
