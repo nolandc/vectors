@@ -17,9 +17,9 @@ import MathDetails from './MathDetails.vue'
 import InlineColorLabel from "../components/InlineColorLabel.vue";
 
 // Use the composable to manage URL state
-const { vec, vec2 } = useUrlState({
-  vec: { type: 'vector', default: new Vector(3, 2) },
-  vec2: { type: 'vector', default: new Vector(-1, -2) }
+const { v, w } = useUrlState({
+  v: { type: 'vector', default: new Vector(3, 2) },
+  w: { type: 'vector', default: new Vector(-1, -2) }
 });
 
 // Create and provide grid
@@ -31,27 +31,27 @@ provide('grid', grid)
   <Visualization>
     <VizDetails>
       <div>
-        <VectorInput label="v" color="#f94144" :vector="vec" @updated="v => vec = v"/>
-        <VectorInput label="w" color="#43aa8b" :vector="vec2" @updated="v => vec2 = v"/>
-        <VectorInput label="v+w" color="#577590" :vector="vec.plus(vec2)" :editable="false"/>
+        <VectorInput label="v" color="#f94144" :vector="v" @updated="nv => v = nv"/>
+        <VectorInput label="w" color="#43aa8b" :vector="w" @updated="v => w = v"/>
+        <VectorInput label="v+w" color="#577590" :vector="v.plus(w)" :editable="false"/>
       </div>
 
     </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
-      <LineView :vector="vec.plus(vec2)" :origin="vec" :color="Colors.lightGray" strokeDashArray="10"/>
-      <LineView :vector="vec.plus(vec2)" :origin="vec2" :color="Colors.lightGray" strokeDashArray="10"/>
+      <LineView :vector="v.plus(w)" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
+      <LineView :vector="v.plus(w)" :origin="w" :color="Colors.lightGray" strokeDashArray="10"/>
 
-      <DraggableCircleView :vector="vec" @onChanged="v => vec = v" :color="Colors.red"/>
-      <VectorView :vector="vec" :color="Colors.red"/>
+      <DraggableCircleView :vector="v" @onChanged="nv => v = nv" :color="Colors.red"/>
+      <VectorView :vector="v" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="vec2" @onChanged="v => vec2 = v" :color="Colors.green"/>
-      <VectorView :vector="vec2" :color="Colors.green"/>
+      <DraggableCircleView :vector="w" @onChanged="v => w = v" :color="Colors.green"/>
+      <VectorView :vector="w" :color="Colors.green"/>
 
-      <VectorView :vector="vec2.plus(vec)" :color="Colors.blue"/>
+      <VectorView :vector="w.plus(v)" :color="Colors.blue"/>
 
-      <LabelView text="v" :position="vec.divided(2)" :color="Colors.red"/>
-      <LabelView text="w" :position="vec2.divided(2)" :color="Colors.green"/>
-      <LabelView text="v+w" :position="vec.plus(vec2).divided(2)" :color="Colors.blue"/>
+      <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
+      <LabelView text="w" :position="w.divided(2)" :color="Colors.green"/>
+      <LabelView text="v+w" :position="v.plus(w).divided(2)" :color="Colors.blue"/>
     </GridView>
     <MathDetails>
       <template #notes>
@@ -61,10 +61,20 @@ provide('grid', grid)
           To add two vectors, you can imagine simply placing the origin of the first vector at the tip of the second.	        
       </template>
       <template #math>
+        <!-- Generic formula for adding two 2D vectors -->
         <KatexComponent>
-	          \begin{bmatrix} {{ vec.x }} \\ {{ vec.y }} \end{bmatrix} + \begin{bmatrix} {{ vec2.x }} \\ {{  vec2.y }} \end{bmatrix} 
-	          = \begin{bmatrix} {{vec.x}} + {{vec2.x}} \\ {{ vec.y }} + {{ vec2.y }} \end{bmatrix} 
-	          = \begin{bmatrix} {{ vec.x + vec2.x }} \\ {{ vec.y + vec2.y }} \end{bmatrix}        </KatexComponent>        
+          \vec{v} + \vec{w} = \begin{bmatrix} v_x \\ v_y \end{bmatrix} + \begin{bmatrix} w_x \\ w_y \end{bmatrix} = \begin{bmatrix} v_x + w_x \\ v_y + w_y \end{bmatrix}
+        </KatexComponent>
+
+        <!-- Specific vector addition step 1: Initial vectors -->
+        <KatexComponent>
+          = \begin{bmatrix} {{ v.x }} \\ {{ v.y }} \end{bmatrix} + \begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix}
+        </KatexComponent>
+
+        <!-- Specific vector addition step 2: Addition and result -->
+        <KatexComponent>
+          = \begin{bmatrix} {{ v.x }} + {{ w.x }} \\ {{ v.y }} + {{ w.y }} \end{bmatrix} = \begin{bmatrix} {{ v.x + w.x }} \\ {{ v.y + w.y }} \end{bmatrix}
+        </KatexComponent>
       </template>
     </MathDetails>
   </Visualization>

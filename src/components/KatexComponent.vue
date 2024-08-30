@@ -20,7 +20,7 @@ const renderLatex = () => {
       renderedContent.value = katex.renderToString(slotContent, {
         throwOnError: false,
         output: 'mathml',
-        displayMode: true  // Display mode for block style rendering
+        displayMode: true,  // Display mode for block style rendering       
       });
     } catch (e) {
       console.error('Error rendering LaTeX content:', e);
@@ -33,10 +33,23 @@ const renderLatex = () => {
 watchEffect(renderLatex);
 </script>
 
-<style scoped>
+<style >
 .katex-component {
   margin-top: 20px;
-  font-size: 20px;
+  font-size: 18px;
+  font-family: arial;
+}
+.katex-component math mover > mo {
+  margin-left: 9px;
+}
+
+/* Adjust the base of the vector if needed */
+.katex-component math mover > mi {
+  padding-top: 0.1em;
+}
+
+.katex-component mtd {
+    text-align: left !important;
 }
 /* Styles specific to the LaTeX rendering container can be added here */
 </style>

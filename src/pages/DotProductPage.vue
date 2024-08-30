@@ -112,7 +112,7 @@ provide('grid', grid)
             </li>
 
             <li>
-              While the dot product by itself it useful, it might be more intuitive to look at the dot product of two unit vectors <InlineColorLabel label="v&#8407&#xb7;w" :color="Colors.gray"/>.
+              While the dot product by itself it useful, it might be more intuitive to look at the dot product of two unit vectors <InlineColorLabel label="v&#xb7;w" :color="Colors.gray"/>.
               Watch how it approaches 1 when the vectors near parallel, and 0 as they approach perpendicularity.
             </li>
         </ul>    
