@@ -109,7 +109,7 @@ class Vector {
     maximum corner of bounds
   */
   intersectWithSquare(bounds: Vector) {
-    let v = this.abs()
+    const v = this.abs()
     let newV = v
 
     if (v.x < bounds.x && v.y < bounds.y) return this

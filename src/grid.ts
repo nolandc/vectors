@@ -56,10 +56,10 @@ class Grid {
   }
 
   pxLineFromGridVec(vec: Vector, origin: Vector = new Vector(0, 0)) {
-      let originPx = this.gridToPx(origin.invertY())
+      const originPx = this.gridToPx(origin.invertY())
       // All user-facing coordinates need to flip the y axis. 
       // I gotta gotta figure out a better solution for this tbh.        
-      let vecPx = this.gridToPx(vec.invertY())
+      const vecPx = this.gridToPx(vec.invertY())
       return [
           originPx.x,
           originPx.y,

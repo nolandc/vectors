@@ -27,7 +27,7 @@ const crossProduct = computed(() =>
 const isClockwise = computed(() => crossProduct.value < 0)
 
 const arcPath = computed(() => {
-  let sweepAngle = endAngle.value - startAngle.value
+  const sweepAngle = endAngle.value - startAngle.value
   
   if (isClockwise.value) {
     if (sweepAngle > 0) sweepAngle -= 2 * Math.PI

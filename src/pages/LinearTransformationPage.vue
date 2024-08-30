@@ -72,6 +72,9 @@ provide('grid', grid)
         This visualization demonstrates how linear transformations can stretch, rotate, or reflect vectors, 
         maintaining linearity throughout the process.
       </template>
+      <template #math>
+        hi
+      </template>
     </MathDetails>
   </Visualization>
 </template>

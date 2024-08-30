@@ -45,7 +45,7 @@ provide('grid', grid)
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
       <template v-for="v in eigenvectors">
-        <LineView :vector="v" :origin="v.times(-1)" :color="Colors.lightGray"/>
+        <LineView :vector="v" :origin="v.times(-1)" :stroke-dash-array="Math.abs(v.unit().dotProduct(v1.unit())) > 0.98 ? '0' : '10 3' " :color="Colors.lightGray"/>
       </template>
 
       <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
@@ -58,8 +58,6 @@ provide('grid', grid)
     </GridView>
     <MathDetails>
       <template #notes>
-        Eigenvector Visualization
-
         Eigenvectors are special vectors that, when transformed, only change in magnitude, not direction.
 
         <ul>
@@ -86,6 +84,10 @@ provide('grid', grid)
       </template>
       <template #math>
         eigenvalues: {{ m1.eigenvalues() }}
+        <br/>
+        dot1: {{ eigenvectors[0].unit().dotProduct(v1.unit()) }}
+        <br/>
+        dot2: {{ eigenvectors[1].unit().dotProduct(v1.unit()) }}
       </template>      
     </MathDetails>
   </Visualization>

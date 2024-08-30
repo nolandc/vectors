@@ -8,7 +8,8 @@ const props = defineProps({
   origin: { type: Vector as PropType<Vector>, default: new Vector(0, 0)},
   vector: { type: Vector as PropType<Vector>, required: true },
   color: { type: String, default: 'blue' },
-  strokeDashArray: { type: String, default: '' }
+  strokeDashArray: { type: String, default: '' },
+  strokeWidth: { type: Number, default: 3 }
 })
 
 const grid = inject('grid') as Grid
@@ -26,7 +27,7 @@ const pxVector = computed(() => grid.gridToPx(props.vector.invertY()))
     :x2="pxVector.x" 
     :y2="pxVector.y" 
     :stroke="props.color" 
-    stroke-width="3" 
+    :stroke-width="props.strokeWidth" 
     style="pointer-events: none;"
     :stroke-dasharray="props.strokeDashArray"
     />

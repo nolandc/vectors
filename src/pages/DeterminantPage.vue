@@ -66,8 +66,8 @@ provide('grid', grid)
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
         <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
         <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
-        <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>
-        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.lightGray"/>          
+        <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>
+        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>          
       </div>
     </VizDetails>
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.5">

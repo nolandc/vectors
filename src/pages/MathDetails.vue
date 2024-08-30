@@ -42,7 +42,7 @@ if (tabs.value.length > 0) {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .math-details {
   width: 400px;
   box-sizing: border-box;

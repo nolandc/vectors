@@ -33,20 +33,20 @@ watch(() => props.vector, (newvec, _) => {
     y.value = MathUtils.round(newvec.y, 4).toString()
 })
 
-let updateX = (value: string) => {
+const updateX = (value: string) => {
     x.value = value
 
     if (!isNaN(Number(value)) && value.charAt(value.length-1) != ".") {
-        let numValue = Number(value)
+        const numValue = Number(value)
         emit('updated', new Vector(numValue, props.vector.y))
     }
 }
 
-let updateY = (value: string) => {
+const updateY = (value: string) => {
     y.value = value
 
     if (!isNaN(Number(value)) && value.charAt(value.length-1) != ".") {
-        let numValue = Number(value)
+        const numValue = Number(value)
         emit('updated', new Vector(props.vector.x, numValue))
     }
 }

@@ -15,12 +15,14 @@ import Grid from "../grid.ts"
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from './MathDetails.vue'
 import InlineColorLabel from '../components/InlineColorLabel.vue'
+import ConstantInput from '../components/ConstantInput.vue'
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(2, 4) },
   w: { type: 'vector', default: new Vector(5, 2) }
 });
 
 const dotProduct = computed(() => v.value.dotProduct(w.value))
+const unitDotProduct = computed(() => v.value.unit().dotProduct(w.value.unit()))
 const magnitudeProduct = computed(() => v.value.length() * w.value.length())
 const cosTheta = computed(() => dotProduct.value / magnitudeProduct.value)
 const angle = computed(() => Math.acos(MathUtils.clamp(cosTheta.value, -1, 1)))
@@ -70,6 +72,8 @@ provide('grid', grid)
       <div>
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
         <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
+        <ConstantInput label="v&#xb7;w" :color="Colors.gray" :value="dotProduct"/>
+        <ConstantInput label="v&#xb7;w" :color="Colors.gray" :value="unitDotProduct"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
@@ -96,7 +100,7 @@ provide('grid', grid)
       <template #notes>
         Dot Product Visualization
 
-        The dot product is a fundamental operation in vector mathematics, providing a scalar result that relates two vectors.
+        The dot product is a fundamental operation in vector mathematics, providing a scalar result that represents how closely two vectors align.
         <ul>
             <li>
                 The angle between <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>  is visualized,
@@ -105,6 +109,11 @@ provide('grid', grid)
 
             <li>
                 As the angle between vectors approaches 90°, the dot product approaches zero, indicating perpendicularity.
+            </li>
+
+            <li>
+              While the dot product by itself it useful, it might be more intuitive to look at the dot product of two unit vectors <InlineColorLabel label="v&#8407&#xb7;w" :color="Colors.gray"/>.
+              Watch how it approaches 1 when the vectors near parallel, and 0 as they approach perpendicularity.
             </li>
         </ul>    
       </template>
