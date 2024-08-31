@@ -16,6 +16,11 @@ import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from "./MathDetails.vue";
 import InlineColorLabel from "../components/InlineColorLabel.vue";
 import MathUtils from "../math/utils.ts";
+import MLVector from "../components/mathml/MLVector.vue";
+import MLVectorVar from "../components/mathml/MLVectorVar.vue";
+import MLFraction from "../components/mathml/MLFraction.vue";
+import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
+
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(4, 1) },
   w: { type: 'vector', default: new Vector(5, 8) }
@@ -91,25 +96,102 @@ const formatNumber = (num: number) => {
         </ul>
       </template>
       <template #math>
-        
-        <KatexComponent>
-          \begin{aligned}
-
-
-          \text{proj}_{\vec{w}}\vec{v} &= \frac{\vec{v} \cdot \vec{w}}{\|\vec{w}\|^2} \vec{w} \\[1.2em]
-          
-          \text{proj}_{\vec{w}}\vec{v} &= \frac{\begin{bmatrix} {{ v.x }} \\ {{ v.y }} \end{bmatrix} \cdot \begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix}}{\left\|\begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix}\right\|^2} \begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix} \\[1.2em]
-          
-          &= \frac{ {{ v.x * w.x + v.y * w.y }} }{ {{ w.x * w.x + w.y * w.y }} } \begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix} \\[1.2em]
-          
-          &= {{ ((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)).toFixed(2) }} \begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix} \\[1.2em]
-          
-          &= \begin{bmatrix} 
-            {{ (((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.x).toFixed(2) }} \\ 
-            {{ (((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.y).toFixed(2) }}
-          \end{bmatrix}
-          \end{aligned}
-        </KatexComponent>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <mtable>
+            <mtr>
+              <mtd>
+                <msub>
+                  <mtext>proj</mtext>
+                  <MLVectorVar variable="w" />
+                </msub>
+                <MLVectorVar variable="v" />
+                <mo>=</mo>
+                <MLFraction>
+                  <mrow>
+                    <MLVectorVar variable="v" />
+                    <mo>⋅</mo>
+                    <MLVectorVar variable="w" />
+                  </mrow>
+                  <msup>
+                    <mrow>
+                      <mo>∥</mo>
+                      <MLVectorVar variable="w" />
+                      <mo>∥</mo>
+                    </mrow>
+                    <mn>2</mn>
+                  </msup>
+                </MLFraction>
+                <MLVectorVar variable="w" />
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <MLVectorVar variable="p"/>
+                <mo>=</mo>
+                <MLFraction>
+                  <mrow>
+                    <MLVector>
+                      <MLFormattedNumber :val="v.x" :decimals="2" />
+                      <MLFormattedNumber :val="v.y" :decimals="2" />
+                    </MLVector>
+                    <mo>⋅</mo>
+                    <MLVector>
+                      <MLFormattedNumber :val="w.x" :decimals="2" />
+                      <MLFormattedNumber :val="w.y" :decimals="2" />
+                    </MLVector>
+                  </mrow>
+                  <msup>
+                    <mrow>
+                      <mo>∥</mo>
+                      <MLVector>
+                        <MLFormattedNumber :val="w.x" :decimals="2" />
+                        <MLFormattedNumber :val="w.y" :decimals="2" />
+                      </MLVector>
+                      <mo>∥</mo>
+                    </mrow>
+                    <mn>2</mn>
+                  </msup>
+                </MLFraction>
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLFraction>
+                  <MLFormattedNumber :val="v.x * w.x + v.y * w.y" :decimals="2" />
+                  <MLFormattedNumber :val="w.x * w.x + w.y * w.y" :decimals="2" />
+                </MLFraction>
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLFormattedNumber :val="(v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)" :decimals="2" />
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLVector>
+                  <MLFormattedNumber :val="(((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.x)" :decimals="2" />
+                  <MLFormattedNumber :val="(((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.y)" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+          </mtable>
+        </math>
       </template>
     </MathDetails>
   </Visualization>

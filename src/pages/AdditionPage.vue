@@ -15,7 +15,10 @@ import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from './MathDetails.vue'
 import InlineColorLabel from "../components/InlineColorLabel.vue";
-
+import MLVector from "../components/mathml/MLVector.vue";
+import MLVectorVar from "../components/mathml/MLVectorVar.vue";
+import MLSubscript from "../components/mathml/MLSubscript.vue";
+import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
 // Use the composable to manage URL state
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(3, 2) },
@@ -62,19 +65,59 @@ provide('grid', grid)
       </template>
       <template #math>
         <!-- Generic formula for adding two 2D vectors -->
-        <KatexComponent>
-          \vec{v} + \vec{w} = \begin{bmatrix} v_x \\ v_y \end{bmatrix} + \begin{bmatrix} w_x \\ w_y \end{bmatrix} = \begin{bmatrix} v_x + w_x \\ v_y + w_y \end{bmatrix}
-        </KatexComponent>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <mrow>
+            <MLVectorVar variable="v" />
+            <mo>+</mo>
+            <MLVectorVar variable="w" />
+            <mo>=</mo>
+          </mrow>
+          <MLVector>
+            <MLSubscript base="v" sub="x" />
+            <MLSubscript base="v" sub="y" />
+          </MLVector>
+          <mo>+</mo>
+          <MLVector>
+            <MLSubscript base="w" sub="x" />
+            <MLSubscript base="w" sub="y" />
+          </MLVector>
+          <mo>=</mo>
+          <MLVector>
+            <mrow>
+              <MLSubscript base="v" sub="x" />
+              <mo>+</mo>
+              <MLSubscript base="w" sub="x" />
+            </mrow>
+            <mrow>
+              <MLSubscript base="v" sub="y" />
+              <mo>+</mo>
+              <MLSubscript base="w" sub="y" />
+            </mrow>
+          </MLVector>
+        </math>
 
         <!-- Specific vector addition step 1: Initial vectors -->
-        <KatexComponent>
-          = \begin{bmatrix} {{ v.x }} \\ {{ v.y }} \end{bmatrix} + \begin{bmatrix} {{ w.x }} \\ {{ w.y }} \end{bmatrix}
-        </KatexComponent>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <mo>=</mo>
+          <MLVector>
+            <MLFormattedNumber :val="v.x" :decimals="2" />
+            <MLFormattedNumber :val="v.y" :decimals="2" />
+          </MLVector>
+          <mo>+</mo>
+          <MLVector>
+            <MLFormattedNumber :val="w.x" :decimals="2" />
+            <MLFormattedNumber :val="w.y" :decimals="2" />
+          </MLVector>
+        </math>
 
         <!-- Specific vector addition step 2: Addition and result -->
-        <KatexComponent>
-          = \begin{bmatrix} {{ v.x }} + {{ w.x }} \\ {{ v.y }} + {{ w.y }} \end{bmatrix} = \begin{bmatrix} {{ v.x + w.x }} \\ {{ v.y + w.y }} \end{bmatrix}
-        </KatexComponent>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <mo>=</mo>
+          <MLVector>
+            <MLFormattedNumber :val="v.x + w.x" :decimals="2" />
+            <MLFormattedNumber :val="v.y + w.y" :decimals="2" />
+          </MLVector>
+        </math>
       </template>
     </MathDetails>
   </Visualization>

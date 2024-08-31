@@ -40,7 +40,6 @@ watchEffect(renderLatex);
   font-family: arial;
 }
 .katex-component math mover > mo {
-  margin-left: 9px;
 }
 
 /* Adjust the base of the vector if needed */

@@ -16,6 +16,11 @@ import KatexComponent from "../components/KatexComponent.vue"
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from "./MathDetails.vue";
+import MLEquation from "../components/mathml/MLEquation.vue";
+import MLVector from "../components/mathml/MLVector.vue";
+import MLVectorVar from "../components/mathml/MLVectorVar.vue";
+import MLFraction from "../components/mathml/MLFraction.vue";
+import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
 
 const { v } = useUrlState({
   v: { type: 'vector', default: new Vector(2, 2) }
@@ -30,6 +35,7 @@ const pointVectors = computed(() => {
     new Vector(unitVec.value.x, unitVec.value.y)
   ]
 })
+
 
 // Create and provide grid
 const grid = new Grid(6, 6, 600, 600, 0.1)
@@ -50,7 +56,6 @@ provide('grid', grid)
       <DraggableCircleView :vector="v" @onChanged="newV => v = newV" :color="Colors.red"/>
       <VectorView :vector="unitVec" :color="Colors.blue"/>
       <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
-
       <CircleView :radius="1"/>
     </GridView>
     <MathDetails>
@@ -63,16 +68,13 @@ provide('grid', grid)
             The <InlineColorLabel label="red" :color="Colors.red"/> vector <InlineColorLabel label="v" :color="Colors.red"/> 
             represents an arbitrary vector in 2D space.
           </li>
-
           <li>
             The blue circle has a radius of 1, centered at the origin. All points on this circle represent unit vectors.
           </li>
-
           <li>
             The light blue triangle shows how <InlineColorLabel label="v" :color="Colors.red"/> is scaled down to create its 
             unit vector, which lies on the circle.
           </li>
-
           <li>
             The resulting unit vector points in the same direction as <InlineColorLabel label="v" :color="Colors.red"/> but 
             has a length of exactly 1.
@@ -85,18 +87,40 @@ provide('grid', grid)
         <KatexComponent>
           \hat{v} = \frac{\overrightarrow{v}}{\|\overrightarrow{v}\|}
         </KatexComponent>
-        <KatexComponent>
-          \hat{v} = \frac{\overrightarrow{v}}{ {{ MathUtils.round(v.length(), 3) }} } 
-          = \begin{bmatrix} 
-            \frac{ {{ MathUtils.round(v.x, 2) }} }{ {{ MathUtils.round(v.length(), 3) }} } \\ 
-            \frac{ {{ MathUtils.round(v.y, 2) }} }{ {{ MathUtils.round(v.length(), 3) }} }
-          \end{bmatrix}
-          = \begin{bmatrix}
-            {{ MathUtils.round(v.x / v.length(), 3) }} \\
-            {{ MathUtils.round(v.y / v.length(), 3) }}
-          \end{bmatrix}      
-        </KatexComponent>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <MLVectorVar variable="v" :isUnit="true" />
+          <mo>=</mo>
+          <mfrac>
+            <MLVectorVar variable="v" />
+            <mn>{{ MathUtils.formatWithPadding(v.length(), 3) }}</mn>
+          </mfrac>
+          <mo>=</mo>
+          <MLVector>
+            <MLFormattedNumber :val="v.x" :decimals="2"/>
+            <MLFormattedNumber :val="v.y" :decimals="2"/>
+          </MLVector>
+          <mo>=</mo>
+          <MLVector>
+            <MLFormattedNumber :val="v.x / v.length()" :decimals="3"/>
+            <MLFormattedNumber :val="v.y / v.length()" :decimals="3"/>
+          </MLVector>
+        </math>
       </template>
     </MathDetails>
   </Visualization>
 </template>
+
+<style>
+/* TODO: MOVE ME */
+math {
+  font-size: 16px;
+  padding-bottom: 25px;
+}
+
+mi {
+  /* TODO: Adjust font perhaps? */
+}
+mn {
+
+}
+</style>

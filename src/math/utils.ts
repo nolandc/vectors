@@ -10,7 +10,13 @@ const MathUtils = {
 
     clamp: (value: number, min: number, max: number): number => {
         return Math.min(Math.max(value, min), max);
-    }    
+    },
+
+    formatWithPadding: (num: number, decimalPlaces: number): string => {
+        const formatted = Math.abs(num).toFixed(decimalPlaces);
+        const sign = num < 0 ? '-' : '';
+        return sign + formatted.padStart(decimalPlaces + 2, '\u2007'); // Figure space for padding
+      }
 }
 
 export default MathUtils
