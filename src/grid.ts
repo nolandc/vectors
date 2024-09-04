@@ -75,7 +75,7 @@ class Grid {
   }
 
   gridHorizontalLines() {
-    const lines = []
+    const lines: number[][] = []
     const halfGridSize = this.gridWidth / 2.0
 
     for (let i = -halfGridSize; i <= halfGridSize; i++) {
@@ -88,7 +88,7 @@ class Grid {
   }
 
   gridVerticalLines() {
-    const lines = []
+    const lines: number[][] = []
     const halfGridSize = this.gridHeight / 2.0
 
     for (let i = -halfGridSize; i <= halfGridSize; i++) {

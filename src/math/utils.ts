@@ -13,10 +13,18 @@ const MathUtils = {
     },
 
     formatWithPadding: (num: number, decimalPlaces: number): string => {
-        const formatted = Math.abs(num).toFixed(decimalPlaces);
+        // Convert to fixed precision, but remove trailing zeros
+        let formatted = Math.abs(num).toFixed(decimalPlaces).replace(/\.?0+$/, "");
+        
+        // If the number is an integer, ensure we don't add a decimal point
+        if (Number.isInteger(num)) {
+            formatted = Math.abs(num).toString();
+        }
+        
         const sign = num < 0 ? '-' : '';
-        return sign + formatted.padStart(decimalPlaces + 2, '\u2007'); // Figure space for padding
-      }
+        
+        return sign + formatted;
+    }
 }
 
 export default MathUtils

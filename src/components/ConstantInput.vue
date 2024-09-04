@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import MathUtils from '../math/utils';
 import InputColorLabel from './InputColorLabel.vue';
 

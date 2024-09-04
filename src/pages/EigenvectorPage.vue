@@ -14,8 +14,14 @@ import MatrixInput from "../components/MatrixInput.vue";
 import LineView from "../components/svg/LineView.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
-import MathDetails from './MathDetails.vue';
+import MathDetails from '../components/layout/MathDetails.vue';
 import InlineColorLabel from '../components/InlineColorLabel.vue';
+import MLAlignedEquations from '../components/mathml/MLAlignedEquations.vue';
+import MLVectorVar from '../components/mathml/MLVectorVar.vue';
+import MLVector from '../components/mathml/MLVector.vue';
+import MLMatrix from '../components/mathml/MLMatrix.vue';
+import MLFormattedNumber from '../components/mathml/MLFormattedNumber.vue';
+import EigenvectorMath from './math/EigenvectorMath.vue';
 
 const { v1, m1 } = useUrlState({
   v1: { type: 'vector', default: new Vector(1, 3) },
@@ -23,7 +29,7 @@ const { v1, m1 } = useUrlState({
 });
 
 const eigenvectors = computed(() => {
-  return m1.value.eigenvectors().map(v => v.unit().times(20))
+  return m1.value.eigenvectors().map((v: Vector) => v.unit().times(20))
 })
 
 
@@ -57,38 +63,14 @@ provide('grid', grid)
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
     </GridView>
     <MathDetails>
-      <template #notes>
-        Eigenvectors are special vectors that, when transformed, only change in magnitude, not direction.
-
-        <ul>
-            <li>
-                <InlineColorLabel label="Mv" :color="Colors.green"/> shows the result of applying 
-                <InlineColorLabel label="M" :color="Colors.blue"/> to <InlineColorLabel label="v" :color="Colors.red"/>.
-            </li>
-
-            <li>
-                The gray lines represent the eigenvector's span before and after transformation.
-            </li>
-
-            <li>
-                Note how when <InlineColorLabel label="v" :color="Colors.red"/> is along the spans of the eigenvectors,
-                <InlineColorLabel label="Mv" :color="Colors.green"/> remains on the same line, only changing in length.
-            </li>
-        </ul>
-
-        This visualization demonstrates how eigenvectors maintain their direction under linear transformations, 
-        scaling by their corresponding eigenvalues.
-
-        <br/><br/>
-        
-      </template>
+      <template #notes>hi</template>
       <template #math>
-        eigenvalues: {{ m1.eigenvalues() }}
-        <br/>
-        dot1: {{ eigenvectors[0].unit().dotProduct(v1.unit()) }}
-        <br/>
-        dot2: {{ eigenvectors[1].unit().dotProduct(v1.unit()) }}
-      </template>      
+        <EigenvectorMath 
+          :matrix="m1" 
+          :vector="v1" 
+          :eigenvectors="eigenvectors"
+        />
+      </template>   
     </MathDetails>
   </Visualization>
 </template>

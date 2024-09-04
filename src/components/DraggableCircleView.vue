@@ -14,7 +14,6 @@ const props = defineProps({
 const OFFSET_DISTANCE_PX = 6
 const grid = inject('grid') as Grid
 const container = inject('container') as Ref<HTMLDivElement>
-const pxVector = computed(() => grid.gridToPx(props.vector))
 const circlePosition = computed(() => {
   const offsetDistanceGrid = -OFFSET_DISTANCE_PX / grid.unitPxSize;
   const gridUnitVector = props.vector.unit();

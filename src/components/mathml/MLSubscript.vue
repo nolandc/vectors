@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
-const props = defineProps({
+defineProps({
   base: { type: String, required: true },
   sub: { type: String, required: true },
 });

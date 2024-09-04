@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import NavMenu from './components/layout/NavMenu.vue'
 
 </script>

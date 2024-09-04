@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 // Script content remains the same as before
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -43,11 +43,6 @@ onMounted(() => {
   router.afterEach(updateSelectedIndex);
 });
 
-onUnmounted(() => {
-  if (router.removeAfterEach) {
-    router.removeAfterEach(updateSelectedIndex);
-  }
-});
 
 const vClickOutside = {
   mounted(el, binding) {

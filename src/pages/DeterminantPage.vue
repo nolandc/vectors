@@ -15,8 +15,9 @@ import PolygonView from "../components/svg/PolygonView.vue"
 import Grid from "../grid.ts"
 import MathUtils from '../math/utils.ts'
 import { useUrlState } from '../logic/useURLState.ts'
-import MathDetails from './MathDetails.vue'
+import MathDetails from '../components/layout/MathDetails.vue'
 import InlineColorLabel from '../components/InlineColorLabel.vue'
+import DeterminantMath from './math/DeterminantMath.vue'
 
 // Use the composable to manage URL state
 const { v, w, m } = useUrlState({
@@ -120,11 +121,11 @@ provide('grid', grid)
         changes areas, with the sign indicating orientation preservation or reversal.
       </template>
       <template #math>
-
-        <p>Area(A1): {{ MathUtils.round(Math.abs(determinant), 2) }}</p>
-        <p>Area(A2): {{ MathUtils.round(Math.abs(transformedDeterminant), 2) }}</p>
-        <p>Determinant of matrix (scale factor): {{ MathUtils.round(m.determinant(), 2) }}</p>
-        <p>A2 / A1 = {{ MathUtils.round(Math.abs(transformedDeterminant) / Math.abs(determinant), 2) }}</p>
+        <DeterminantMath 
+          :v="v" 
+          :w="w" 
+          :m="m"
+        />
       </template>
     </MathDetails>
   </Visualization>

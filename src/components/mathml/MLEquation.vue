@@ -3,7 +3,7 @@
 // MLEquation.vue
 import { defineProps } from 'vue';
 
-const props = defineProps({
+defineProps({
   leftSide: { type: String, required: true },
   rightSide: { type: String, required: true },
 });

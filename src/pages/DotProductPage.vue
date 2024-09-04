@@ -13,9 +13,10 @@ import ArcView from "../components/svg/ArcView.vue"
 import MathUtils from "../math/utils.ts"
 import Grid from "../grid.ts"
 import { useUrlState } from '../logic/useURLState.ts'
-import MathDetails from './MathDetails.vue'
+import MathDetails from '../components/layout/MathDetails.vue'
 import InlineColorLabel from '../components/InlineColorLabel.vue'
 import ConstantInput from '../components/ConstantInput.vue'
+import DotProductMath from './math/DotProductMath.vue'
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(2, 4) },
   w: { type: 'vector', default: new Vector(5, 2) }
@@ -118,10 +119,7 @@ provide('grid', grid)
         </ul>    
       </template>
       <template #math>
-        <p>Dot Product (v · w): {{ MathUtils.round(dotProduct, 2) }}</p>
-        <p>|v| * |w|: {{ MathUtils.round(magnitudeProduct, 2) }}</p>
-        <p>cos(θ): {{ MathUtils.round(cosTheta, 2) }}</p>
-        <p>Angle θ: {{ MathUtils.round(Math.abs(angle), 2) }} radians ({{ MathUtils.round(Math.abs(angleDegrees), 2) }}°)</p>
+        <DotProductMath :v="v" :w="w" />
       </template>
     </MathDetails>
   </Visualization>

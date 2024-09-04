@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide } from 'vue'
+import { provide } from 'vue'
 import Vector from "../math/vector.ts";
 import Colors from "../constants/Colors.ts";
 import Matrix2x2 from "../math/matrix.ts";
@@ -13,12 +13,17 @@ import LabelView from "../components/svg/LabelView.vue";
 import MatrixInput from "../components/MatrixInput.vue";
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
-import MathDetails from './MathDetails.vue';
 import InlineColorLabel from '../components/InlineColorLabel.vue';
+import MathDetails from '../components/layout/MathDetails.vue';
+import MLAlignedEquations from '../components/mathml/MLAlignedEquations.vue';
+import MLVectorVar from '../components/mathml/MLVectorVar.vue';
+import MLMatrix from '../components/mathml/MLMatrix.vue';
+import MLVector from '../components/mathml/MLVector.vue';
+import MLFormattedNumber from '../components/mathml/MLFormattedNumber.vue';
 
-const { v1, m1 } = useUrlState({
-  v1: { type: 'vector', default: new Vector(-2, 2) },
-  m1: { type: 'matrix', default: new Matrix2x2(-1, 2, 2, 3) }
+const { v, m } = useUrlState({
+  v: { type: 'vector', default: new Vector(-2, 2) },
+  m: { type: 'matrix', default: new Matrix2x2(-1, 2, 2, 3) }
 });
 
 // Create and provide grid
@@ -30,19 +35,19 @@ provide('grid', grid)
   <Visualization>
     <VizDetails>
       <div>
-        <VectorInput label="v" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
-        <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
-        <VectorInput label="Mv" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
+        <MatrixInput :initial-matrix="m" @updated="newM => m = newM"/>
+        <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
-      <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
-      <LabelView text="Mv" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+      <VectorView :vector="v.multiplyByMatrix(m)" :color="Colors.green"/>
+      <LabelView text="Mv" :position="v.multiplyByMatrix(m).divided(2)" :color="Colors.green"/>
 
-      <VectorView :vector="v1" :color="Colors.red"/>
-      <LabelView text="v" :position="v1.divided(2)" :color="Colors.red"/>
+      <VectorView :vector="v" :color="Colors.red"/>
+      <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
+      <DraggableCircleView :vector="v" @on-changed="nv => v = nv" :color="Colors.red"/>
     </GridView>
     <MathDetails>
       <template #notes>
@@ -73,7 +78,103 @@ provide('grid', grid)
         maintaining linearity throughout the process.
       </template>
       <template #math>
-        hi
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <MLAlignedEquations>
+            <mtr>
+              <mtd>
+                <mi>M</mi>
+                <MLVectorVar variable="v" />                
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <MLMatrix :matrix="[['a', 'b'], ['c', 'd']]" />
+                <MLVector>
+                  <mi>x</mi>
+                  <mi>y</mi>
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd></mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <MLVector>
+                  <mrow>
+                    <mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi>
+                  </mrow>
+                  <mrow>
+                    <mi>c</mi><mi>x</mi><mo>+</mo><mi>d</mi><mi>y</mi>
+                  </mrow>
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd></mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <MLMatrix :matrix="[[m.a, m.b], [m.c, m.d]]" />
+                <MLVector>
+                  <MLFormattedNumber :val="v.x" :decimals="2" />
+                  <MLFormattedNumber :val="v.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd></mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <MLVector>
+                  <mrow>
+                    <mo>(</mo>
+                    <MLFormattedNumber :val="m.a" :decimals="2" />
+                    <mo>×</mo>
+                    <MLFormattedNumber :val="v.x" :decimals="2" />
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mo>(</mo>
+                    <MLFormattedNumber :val="m.b" :decimals="2" />
+                    <mo>×</mo>
+                    <MLFormattedNumber :val="v.y" :decimals="2" />
+                    <mo>)</mo>
+                  </mrow>
+                  <mrow>
+                    <mo>(</mo>
+                    <MLFormattedNumber :val="m.c" :decimals="2" />
+                    <mo>×</mo>
+                    <MLFormattedNumber :val="v.x" :decimals="2" />
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mo>(</mo>
+                    <MLFormattedNumber :val="m.d" :decimals="2" />
+                    <mo>×</mo>
+                    <MLFormattedNumber :val="v.y" :decimals="2" />
+                    <mo>)</mo>
+                  </mrow>
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd></mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <MLVector>
+                  <MLFormattedNumber :val="m.a * v.x + m.b * v.y" :decimals="2"/>
+                  <MLFormattedNumber :val="m.c * v.x + m.d * v.y" :decimals="2"/>
+                </MLVector>
+              </mtd>
+            </mtr>
+          </MLAlignedEquations>
+        </math>
       </template>
     </MathDetails>
   </Visualization>
