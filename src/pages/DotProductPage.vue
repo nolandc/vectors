@@ -74,7 +74,7 @@ provide('grid', grid)
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
         <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
         <ConstantInput label="v&#xb7;w" :color="Colors.gray" :value="dotProduct"/>
-        <ConstantInput label="v&#xb7;w" :color="Colors.gray" :value="unitDotProduct"/>
+        <ConstantInput label="v̂&#xb7;ŵ" :color="Colors.gray" :value="unitDotProduct"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
@@ -99,21 +99,14 @@ provide('grid', grid)
     </GridView>
     <MathDetails>      
       <template #notes>
-        Dot Product Visualization
-
-        The dot product is a fundamental operation in vector mathematics, providing a scalar result that represents how closely two vectors align.
+        The dot product is an operation providing a scalar value that represents how closely two vectors align.
         <ul>
-            <li>
-                The angle between <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>  is visualized,
-                illustrating that the dot product depends on both the magnitudes of the vectors and the angle between them.
-            </li>
-
             <li>
                 As the angle between vectors approaches 90°, the dot product approaches zero, indicating perpendicularity.
             </li>
 
             <li>
-              While the dot product by itself it useful, it might be more intuitive to look at the dot product of two unit vectors <InlineColorLabel label="v&#xb7;w" :color="Colors.gray"/>.
+              While the dot product by itself it useful, it can be more intuitive to look at the dot product of two unit vectors <InlineColorLabel label="v̂&#xb7;ŵ" :color="Colors.gray"/>.
               Watch how it approaches 1 when the vectors near parallel, and 0 as they approach perpendicularity.
             </li>
         </ul>    

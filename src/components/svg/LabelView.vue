@@ -31,7 +31,7 @@ const visible = computed(() => (props.position.length() * grid.unitPxSize) > 40)
     />
     <text 
       :text="text" 
-      style="user-select: none" 
+      style="user-select: none; font-family: Courier;" 
       :x="pxPosition.x" 
       :y="pxPosition.y + 5" 
       :fill="background" 

@@ -17,6 +17,7 @@ defineProps({
 
 <style scoped lang="scss">
     .provided-label {
+        font-family: Courier, monospace;
         vertical-align: middle;
         display: inline;
         text-align: right;

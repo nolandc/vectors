@@ -61,28 +61,21 @@ provide('grid', grid)
     </GridView>
     <MathDetails>
       <template #notes>
-        A unit vector is a vector with a magnitude (length) of 1. This visualization demonstrates how any vector can be 
-        converted to a unit vector.
+        A unit vector is a vector with a magnitude (length) of 1. 
 
         <ul>
           <li>
-            The vector <InlineColorLabel label="v" :color="Colors.red"/> 
-            represents an arbitrary vector in 2D space.
-          </li>
-          <li>
-            The blue circle has a radius of 1, centered at the origin. All points on this circle represent unit vectors.
-          </li>
-          <li>
-            The light blue triangle shows how <InlineColorLabel label="v" :color="Colors.red"/> is scaled down to create its 
-            unit vector, which lies on the circle.
+            The process of taking a vector <InlineColorLabel label="v" :color="Colors.red"/> and finding its unit vector <InlineColorLabel label="v̂" :color="Colors.blue"/> is called normalization.
           </li>
           <li>
             The resulting unit vector points in the same direction as <InlineColorLabel label="v" :color="Colors.red"/> but 
             has a length of exactly 1.
           </li>
+          <li>
+            The blue circle has a radius of 1, centered at the origin. All points on this circle represent unit vectors.
+          </li>          
         </ul>
 
-        This concept is crucial in many applications where only the direction of a vector is important, not its magnitude.            
       </template>
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
