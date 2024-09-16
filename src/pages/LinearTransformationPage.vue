@@ -51,18 +51,12 @@ provide('grid', grid)
     </GridView>
     <MathDetails>
       <template #notes>
-        Linear Transformation Visualization
-
         Linear transformations are operations that map vectors while preserving vector addition and scalar multiplication.
 
         <ul>
             <li>
-                <InlineColorLabel label="v" :color="Colors.red"/> represents an input vector.
-            </li>
-
-            <li>
                 <InlineColorLabel label="Mv" :color="Colors.green"/> shows the result of applying 
-                the linear transformation M to v1.
+                the linear transformation <InlineColorLabel label="M" :color="Colors.blue"/> to <InlineColorLabel label="v" :color="Colors.red"/>.
             </li>
 
             <li>

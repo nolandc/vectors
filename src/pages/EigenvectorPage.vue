@@ -57,7 +57,7 @@ provide('grid', grid)
       <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
     </GridView>
     <MathDetails>
-      <template #notes>hi</template>
+      <template #notes>Coming soon</template>
       <template #math>
         <EigenvectorMath 
           :matrix="m1" 
