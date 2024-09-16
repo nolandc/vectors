@@ -13,7 +13,6 @@ import LabelView from "../components/svg/LabelView.vue"
 import MatrixInput from "../components/MatrixInput.vue"
 import PolygonView from "../components/svg/PolygonView.vue"
 import Grid from "../grid.ts"
-import MathUtils from '../math/utils.ts'
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from '../components/layout/MathDetails.vue'
 import InlineColorLabel from '../components/InlineColorLabel.vue'
@@ -29,15 +28,6 @@ const { v, w, m } = useUrlState({
 // Compute transformed vectors
 const mV = computed(() => v.value.multiplyByMatrix(m.value))
 const mW = computed(() => w.value.multiplyByMatrix(m.value))
-
-// Compute determinant (area)
-const determinant = computed(() => {
-  return v.value.x * w.value.y - v.value.y * w.value.x
-})
-
-const transformedDeterminant = computed(() => {
-  return mV.value.x * mW.value.y - mV.value.y * mW.value.x
-})
 
 const originalCenter = computed(() => v.value.plus(w.value).divided(2))
 const transformedCenter = computed(() => mV.value.plus(mW.value).divided(2))

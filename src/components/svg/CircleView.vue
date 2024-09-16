@@ -22,6 +22,6 @@ const pxPosition = computed(() => grid.gridToPx(props.origin))
 
 
 <template>
-  <circle :r="pxRadius" :stroke="color" stroke-width="2" :cx="pxPosition.x" :cy="pxPosition.y" fill="transparent"/>
+  <circle :r="pxRadius" :stroke="color" stroke-width="2" :cx="pxPosition.x" :cy="pxPosition.y" fill="transparent" style="pointer-events: none;"/>
 </template>
 

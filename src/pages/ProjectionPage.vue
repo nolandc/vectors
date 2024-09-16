@@ -73,7 +73,7 @@ provide('grid', grid)
           <li>
             The projection vector <InlineColorLabel label="p" :color="Colors.blue"/> represents the 'shadow' of 
             <InlineColorLabel label="v" :color="Colors.red"/> cast onto 
-            <InlineColorLabel label="w" :color="Colors.green"/>'s line.
+            <InlineColorLabel label="w" :color="Colors.green"/>'s span.
           </li>
 
           <li>

@@ -57,10 +57,17 @@ provide('grid', grid)
     </GridView>
     <MathDetails>
       <template #notes>
-	        Notice how dotted gray vectors extending from <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>
-          to <InlineColorLabel label="v+w" :color="Colors.blue"/> are the same magnitude as 
-          <InlineColorLabel label="w" :color="Colors.green"/> and <InlineColorLabel label="v" :color="Colors.red"/> respectively. 
-          To add two vectors, you can imagine simply placing the origin of the first vector at the tip of the second.	        
+        Vector addition combines two or more vectors by adding their corresponding components.
+        <ul>
+          <li>
+            Visually, you can imagine simply placing the origin of the first vector at the tip of the second.	        
+          </li>
+          <li>
+            Notice how dotted gray vectors extending from <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>
+            to <InlineColorLabel label="v+w" :color="Colors.blue"/> are the same magnitude as 
+            <InlineColorLabel label="w" :color="Colors.green"/> and <InlineColorLabel label="v" :color="Colors.red"/> respectively. 
+          </li>
+        </ul>
       </template>
       <template #math>
         <!-- Generic formula for adding two 2D vectors -->

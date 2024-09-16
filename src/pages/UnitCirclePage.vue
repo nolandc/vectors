@@ -9,10 +9,8 @@ import Colors from "../constants/Colors";
 import LabelView from "../components/svg/LabelView.vue"
 import Visualization from "../components/layout/Visualization.vue";
 import VizDetails from "../components/layout/VizDetails.vue"
-import MathUtils from "../math/utils";
 import PolygonView from "../components/svg/PolygonView.vue"
 import CircleView from "../components/svg/CircleView.vue"
-import KatexComponent from "../components/KatexComponent.vue"
 import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from "../components/layout/MathDetails.vue";
@@ -58,6 +56,7 @@ provide('grid', grid)
       <DraggableCircleView :vector="v" @onChanged="newV => v = newV" :color="Colors.red"/>
       <VectorView :vector="unitVec" :color="Colors.blue"/>
       <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
+      <LabelView text="v̂" :position="v.unit().divided(2)" :color="Colors.blue"/>
       <CircleView :radius="1"/>
     </GridView>
     <MathDetails>
