@@ -18,13 +18,13 @@ import MathDetails from '../components/layout/MathDetails.vue';
 import EigenvectorMath from './math/EigenvectorMath.vue';
 import InlineColorLabel from '../components/InlineColorLabel.vue';
 
-const { v1, m1 } = useUrlState({
-  v1: { type: 'vector', default: new Vector(1, 3) },
-  m1: { type: 'matrix', default: new Matrix2x2(-1, 1, 1, 3) }
+const { v, m } = useUrlState({
+  v: { type: 'vector', default: new Vector(1, 3) },
+  m: { type: 'matrix', default: new Matrix2x2(-1, 1, 1, 3) }
 });
 
 const eigenvectors = computed(() => {
-  return m1.value.eigenvectors().map((v: Vector) => v.unit().times(20))
+  return m.value.eigenvectors().map((v: Vector) => v.unit().times(20))
 })
 
 
@@ -37,25 +37,25 @@ provide('grid', grid)
   <Visualization>
     <VizDetails>
       <div>
-        <VectorInput label="v" :color="Colors.red" :vector="v1" @updated="v => v1 = v"/>
-        <MatrixInput :initial-matrix="m1" @updated="newM => m1 = newM"/>
-        <VectorInput label="Mv" :color="Colors.green" :vector="v1.multiplyByMatrix(m1)" :editable="false"/>
+        <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
+        <MatrixInput :initial-matrix="m" @updated="newM => m = newM"/>
+        <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
         <VectorInput label="e1" :color="Colors.blue" :vector="eigenvectors[0].unit()" :editable="false"/>
         <VectorInput label="e2" :color="Colors.blue" :vector="eigenvectors[1].unit()" :editable="false"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
-      <template v-for="v in eigenvectors">
-        <LineView :vector="v" :origin="v.times(-1)" :stroke-dash-array="Math.abs(v.unit().dotProduct(v1.unit())) > 0.98 ? '0' : '10 3' " :color="Colors.lightGray"/>
+      <template v-for="ev in eigenvectors">
+        <LineView :vector="ev" :origin="ev.times(-1)" :stroke-dash-array="Math.abs(ev.unit().dotProduct(v.unit())) > 0.98 ? '0' : '10 3' " :color="Colors.lightGray"/>
       </template>
 
-      <VectorView :vector="v1.multiplyByMatrix(m1)" :color="Colors.green"/>
-      <LabelView text="Mv" :position="v1.multiplyByMatrix(m1).divided(2)" :color="Colors.green"/>
+      <VectorView :vector="v.multiplyByMatrix(m)" :color="Colors.green"/>
+      <LabelView text="Mv" :position="v.multiplyByMatrix(m).divided(2)" :color="Colors.green"/>
 
-      <VectorView :vector="v1" :color="Colors.red"/>
-      <LabelView text="v" :position="v1.divided(2)" :color="Colors.red"/>
+      <VectorView :vector="v" :color="Colors.red"/>
+      <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
 
-      <DraggableCircleView :vector="v1" @on-changed="v => v1 = v" :color="Colors.red"/>
+      <DraggableCircleView :vector="v" @on-changed="nv => v = nv" :color="Colors.red"/>
     </GridView>
     <MathDetails>
       <template #notes>
@@ -64,12 +64,13 @@ provide('grid', grid)
         <ul>
           <li>An eigenspace is the set of all eigenvectors associated with a particular eigenvalue. The eigenspaces for <InlineColorLabel label="M" :color="Colors.blue"/> are represented as gray lines.</li>
           <li><InlineColorLabel label="e1" :color="Colors.blue"/> and <InlineColorLabel label="e2" :color="Colors.blue"/> are unit vectors in the eigenspaces for the matrix.</li>
+
         </ul>
       </template>
       <template #math>
         <EigenvectorMath 
-          :matrix="m1" 
-          :vector="v1" 
+          :matrix="m" 
+          :vector="v" 
           :eigenvectors="eigenvectors"
         />
       </template>   
