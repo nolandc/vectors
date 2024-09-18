@@ -62,14 +62,7 @@ provide('grid', grid)
             <li>
                 The transformation preserves the origin (the point where both vectors start).
             </li>
-
-            <li>
-                Changes in direction and magnitude of the vector illustrate how M affects v1.
-            </li>
         </ul>
-
-        This visualization demonstrates how linear transformations can stretch, rotate, or reflect vectors, 
-        maintaining linearity throughout the process.
       </template>
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">

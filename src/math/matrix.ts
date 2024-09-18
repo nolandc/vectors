@@ -87,13 +87,13 @@ class Matrix2x2 {
             ]
         } else if (this.b !== 0) {
             return [
-                new Vector(l1-this.d, this.b),
-                new Vector(l2-this.d, this.b)
+                new Vector(this.b, l1 - this.a),
+                new Vector(this.b, l2 - this.a)
             ]   
         } else {
             return [
-                new Vector(this.c, l1-this.a),
-                new Vector(this.c, l2-this.a)
+                new Vector(l1 - this.d, this.c),
+                new Vector(l2 - this.d, this.c)
             ]
         }
     }
