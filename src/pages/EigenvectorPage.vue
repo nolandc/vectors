@@ -38,7 +38,7 @@ provide('grid', grid)
     <VizDetails>
       <div>
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
-        <MatrixInput :initial-matrix="m" @updated="newM => m = newM"/>
+        <MatrixInput :matrix="m" @updated="newM => m = newM"/>
         <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
         <VectorInput label="e1" :color="Colors.blue" :vector="eigenvectors[0].unit()" :editable="false"/>
         <VectorInput label="e2" :color="Colors.blue" :vector="eigenvectors[1].unit()" :editable="false"/>

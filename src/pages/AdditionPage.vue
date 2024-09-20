@@ -20,8 +20,8 @@ import MLSubscript from "../components/mathml/MLSubscript.vue";
 import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
 // Use the composable to manage URL state
 const { v, w } = useUrlState({
-  v: { type: 'vector', default: new Vector(3, 2) },
-  w: { type: 'vector', default: new Vector(-1, -2) }
+  v: { type: 'vector', default: new Vector(-2, 5) },
+  w: { type: 'vector', default: new Vector(5, 3) }
 });
 
 // Create and provide grid

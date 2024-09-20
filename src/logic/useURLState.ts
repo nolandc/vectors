@@ -87,7 +87,15 @@ export function useUrlState(config: UrlStateConfig) {
   const vStateLink: Directive = {
     mounted(el, binding) {
       const newState = binding.value;
-      const href = router.resolve({ query: generateQueryParams(newState) }).href;
+      const query = generateQueryParams(newState);
+      
+      // Generate the correct URL without duplicating the hash
+      const href = router.resolve({
+        path: route.path,
+        hash: route.hash,
+        query: query
+      }).href;
+      
       el.href = href;
       el.addEventListener('click', (event: MouseEvent) => {
         if (!event.ctrlKey && !event.metaKey) {
@@ -97,7 +105,7 @@ export function useUrlState(config: UrlStateConfig) {
               state[key].value = value;
             }
           }
-          router.push(href);
+          router.push({ query: query });
         }
       });
     }

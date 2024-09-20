@@ -20,7 +20,7 @@ import DeterminantMath from './math/DeterminantMath.vue'
 import ConstantInput from '../components/ConstantInput.vue'
 
 // Use the composable to manage URL state
-const { v, w, m } = useUrlState({
+const { v, w, m, vStateLink } = useUrlState({
   v: { type: 'vector', default: new Vector(2, 2) },
   w: { type: 'vector', default: new Vector(-3, 3) },
   m: { type: 'matrix', default: new Matrix2x2(2, 1, 1, 2) }
@@ -50,6 +50,12 @@ const transformedPoints = computed(() => [
 // Create and provide grid
 const grid = new Grid(20, 20, 600, 600, 0.1)
 provide('grid', grid)
+
+const reflection = {
+  v: new Vector(2, 2),
+  w: new Vector(-4, 1),
+  m: new Matrix2x2(1, 1, 1, -1)
+}
 </script>
 <template>
   <Visualization>
@@ -57,7 +63,7 @@ provide('grid', grid)
       <div>
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="newV => v = newV" />
         <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
-        <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
+        <MatrixInput :matrix="m" @updated="newM => m = newM" />
         <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>
         <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>
         <ConstantInput label="det(M)" :value="m.determinant()" :editable="false"/>
@@ -106,6 +112,9 @@ provide('grid', grid)
 
             <li>
                 A2 shows the area after transformation, illustrating the scaling effect of the determinant.
+            </li>
+            <li>
+              A negative determinant indicates that the transformation includes a reflection: <a v-state-link="reflection">example</a>.
             </li>
         </ul>
 
