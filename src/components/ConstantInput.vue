@@ -2,12 +2,13 @@
 import { ref, watch } from 'vue';
 import MathUtils from '../math/utils';
 import InputColorLabel from './InputColorLabel.vue';
+import Colors from '../constants/Colors';
 
 const props = defineProps({
     label: String,
     color: {
         type: String,
-        default: 'black',
+        default: Colors.gray,
     },
     editable: {
         type: Boolean,

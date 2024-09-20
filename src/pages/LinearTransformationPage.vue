@@ -21,7 +21,7 @@ import MLMatrix from '../components/mathml/MLMatrix.vue';
 import MLVector from '../components/mathml/MLVector.vue';
 import MLFormattedNumber from '../components/mathml/MLFormattedNumber.vue';
 
-const { v, m } = useUrlState({
+const { v, m, vStateLink } = useUrlState({
   v: { type: 'vector', default: new Vector(-2, 2) },
   m: { type: 'matrix', default: new Matrix2x2(-1, 2, 2, 3) }
 });
@@ -29,6 +29,17 @@ const { v, m } = useUrlState({
 // Create and provide grid
 const grid = new Grid(20, 20, 600, 600, 0.1)
 provide('grid', grid)
+
+
+const rotation = {
+  v: new Vector(4.5, 4.5),
+  m: new Matrix2x2(0, 1, -1, 0)
+};
+
+const shear = {
+  v: new Vector(0, 4.5),
+  m: new Matrix2x2(1, 2, 0, 1)
+}
 </script>
 
 <template>
@@ -36,7 +47,7 @@ provide('grid', grid)
     <VizDetails>
       <div>
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
-        <MatrixInput :initial-matrix="m" @updated="newM => m = newM"/>
+        <MatrixInput :matrix="m" @updated="newM => m = newM"/>
         <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
       </div>
     </VizDetails>    
@@ -61,6 +72,11 @@ provide('grid', grid)
 
             <li>
                 The transformation preserves the origin (the point where both vectors start).
+            </li>
+            <li>
+              Some useful, common matrix transformations are a 
+              <a v-state-link="rotation">rotation</a> and a 
+              <a v-state-link="shear">shear</a>
             </li>
         </ul>
       </template>

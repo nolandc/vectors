@@ -17,6 +17,7 @@ import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from '../components/layout/MathDetails.vue'
 import InlineColorLabel from '../components/InlineColorLabel.vue'
 import DeterminantMath from './math/DeterminantMath.vue'
+import ConstantInput from '../components/ConstantInput.vue'
 
 // Use the composable to manage URL state
 const { v, w, m } = useUrlState({
@@ -58,7 +59,8 @@ provide('grid', grid)
         <VectorInput label="w" :color="Colors.green" :vector="w" @updated="newW => w = newW" />
         <MatrixInput :initial-matrix="m" @updated="newM => m = newM" />
         <VectorInput label="Mv" :vector="v.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>
-        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>          
+        <VectorInput label="Mw" :vector="w.multiplyByMatrix(m)" :editable="false" :color="Colors.gray"/>
+        <ConstantInput label="det(M)" :value="m.determinant()" :editable="false"/>
       </div>
     </VizDetails>
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.5">
