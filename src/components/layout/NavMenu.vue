@@ -104,7 +104,6 @@ const vClickOutside = {
   transition: all 0.3s ease;
   user-select: none;
 
-
   .selected-link {
     display: flex;
     justify-content: space-between;
@@ -133,7 +132,7 @@ const vClickOutside = {
     border-radius: 3px;
     .link {
       box-sizing: border-box;
-
+      text-align: left;
       &:hover {
         text-decoration: underline;
       }
@@ -143,7 +142,7 @@ const vClickOutside = {
       }
 
       a {
-        padding: 8px;
+        padding: 8px 12px;
         color: #333;
         text-decoration: none;
         display: block;
