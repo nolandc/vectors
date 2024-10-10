@@ -41,7 +41,6 @@ provide('grid', grid)
     </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="v.plus(w)" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
-      <LineView :vector="v.plus(w)" :origin="w" :color="Colors.lightGray" strokeDashArray="10"/>
 
       <DraggableCircleView :vector="v" @onChanged="nv => v = nv" :color="Colors.red"/>
       <VectorView :vector="v" :color="Colors.red"/>
@@ -63,9 +62,9 @@ provide('grid', grid)
             Visually, you can imagine simply placing the origin of the first vector at the tip of the second.	        
           </li>
           <li>
-            Notice how dotted gray vectors extending from <InlineColorLabel label="v" :color="Colors.red"/> and <InlineColorLabel label="w" :color="Colors.green"/>
-            to <InlineColorLabel label="v+w" :color="Colors.blue"/> are the same magnitude as 
-            <InlineColorLabel label="w" :color="Colors.green"/> and <InlineColorLabel label="v" :color="Colors.red"/> respectively. 
+            Notice how dotted gray vector extending from the tip of <InlineColorLabel label="v" :color="Colors.red"/>
+            to <InlineColorLabel label="v+w" :color="Colors.blue"/> is the same magnitude as 
+            <InlineColorLabel label="w" :color="Colors.green"/>. 
           </li>
         </ul>
       </template>
