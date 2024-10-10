@@ -102,6 +102,10 @@ class Vector {
     return new Vector(this.x * signVector.x, this.y * signVector.y)
   }
 
+  map(f: (v: Vector) => Vector) {
+    return f(this)
+  }
+
   
   /* 
     Find intersection of square defined by:

@@ -21,6 +21,7 @@ import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
 import MLDotProduct from "../components/mathml/MLDotProduct.vue";
 import MLNorm from "../components/mathml/MLNorm.vue";
 import MLAlignedEquations from "../components/mathml/MLAlignedEquations.vue";
+import RightAngleView from "../components/svg/RightAngleView.vue";
 
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(4, 1) },
@@ -45,7 +46,12 @@ provide('grid', grid)
     </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="p" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
-
+      <RightAngleView 
+        :v="v"
+        :p="p"
+        :color="Colors.lightGray"
+        :strokeWidth="3"
+      />
       <DraggableCircleView :vector="v" @onChanged="(nv: Vector) => v=nv" :color="Colors.red"/>
       <VectorView :vector="v" :color="Colors.red"/>
 
@@ -53,6 +59,8 @@ provide('grid', grid)
       <VectorView :vector="w" :color="Colors.green"/>
 
       <VectorView :vector="p" :color="Colors.blue"/>
+
+
 
       <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
       <LabelView text="w" :position="w.divided(2)" :color="Colors.green"/>

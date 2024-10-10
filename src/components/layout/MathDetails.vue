@@ -54,36 +54,30 @@ if (tabs.value.length > 0) {
 		justify-content: center;
     gap: 20px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #888;
 
     button {
       border: none;
-      padding: 10px 16px 6px 16px;
+      padding: 8px 14px 8px 14px;
       font-size: 16px;
       cursor: pointer;
-      color: #333;
       position: relative;
-      border-radius: 4px 4px 0 0;
+      border-radius: 20px;
       background: white;
-      margin-bottom: -1px;
-      border: 0px solid transparent;
-      border-bottom: 1px solid #888;
-      
+      border: 1px solid transparent;
+      transition: border-color 0s;
+      color: #777;
 
 			&.active {
-        padding: 9px 15px 5px 15px;
-        border: 1px solid;
-        border-color: #888;
-        border-bottom-color: transparent;
+        border: 1px solid #888;
+        color: #333;
 			}
+
+      &:hover:not(.active) {
+        border: 1px dotted #888;
+      }
 
       &:focus {
         outline: none;
-      }
-
-      &:focus-visible {
-        outline: 2px solid #333;
-        outline-offset: 2px;
       }
     }
   }

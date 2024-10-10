@@ -80,7 +80,6 @@ const emit = defineEmits(['onChanged'])
   <circle 
     class="draggable-circle" 
     ref="el" 
-    r="20.5" 
     :cx="circlePosition.x" 
     :cy="circlePosition.y" 
     :fill="color" 
@@ -93,8 +92,15 @@ const emit = defineEmits(['onChanged'])
   ></circle>
 </template>
 
-<style scoped>
-.draggable-circle:hover {
-  opacity: 0.25;
+<style scoped lang="scss">
+.draggable-circle {
+  
+
+  r: 20.5;
+  transition: opacity 0.2s;  
+  &:hover {
+    r: 21.5;
+    opacity: 0.25;
+  }
 }
 </style>
