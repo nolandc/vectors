@@ -20,7 +20,8 @@ mn {
   font-family: "JetBrains Mono";
   display: inline-block;
   text-align: center;
-  min-width: v-bind('totalChars');
+  font-size: 14px;
+  //min-width: v-bind('totalChars');
   white-space: pre;
 }
 </style>

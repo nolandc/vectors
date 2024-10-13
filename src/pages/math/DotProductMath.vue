@@ -25,16 +25,12 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
   <div class="dot-product-math">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <MLAlignedEquations>
-        <mtr>
+        <mtr class="theory">
           <mtd>
             <MLVectorVar variable="v" />
             <mo>⋅</mo>
             <MLVectorVar variable="w" />
-          </mtd>
-          <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <msub><mi>v</mi><mn>x</mn></msub>
             <msub><mi>w</mi><mn>x</mn></msub>
             <mo>+</mo>
@@ -43,11 +39,8 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
           </mtd>
         </mtr>
         <mtr>
-          <mtd></mtd>
           <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <mrow>
               <mo>(</mo>
               <MLFormattedNumber :val="v.x" :decimals="2" />
@@ -66,11 +59,8 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
           </mtd>
         </mtr>
         <mtr>
-          <mtd></mtd>
           <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <MLFormattedNumber :val="dotProduct" :decimals="2" />
           </mtd>
         </mtr>
@@ -93,11 +83,7 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
                 <mo>|</mo><MLVectorVar variable="w" /><mo>|</mo>
               </mrow>
             </mfrac>
-          </mtd>
-          <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <MLFormattedNumber :val="unitDotProduct" :decimals="2" />
           </mtd>
         </mtr>
@@ -112,11 +98,7 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
             <MLVectorVar variable="v" />
             <mo>⋅</mo>
             <MLVectorVar variable="w" />
-          </mtd>
-          <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <mo>|</mo><MLVectorVar variable="v" /><mo>|</mo>
             <mo>|</mo><MLVectorVar variable="w" /><mo>|</mo>
             <mi>cos</mi>
@@ -128,11 +110,7 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
         <mtr>
           <mtd>
             <MLFormattedNumber :val="dotProduct" :decimals="2" />
-          </mtd>
-          <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <mrow>
               <mo>(</mo>
               <MLFormattedNumber :val="v.length()" :decimals="2" />
@@ -156,11 +134,7 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
         <mtr>
           <mtd>
             <mi>θ</mi>
-          </mtd>
-          <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <msup>
               <mi>cos</mi>
               <mrow>
@@ -186,21 +160,15 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
           </mtd>
         </mtr>
         <mtr>
-          <mtd></mtd>
           <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <MLFormattedNumber :val="angle" :decimals="2" />
             <mtext> radians</mtext>
           </mtd>
         </mtr>
         <mtr>
-          <mtd></mtd>
           <mtd>
             <mo>=</mo>
-          </mtd>
-          <mtd>
             <MLFormattedNumber :val="angleDegrees" :decimals="2" />
             <mi>°</mi>
           </mtd>

@@ -100,7 +100,6 @@ const updateY = (value: string) => {
         padding: 10px 4px;
         margin: 0 5px;
         border-radius: 3px;
-        border: 1px solid gray;
         text-align: center;
         border: 1px solid #ccc;
     }
@@ -116,7 +115,7 @@ const updateY = (value: string) => {
     .non-editable-vector {
         .vector-value {
             display: inline-block;
-            width: 80px;
+            width: 70px;
         }
     }
 }

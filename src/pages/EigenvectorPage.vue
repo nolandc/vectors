@@ -17,6 +17,7 @@ import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from '../components/layout/MathDetails.vue';
 import EigenvectorMath from './math/EigenvectorMath.vue';
 import InlineColorLabel from '../components/InlineColorLabel.vue';
+import ConstantInput from '../components/ConstantInput.vue';
 
 const { v, m } = useUrlState({
   v: { type: 'vector', default: new Vector(1, 3) },
@@ -25,6 +26,10 @@ const { v, m } = useUrlState({
 
 const eigenvectors = computed(() => {
   return m.value.eigenvectors().map((v: Vector) => v.unit().times(20))
+})
+
+const eigenvalues = computed(() => {
+  return m.value.eigenvalues()
 })
 
 
@@ -40,8 +45,11 @@ provide('grid', grid)
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
         <MatrixInput :matrix="m" @updated="newM => m = newM"/>
         <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
-        <VectorInput label="e1" :color="Colors.blue" :vector="eigenvectors[0].unit()" :editable="false"/>
-        <VectorInput label="e2" :color="Colors.blue" :vector="eigenvectors[1].unit()" :editable="false"/>
+        <VectorInput label="ev1" :color="Colors.blue" :vector="eigenvectors[0].unit()" :editable="false"/>
+        <VectorInput label="ev2" :color="Colors.blue" :vector="eigenvectors[1].unit()" :editable="false"/>
+        
+        <ConstantInput v-if="eigenvalues[0] != undefined" label="e1" :color="Colors.blue" :value="eigenvalues[0]" :editable="false"/>
+        <ConstantInput v-if="eigenvalues[1] != undefined" label="e2" :color="Colors.blue" :value="eigenvalues[1]" :editable="false"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">

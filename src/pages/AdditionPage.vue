@@ -18,6 +18,8 @@ import MLVector from "../components/mathml/MLVector.vue";
 import MLVectorVar from "../components/mathml/MLVectorVar.vue";
 import MLSubscript from "../components/mathml/MLSubscript.vue";
 import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
+import MLHeader from "../components/mathml/MLHeader.vue";
+
 // Use the composable to manage URL state
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(-2, 5) },
@@ -37,19 +39,14 @@ provide('grid', grid)
         <VectorInput label="w" color="#43aa8b" :vector="w" @updated="v => w = v"/>
         <VectorInput label="v+w" color="#577590" :vector="v.plus(w)" :editable="false"/>
       </div>
-
     </VizDetails>
     <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
       <LineView :vector="v.plus(w)" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
-
       <DraggableCircleView :vector="v" @onChanged="nv => v = nv" :color="Colors.red"/>
       <VectorView :vector="v" :color="Colors.red"/>
-
       <DraggableCircleView :vector="w" @onChanged="v => w = v" :color="Colors.green"/>
       <VectorView :vector="w" :color="Colors.green"/>
-
       <VectorView :vector="w.plus(v)" :color="Colors.blue"/>
-
       <LabelView text="v" :position="v.divided(2)" :color="Colors.red"/>
       <LabelView text="w" :position="w.divided(2)" :color="Colors.green"/>
       <LabelView text="v+w" :position="v.plus(w).divided(2)" :color="Colors.blue"/>
@@ -69,62 +66,68 @@ provide('grid', grid)
         </ul>
       </template>
       <template #math>
-        <!-- Generic formula for adding two 2D vectors -->
-        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <mrow>
-            <MLVectorVar variable="v" />
-            <mo>+</mo>
-            <MLVectorVar variable="w" />
-            <mo>=</mo>
-          </mrow>
-          <MLVector>
-            <MLSubscript base="v" sub="x" />
-            <MLSubscript base="v" sub="y" />
-          </MLVector>
-          <mo>+</mo>
-          <MLVector>
-            <MLSubscript base="w" sub="x" />
-            <MLSubscript base="w" sub="y" />
-          </MLVector>
-          <mo>=</mo>
-          <MLVector>
-            <mrow>
-              <MLSubscript base="v" sub="x" />
-              <mo>+</mo>
-              <MLSubscript base="w" sub="x" />
-            </mrow>
-            <mrow>
-              <MLSubscript base="v" sub="y" />
-              <mo>+</mo>
-              <MLSubscript base="w" sub="y" />
-            </mrow>
-          </MLVector>
-        </math>
-
-        <!-- Specific vector addition step 1: Initial vectors -->
-        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <mo>=</mo>
-          <MLVector>
-            <MLFormattedNumber :val="v.x" :decimals="2" />
-            <MLFormattedNumber :val="v.y" :decimals="2" />
-          </MLVector>
-          <mo>+</mo>
-          <MLVector>
-            <MLFormattedNumber :val="w.x" :decimals="2" />
-            <MLFormattedNumber :val="w.y" :decimals="2" />
-          </MLVector>
-        </math>
-
-        <!-- Specific vector addition step 2: Addition and result -->
-        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <mo>=</mo>
-          <MLVector>
-            <MLFormattedNumber :val="v.x + w.x" :decimals="2" />
-            <MLFormattedNumber :val="v.y + w.y" :decimals="2" />
-          </MLVector>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" >
+          <mtable columnalign="center">
+            <MLHeader label="theory"/>
+            <mtr class="theory">
+              <mtd>
+                <mrow>
+                  <MLVectorVar variable="v" />
+                  <mo>+</mo>
+                  <MLVectorVar variable="w" />
+                  <mo>=</mo>
+                </mrow>
+                <MLVector>
+                  <MLSubscript base="v" sub="x" />
+                  <MLSubscript base="v" sub="y" />
+                </MLVector>
+                <mo>+</mo>
+                <MLVector>
+                  <MLSubscript base="w" sub="x" />
+                  <MLSubscript base="w" sub="y" />
+                </MLVector>
+                <mo>=</mo>
+                <MLVector>
+                  <mrow>
+                    <MLSubscript base="v" sub="x" />
+                    <mo>+</mo>
+                    <MLSubscript base="w" sub="x" />
+                  </mrow>
+                  <mrow>
+                    <MLSubscript base="v" sub="y" />
+                    <mo>+</mo>
+                    <MLSubscript base="w" sub="y" />
+                  </mrow>
+                </MLVector>
+              </mtd>
+            </mtr>
+            <MLHeader label="in practice"/>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLVector>
+                  <MLFormattedNumber :val="v.x" :decimals="2" />
+                  <MLFormattedNumber :val="v.y" :decimals="2" />
+                </MLVector>
+                <mo>+</mo>
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLVector>
+                  <MLFormattedNumber :val="v.x + w.x" :decimals="2" />
+                  <MLFormattedNumber :val="v.y + w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+          </mtable>
         </math>
       </template>
     </MathDetails>
   </Visualization>
 </template>
-

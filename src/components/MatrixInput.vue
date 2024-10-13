@@ -41,7 +41,7 @@ watch(localMatrix, (newMatrix) => {
     <div class="matrix-container">
       <div class="matrix-wrapper">
         <InputColorLabel :label="label" :color="color"/>
-        <span> = </span>
+        <span class="equals"> = </span>
         <div class="matrix-bracket left">[</div>
         <div class="matrix-inputs">
           <input v-model.number="localMatrix.a" inputmode="numeric" class="matrix-input" @focus="($event.target as HTMLInputElement)?.select()"/>
@@ -57,10 +57,14 @@ watch(localMatrix, (newMatrix) => {
 
 <style scoped>
 .matrix-container {
-  display: flex;
-  align-items: center;
   margin-bottom: 20px;
-  justify-content: center;
+  font-family: Courier, monospace;
+  font-size: 20px;
+}
+
+.equals {
+  display:inline-block;
+  padding: 0 12px;
 }
 
 .matrix-wrapper {

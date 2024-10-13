@@ -82,29 +82,19 @@ const shear = {
       </template>
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <MLAlignedEquations>
-            <mtr>
+          <mtable>
+            <mtr class="theory">
               <mtd>
                 <mi>M</mi>
                 <MLVectorVar variable="v" />                
-              </mtd>
-              <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLMatrix :matrix="[['a', 'b'], ['c', 'd']]" />
                 <MLVector>
                   <mi>x</mi>
                   <mi>y</mi>
                 </MLVector>
-              </mtd>
-            </mtr>
-            <mtr>
-              <mtd></mtd>
-              <mtd>
+
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLVector>
                   <mrow>
                     <mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi>
@@ -116,11 +106,8 @@ const shear = {
               </mtd>
             </mtr>
             <mtr>
-              <mtd></mtd>
               <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLMatrix :matrix="[[m.a, m.b], [m.c, m.d]]" />
                 <MLVector>
                   <MLFormattedNumber :val="v.x" :decimals="2" />
@@ -129,11 +116,8 @@ const shear = {
               </mtd>
             </mtr>
             <mtr>
-              <mtd></mtd>
               <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLVector>
                   <mrow>
                     <mo>(</mo>
@@ -165,18 +149,15 @@ const shear = {
               </mtd>
             </mtr>
             <mtr>
-              <mtd></mtd>
               <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLVector>
                   <MLFormattedNumber :val="m.a * v.x + m.b * v.y" :decimals="2"/>
                   <MLFormattedNumber :val="m.c * v.x + m.d * v.y" :decimals="2"/>
                 </MLVector>
               </mtd>
             </mtr>
-          </MLAlignedEquations>
+          </mtable>
         </math>
       </template>
     </MathDetails>

@@ -96,8 +96,8 @@ provide('grid', grid)
       </template>
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <mtable>
-            <mtr>
+          <mtable columnalign="left">
+            <mtr class="theory">
               <mtd>
                 <msub>
                   <mtext>proj</mtext>
@@ -122,84 +122,65 @@ provide('grid', grid)
             </mtr>
             <mtr>
               <mtd>
-                <MLAlignedEquations>
-                  <mtr>
-                    <mtd>
-                      <MLVectorVar variable="p"/>
-                    </mtd>
-                    <mtd>
-                      <mo>=</mo>
-                    </mtd>
-                    <mtd>
-                      <MLFraction>
-                        <MLDotProduct>
-                          <MLVector>
-                            <MLFormattedNumber :val="v.x" :decimals="2" />
-                            <MLFormattedNumber :val="v.y" :decimals="2" />
-                          </MLVector>
-                          <MLVector>
-                            <MLFormattedNumber :val="w.x" :decimals="2" />
-                            <MLFormattedNumber :val="w.y" :decimals="2" />
-                          </MLVector>
-                        </MLDotProduct>
-                        <msup>
-                          <MLNorm>
-                            <MLVector>
-                              <MLFormattedNumber :val="w.x" :decimals="2" />
-                              <MLFormattedNumber :val="w.y" :decimals="2" />
-                            </MLVector>
-                          </MLNorm>
-                          <mn>2</mn>
-                        </msup>
-                      </MLFraction>
+                <MLVectorVar variable="p"/>
+                <mo>=</mo>
+                <MLFraction>
+                  <MLDotProduct>
+                    <MLVector>
+                      <MLFormattedNumber :val="v.x" :decimals="2" />
+                      <MLFormattedNumber :val="v.y" :decimals="2" />
+                    </MLVector>
+                    <MLVector>
+                      <MLFormattedNumber :val="w.x" :decimals="2" />
+                      <MLFormattedNumber :val="w.y" :decimals="2" />
+                    </MLVector>
+                  </MLDotProduct>
+                  <msup>
+                    <MLNorm>
                       <MLVector>
                         <MLFormattedNumber :val="w.x" :decimals="2" />
                         <MLFormattedNumber :val="w.y" :decimals="2" />
                       </MLVector>
-                    </mtd>
-                  </mtr>
-                  <mtr>
-                    <mtd></mtd>
-                    <mtd>
-                      <mo>=</mo>
-                    </mtd>
-                    <mtd>
-                      <MLFraction>
-                        <MLFormattedNumber :val="v.x * w.x + v.y * w.y" :decimals="2" />
-                        <MLFormattedNumber :val="w.x * w.x + w.y * w.y" :decimals="2" />
-                      </MLFraction>
-                      <MLVector>
-                        <MLFormattedNumber :val="w.x" :decimals="2" />
-                        <MLFormattedNumber :val="w.y" :decimals="2" />
-                      </MLVector>
-                    </mtd>
-                  </mtr>
-                  <mtr>
-                    <mtd></mtd>
-                    <mtd>
-                      <mo>=</mo>
-                    </mtd>
-                    <mtd>
-                      <MLFormattedNumber :val="(v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)" :decimals="2" />
-                      <MLVector>
-                        <MLFormattedNumber :val="w.x" :decimals="2" />
-                        <MLFormattedNumber :val="w.y" :decimals="2" />
-                      </MLVector>
-                    </mtd>
-                  </mtr>
-                  <mtr>
-                    <mtd></mtd>
-                    <mtd>
-                      <mo>=</mo>
-                    </mtd>
-                    <mtd>
-                      <MLVector>
-                        <MLFormattedNumber :val="(((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.x)" :decimals="2" />
-                        <MLFormattedNumber :val="(((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.y)" :decimals="2" />
-                      </MLVector>
-                    </mtd>
-                  </mtr>
-                </MLAlignedEquations>
+                    </MLNorm>
+                    <mn>2</mn>
+                  </msup>
+                </MLFraction>
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLFraction>
+                  <MLFormattedNumber :val="v.x * w.x + v.y * w.y" :decimals="2" />
+                  <MLFormattedNumber :val="w.x * w.x + w.y * w.y" :decimals="2" />
+                </MLFraction>
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLFormattedNumber :val="(v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)" :decimals="2" />
+                <MLVector>
+                  <MLFormattedNumber :val="w.x" :decimals="2" />
+                  <MLFormattedNumber :val="w.y" :decimals="2" />
+                </MLVector>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo>=</mo>
+                <MLVector>
+                  <MLFormattedNumber :val="(((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.x)" :decimals="2" />
+                  <MLFormattedNumber :val="(((v.x * w.x + v.y * w.y) / (w.x * w.x + w.y * w.y)) * w.y)" :decimals="2" />
+                </MLVector>
               </mtd>
             </mtr>
           </mtable>

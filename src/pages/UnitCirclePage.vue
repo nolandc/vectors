@@ -80,14 +80,10 @@ provide('grid', grid)
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
           <MLAlignedEquations>
-            <mtr>
+            <mtr class="theory">
               <mtd>
                 <MLVectorVar variable="v" :isUnit="true" />
-              </mtd>
-              <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLFraction>
                   <MLVectorVar variable="v" />
                   <MLNorm>
@@ -97,11 +93,8 @@ provide('grid', grid)
               </mtd>
             </mtr>
             <mtr>
-              <mtd></mtd>
               <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLFraction>
                   <MLVector>
                     <MLFormattedNumber :val="v.x" :decimals="2"/>
@@ -112,11 +105,8 @@ provide('grid', grid)
               </mtd>
             </mtr>
             <mtr>
-              <mtd></mtd>
               <mtd>
                 <mo>=</mo>
-              </mtd>
-              <mtd>
                 <MLVector>
                   <MLFormattedNumber :val="v.x / v.length()" :decimals="3"/>
                   <MLFormattedNumber :val="v.y / v.length()" :decimals="3"/>

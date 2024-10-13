@@ -47,7 +47,6 @@ if (tabs.value.length > 0) {
   width: 400px;
   box-sizing: border-box;
   padding: 0 30px;
-  text-align: left;
 
   .tab-bar {
     display: flex;
@@ -89,6 +88,24 @@ if (tabs.value.length > 0) {
   li {
     margin-bottom: 10px;
   }
+
+  math {
+    width: 100%;
+  }
+  math > mtable {
+    width: 100%;
+    border-collapse: collapse;
+    > mtr > mtd {
+      padding: 10px 0;
+    }
+  }
+
+
+
+
+
+
+
 
 }
 </style>
