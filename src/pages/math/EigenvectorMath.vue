@@ -18,17 +18,13 @@ interface Props {
 const props = defineProps<Props>();
 
 const eigenvalues = computed(() => props.matrix.eigenvalues());
-
-const dotProducts = computed(() => 
-  props.eigenvectors.map(ev => ev.unit().dotProduct(props.vector.unit()))
-);
 </script>
 
 <template>
   <div class="eigenvector-math">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <mtable>
-        <MLHeader label="Solve lx = 0"/>
+        <MLHeader label="theory"/>
         <mtr>
           <mtd>
             <mi>M</mi>
@@ -69,6 +65,7 @@ const dotProducts = computed(() =>
             <mn>0</mn>
           </mtd>
         </mtr>
+        <MLHeader label="in practice"/>
         <mtr>
           <mtd>
             <mrow>
@@ -107,12 +104,6 @@ const dotProducts = computed(() =>
             <mn>0</mn>
           </mtd>
         </mtr>
-      </mtable>
-    </math>
-
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <mtable>
-        <MLHeader label="Quadratic Formula"/>
         <mtr>
           <mtd>
             <mi>λ</mi>
@@ -167,6 +158,16 @@ const dotProducts = computed(() =>
             </mfrac>
           </mtd>
         </mtr>
+        <mtr>
+          <mtd>
+            <mo>=</mo>
+            <mrow>
+              <MLFormattedNumber :val="eigenvalues[0]" :decimals="2" />
+              <mo>,</mo>
+              <MLFormattedNumber :val="eigenvalues[1]" :decimals="2" />
+            </mrow>
+          </mtd>
+        </mtr>        
       </mtable>
     </math>
   </div>

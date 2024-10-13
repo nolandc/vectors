@@ -22,6 +22,7 @@ import MLDotProduct from "../components/mathml/MLDotProduct.vue";
 import MLNorm from "../components/mathml/MLNorm.vue";
 import MLAlignedEquations from "../components/mathml/MLAlignedEquations.vue";
 import RightAngleView from "../components/svg/RightAngleView.vue";
+import MLHeader from "../components/mathml/MLHeader.vue";
 
 const { v, w } = useUrlState({
   v: { type: 'vector', default: new Vector(4, 1) },
@@ -97,6 +98,7 @@ provide('grid', grid)
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
           <mtable columnalign="left">
+            <MLHeader label="theory"/>
             <mtr class="theory">
               <mtd>
                 <msub>
@@ -114,12 +116,13 @@ provide('grid', grid)
                     <MLNorm>
                       <MLVectorVar variable="w" />
                     </MLNorm>
-                    <mn>2</mn>
+                    <mn style="font-size: 12">2</mn>
                   </msup>
                 </MLFraction>
                 <MLVectorVar variable="w" />
               </mtd>
             </mtr>
+            <MLHeader label="in practice"/>
             <mtr>
               <mtd>
                 <MLVectorVar variable="p"/>
@@ -142,21 +145,8 @@ provide('grid', grid)
                         <MLFormattedNumber :val="w.y" :decimals="2" />
                       </MLVector>
                     </MLNorm>
-                    <mn>2</mn>
+                    <mn style="font-size: 12;">2</mn>
                   </msup>
-                </MLFraction>
-                <MLVector>
-                  <MLFormattedNumber :val="w.x" :decimals="2" />
-                  <MLFormattedNumber :val="w.y" :decimals="2" />
-                </MLVector>
-              </mtd>
-            </mtr>
-            <mtr>
-              <mtd>
-                <mo>=</mo>
-                <MLFraction>
-                  <MLFormattedNumber :val="v.x * w.x + v.y * w.y" :decimals="2" />
-                  <MLFormattedNumber :val="w.x * w.x + w.y * w.y" :decimals="2" />
                 </MLFraction>
                 <MLVector>
                   <MLFormattedNumber :val="w.x" :decimals="2" />

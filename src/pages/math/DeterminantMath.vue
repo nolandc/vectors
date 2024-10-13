@@ -2,9 +2,9 @@
 import { computed } from 'vue';
 import MLVectorVar from "../../components/mathml/MLVectorVar.vue";
 import MLFormattedNumber from "../../components/mathml/MLFormattedNumber.vue";
-import MLMatrix from "../../components/mathml/MLMatrix.vue";
 import Vector from '@/src/math/vector';
 import Matrix2x2 from '@/src/math/matrix';
+import MLHeader from '../../components/mathml/MLHeader.vue';
 
 interface Props {
   v: Vector;
@@ -26,34 +26,39 @@ const areaRatio = computed(() => transformedArea.value / area.value);
 
 <template>
   <div class="determinant-math">
-    <p>Determinant of M (scale factor):</p>
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <mtable>
+        <MLHeader label="theory"/>
         <mtr class="theory">
           <mtd>
             <mtext>det(M)</mtext>
             <mo>=</mo>
-            <msub><mi>m</mi><mn>11</mn></msub>
-            <msub><mi>m</mi><mn>22</mn></msub>
+            <msub><mi>m</mi><mn>a</mn></msub>
+            <msub><mi>m</mi><mn>d</mn></msub>
             <mo>-</mo>
-            <msub><mi>m</mi><mn>12</mn></msub>
-            <msub><mi>m</mi><mn>21</mn></msub>
+            <msub><mi>m</mi><mn>b</mn></msub>
+            <msub><mi>m</mi><mn>c</mn></msub>
           </mtd>
         </mtr>
+        <MLHeader label="in practice"/>
+        <mtr>
+          <mtd>
+            <mo>=</mo>
+            (<MLFormattedNumber :val="m.a" :decimals="2" /> * <MLFormattedNumber :val="m.d" :decimals="2" />)
+            <mo>-</mo>
+            (<MLFormattedNumber :val="m.b" :decimals="2" /> * <MLFormattedNumber :val="m.c" :decimals="2" />)
+          </mtd>
+        </mtr>        
         <mtr>
           <mtd>
             <mo>=</mo>
             <MLFormattedNumber :val="scaleFactor" :decimals="2" />
           </mtd>
         </mtr>
-      </mtable>
-    </math>
-
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <mtable>
+        <MLHeader label="comparing areas"/>
         <mtr>
           <mtd>
-            <mtext>Area(A1)</mtext>
+            A1
             <mo>=</mo>
             <mo>|</mo>
             <mrow>
@@ -84,23 +89,29 @@ const areaRatio = computed(() => transformedArea.value / area.value);
             <MLFormattedNumber :val="area" :decimals="2" />
           </mtd>
         </mtr>
-      </mtable>
-    </math>
-
-    <p>Transformation by matrix M:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <mtable>
         <mtr>
           <mtd>
-            <mtext>Area(A2)</mtext>
+            A2
             <mo>=</mo>
             <mo>|</mo>
             <mrow>
-              <mi>M</mi>
-              <MLVectorVar variable="v" />
+              <MLVectorVar variable="Mv" />
               <mo>×</mo>
-              <mi>M</mi>
-              <MLVectorVar variable="w" />
+              <MLVectorVar variable="Mw" />
+            </mrow>
+            <mo>|</mo>
+          </mtd>
+        </mtr>
+        <mtr>
+          <mtd>
+            <mo>=</mo>
+            <mo>|</mo>
+            <mrow>
+              <msub><mi>Mv</mi><mn>x</mn></msub>
+              <msub><mi>Mw</mi><mn>y</mn></msub>
+              <mo>-</mo>
+              <msub><mi>Mv</mi><mn>y</mn></msub>
+              <msub><mi>Mw</mi><mn>x</mn></msub>
             </mrow>
             <mo>|</mo>
           </mtd>
@@ -110,33 +121,16 @@ const areaRatio = computed(() => transformedArea.value / area.value);
             <mo>=</mo>
             <MLFormattedNumber :val="transformedArea" :decimals="2" />
           </mtd>
-        </mtr>
-      </mtable>
-    </math>
-
-
-
-    <p>Ratio of transformed area to original area:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <mtable>
+        </mtr>  
         <mtr>
           <mtd>
-            <mfrac>
-              <mtext>Area(A2)</mtext>
-              <mtext>Area(A1)</mtext>
-            </mfrac>
+            <MLFormattedNumber :val="transformedArea" :decimals="2" />
             <mo>=</mo>
-            <mo>|</mo>
-            <mtext>det(M)</mtext>
-            <mo>|</mo>
+            <MLFormattedNumber :val="area" :decimals="2" />
+            <mo>*</mo>
+            <MLFormattedNumber :val="scaleFactor" :decimals="2" />
           </mtd>
-        </mtr>
-        <mtr>
-          <mtd>
-            <mo>=</mo>
-            <MLFormattedNumber :val="areaRatio" :decimals="2" />
-          </mtd>
-        </mtr>
+        </mtr>            
       </mtable>
     </math>
   </div>

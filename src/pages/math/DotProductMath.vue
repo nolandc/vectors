@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import MLAlignedEquations from "../../components/mathml/MLAlignedEquations.vue";
 import MLVectorVar from "../../components/mathml/MLVectorVar.vue";
 import MLFormattedNumber from "../../components/mathml/MLFormattedNumber.vue";
 import Vector from '@/src/math/vector';
+import MLHeader from '../../components/mathml/MLHeader.vue';
 
 
 interface Props {
@@ -15,16 +15,13 @@ const props = defineProps<Props>();
 
 const dotProduct = computed(() => props.v.dotProduct(props.w));
 const unitDotProduct = computed(() => props.v.unit().dotProduct(props.w.unit()));
-const magnitudeProduct = computed(() => props.v.length() * props.w.length());
-const cosTheta = computed(() => dotProduct.value / magnitudeProduct.value);
-const angle = computed(() => Math.acos(Math.min(Math.max(cosTheta.value, -1), 1)));
-const angleDegrees = computed(() => angle.value * 180 / Math.PI);
 </script>
 
 <template>
   <div class="dot-product-math">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <MLAlignedEquations>
+      <mtable>
+        <MLHeader label="theory"/>
         <mtr class="theory">
           <mtd>
             <MLVectorVar variable="v" />
@@ -38,6 +35,7 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
             <msub><mi>w</mi><mn>y</mn></msub>
           </mtd>
         </mtr>
+        <MLHeader label="in practice"/>
         <mtr>
           <mtd>
             <mo>=</mo>
@@ -64,12 +62,7 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
             <MLFormattedNumber :val="dotProduct" :decimals="2" />
           </mtd>
         </mtr>
-      </MLAlignedEquations>
-    </math>
-
-    <p>Dot product of unit vectors:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <MLAlignedEquations>
+        <MLHeader label="dot product of unit vectors"/>
         <mtr>
           <mtd>
             <mfrac>
@@ -84,96 +77,10 @@ const angleDegrees = computed(() => angle.value * 180 / Math.PI);
               </mrow>
             </mfrac>
             <mo>=</mo>
-            <MLFormattedNumber :val="unitDotProduct" :decimals="2" />
+            <MLFormattedNumber :val="unitDotProduct" :decimals="4" />
           </mtd>
         </mtr>
-      </MLAlignedEquations>
-    </math>
-
-    <p>Relationship with angle and magnitudes:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <MLAlignedEquations>
-        <mtr>
-          <mtd>
-            <MLVectorVar variable="v" />
-            <mo>⋅</mo>
-            <MLVectorVar variable="w" />
-            <mo>=</mo>
-            <mo>|</mo><MLVectorVar variable="v" /><mo>|</mo>
-            <mo>|</mo><MLVectorVar variable="w" /><mo>|</mo>
-            <mi>cos</mi>
-            <mo>(</mo>
-            <mi>θ</mi>
-            <mo>)</mo>
-          </mtd>
-        </mtr>
-        <mtr>
-          <mtd>
-            <MLFormattedNumber :val="dotProduct" :decimals="2" />
-            <mo>=</mo>
-            <mrow>
-              <mo>(</mo>
-              <MLFormattedNumber :val="v.length()" :decimals="2" />
-              <mo>×</mo>
-              <MLFormattedNumber :val="w.length()" :decimals="2" />
-              <mo>)</mo>
-            </mrow>
-            <mo>×</mo>
-            <mi>cos</mi>
-            <mo>(</mo>
-            <MLFormattedNumber :val="angle" :decimals="2" />
-            <mo>)</mo>
-          </mtd>
-        </mtr>
-      </MLAlignedEquations>
-    </math>
-
-    <p>Angle between vectors:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <MLAlignedEquations>
-        <mtr>
-          <mtd>
-            <mi>θ</mi>
-            <mo>=</mo>
-            <msup>
-              <mi>cos</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <mrow>
-                  <MLVectorVar variable="v" />
-                  <mo>⋅</mo>
-                  <MLVectorVar variable="w" />
-                </mrow>
-                <mrow>
-                  <mo>|</mo><MLVectorVar variable="v" /><mo>|</mo>
-                  <mo>|</mo><MLVectorVar variable="w" /><mo>|</mo>
-                </mrow>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-          </mtd>
-        </mtr>
-        <mtr>
-          <mtd>
-            <mo>=</mo>
-            <MLFormattedNumber :val="angle" :decimals="2" />
-            <mtext> radians</mtext>
-          </mtd>
-        </mtr>
-        <mtr>
-          <mtd>
-            <mo>=</mo>
-            <MLFormattedNumber :val="angleDegrees" :decimals="2" />
-            <mi>°</mi>
-          </mtd>
-        </mtr>
-      </MLAlignedEquations>
+      </mtable>
     </math>
   </div>
 </template>

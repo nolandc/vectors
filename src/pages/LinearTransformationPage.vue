@@ -20,6 +20,7 @@ import MLVectorVar from '../components/mathml/MLVectorVar.vue';
 import MLMatrix from '../components/mathml/MLMatrix.vue';
 import MLVector from '../components/mathml/MLVector.vue';
 import MLFormattedNumber from '../components/mathml/MLFormattedNumber.vue';
+import MLHeader from '../components/mathml/MLHeader.vue';
 
 const { v, m, vStateLink } = useUrlState({
   v: { type: 'vector', default: new Vector(-2, 2) },
@@ -83,6 +84,7 @@ const shear = {
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
           <mtable>
+            <MLHeader label="theory"/>
             <mtr class="theory">
               <mtd>
                 <mi>M</mi>
@@ -105,6 +107,7 @@ const shear = {
                 </MLVector>
               </mtd>
             </mtr>
+            <MLHeader label="in practice"/>
             <mtr>
               <mtd>
                 <mo>=</mo>

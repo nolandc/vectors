@@ -21,6 +21,7 @@ import InlineColorLabel from "../components/InlineColorLabel.vue";
 import MLAlignedEquations from "../components/mathml/MLAlignedEquations.vue";
 import MLFraction from "../components/mathml/MLFraction.vue";
 import MLNorm from "../components/mathml/MLNorm.vue";
+import MLHeader from "../components/mathml/MLHeader.vue";
 
 const { v } = useUrlState({
   v: { type: 'vector', default: new Vector(2, 2) }
@@ -79,7 +80,8 @@ provide('grid', grid)
       </template>
       <template #math>
         <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <MLAlignedEquations>
+          <mtable>
+            <MLHeader label="theory"/>
             <mtr class="theory">
               <mtd>
                 <MLVectorVar variable="v" :isUnit="true" />
@@ -92,6 +94,7 @@ provide('grid', grid)
                 </MLFraction>
               </mtd>
             </mtr>
+            <MLHeader label="in practice"/>
             <mtr>
               <mtd>
                 <mo>=</mo>
@@ -113,7 +116,7 @@ provide('grid', grid)
                 </MLVector>
               </mtd>
             </mtr>
-          </MLAlignedEquations>
+          </mtable>
         </math>
       </template>
     </MathDetails>
