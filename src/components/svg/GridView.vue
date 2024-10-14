@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { onMounted, provide, ref } from 'vue';
+import { onMounted, onUnmounted, provide, ref } from 'vue';
 import Grid from '../../grid';
 
 
@@ -21,13 +21,20 @@ provide('container', container)
 const emit = defineEmits(['updated'])
 
 onMounted(() => {
-  const pxw = container.value?.offsetWidth
-  const pxh = container.value?.offsetHeight
+  const resizeObserver = new ResizeObserver(entries => {
+    for (let entry of entries) {
+      const { width, height } = entry.contentRect;
+      grid.value.setPixelSize(width, height);
+    }
+  });
 
-  if (pxw && pxh) {
-    grid.value.setPixelSize(pxw, pxh)
-    console.log('size', pxw, pxh)
+  if (container.value) {
+    resizeObserver.observe(container.value);
   }
+
+  onUnmounted(() => {
+    resizeObserver.disconnect();
+  });
 })
 </script>
 

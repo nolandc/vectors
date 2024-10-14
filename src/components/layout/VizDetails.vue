@@ -15,6 +15,9 @@
 
     @media screen and (max-width: 800px) {
       padding: 0;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
     }
  }
 </style>
