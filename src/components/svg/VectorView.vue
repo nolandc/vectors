@@ -16,6 +16,7 @@ const props = defineProps({
 const grid = inject('grid') as Grid
 
 const pxOrigin = computed(() => grid.gridToPx(props.origin))
+console.log('origin of vector: ', props.vector, ' : ', pxOrigin.value)
 const pxVector = computed(() => grid.gridToPx(props.vector))
 
 const uuid = uuidv4()

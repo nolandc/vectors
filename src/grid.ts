@@ -13,16 +13,25 @@ class Grid {
   constructor(w: number, h: number, pw: number, ph: number, _snapIncrement: number = 0.5) {
       this.gridWidth = w
       this.gridHeight = h
-      this.pxWidth = pw
-      this.pxHeight = ph
-
       this.snapIncrement = _snapIncrement
       // Graph must be divisible by 2 - eventually should allow origin to be specified
       this.origin = new Vector(this.gridWidth / 2, this.gridHeight / 2)
 
+      this.pxWidth = pw;
+      this.pxHeight = ph;
+  
       // I just use height to calculate this. All units have to be square. I'll need to refactor this
       // later if we want a non-square grid.
       this.unitPxSize = this.pxHeight / this.gridHeight
+  }
+
+  setPixelSize(w: number, h: number) {
+    this.pxWidth = w;
+    this.pxHeight = h;
+
+    // I just use height to calculate this. All units have to be square. I'll need to refactor this
+    // later if we want a non-square grid.
+    this.unitPxSize = this.pxHeight / this.gridHeight
   }
 
 

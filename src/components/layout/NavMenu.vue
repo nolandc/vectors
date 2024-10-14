@@ -93,13 +93,17 @@ const vClickOutside = {
 
 <style lang="scss" scoped>
 .nav-menu-wrapper {
-  width: 200px;
-  margin-bottom: 40px;
+  width: 100%;
+  margin: 20px 0 40px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-menu {
   position: relative;
-  width: 100%;
+  width: 200px;
   box-sizing: border-box;
   transition: all 0.3s ease;
   user-select: none;

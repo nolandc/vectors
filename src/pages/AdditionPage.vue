@@ -26,9 +26,6 @@ const { v, w } = useUrlState({
   w: { type: 'vector', default: new Vector(5, 3) }
 });
 
-// Create and provide grid
-const grid = new Grid(20, 20, 600, 600, 0.1)
-provide('grid', grid)
 </script>
 
 <template>

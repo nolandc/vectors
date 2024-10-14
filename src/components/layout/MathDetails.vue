@@ -44,9 +44,14 @@ if (tabs.value.length > 0) {
 
 <style lang="scss">
 .math-details {
-  width: 400px;
   box-sizing: border-box;
   padding: 0 30px;
+  width: 440px;
+
+  @media screen and (max-width: 800px) {
+    padding: 0 15px;
+    width: 100%;
+  }
 
   .tab-bar {
     display: flex;
@@ -89,23 +94,15 @@ if (tabs.value.length > 0) {
     margin-bottom: 10px;
   }
 
-  math {
-    width: 100%;
-  }
   math > mtable {
     width: 100%;
     border-collapse: collapse;
+    > mtr:first-child > mtd {
+      padding-top: 10px
+    }
     > mtr > mtd {
       padding: 10px 0;
     }
   }
-
-
-
-
-
-
-
-
 }
 </style>

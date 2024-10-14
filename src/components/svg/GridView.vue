@@ -1,27 +1,34 @@
 
 <script setup lang="ts">
-import { provide, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 import Grid from '../../grid';
 
 
 const props = defineProps({
   width: { type: Number, required: true },
   height: { type: Number, required: true },
-  pxWidth: { type: Number, required: true },
-  pxHeight: { type: Number, required: true },
   snapIncrement: { type: Number, default: 0.5 }
 })
 
-const grid = new Grid(props.width, props.height, props.pxWidth, props.pxHeight, props.snapIncrement)
-console.log('injecting grid', grid)
+const grid = ref(new Grid(props.width, props.height, 600, 600, props.snapIncrement))
 const halfGridSize = props.width / 2.0
 
 const container = ref<HTMLDivElement>()
 
-provide('grid', grid)
+provide('grid', grid.value)
 provide('container', container)
 
 const emit = defineEmits(['updated'])
+
+onMounted(() => {
+  const pxw = container.value?.offsetWidth
+  const pxh = container.value?.offsetHeight
+
+  if (pxw && pxh) {
+    grid.value.setPixelSize(pxw, pxh)
+    console.log('size', pxw, pxh)
+  }
+})
 </script>
 
 <template>
@@ -43,11 +50,21 @@ const emit = defineEmits(['updated'])
 <style lang="scss">
 
 #svg-container {
-  width: v-bind('props.pxWidth + "px"');
-  height: v-bind('props.pxHeight + "px"');
+  width: 600px;
+  height: 600px;
+  aspect-ratio: 1; 
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+  }
 }
+
 #svg-grid {
   width: 100%;
   height: 100%;
 }
+
+
 </style>

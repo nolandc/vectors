@@ -20,16 +20,11 @@ import NavMenu from './components/layout/NavMenu.vue'
   display: flex;
   align-items: center;
   flex-direction: column;
-}
+  gap: 0;
 
-
-#details {
-  box-sizing: border-box;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  #details-text {
-    margin-top: auto;
+  @media screen and (max-width: 800px) {
+    padding: 0;
+    align-items: unset;
   }
 }
 </style>
