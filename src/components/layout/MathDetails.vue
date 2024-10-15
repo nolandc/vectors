@@ -50,7 +50,6 @@ if (tabs.value.length > 0) {
 
   @media screen and (max-width: 1400px) {
     padding: 0 15px;
-    width: 100%;
   }
 
   .tab-bar {
