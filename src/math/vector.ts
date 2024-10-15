@@ -119,7 +119,6 @@ class Vector {
     if (v.x < bounds.x && v.y < bounds.y) return this
 
     if (v.x > v.y) {
-      // If x > y, take projection of (box.x, 0) onto v1
       const scale = v.x / bounds.x
       newV = new Vector(bounds.x, v.divided(scale).y)
     } else if (v.x < v.y) {
