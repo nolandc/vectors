@@ -53,12 +53,12 @@ const eigenvalues = computed(() => props.matrix.eigenvalues());
           <mtd>
             <mrow>
               <mo>det</mo>
-              <mo>(</mo>
+              <mo class="bracket">(</mo>
               <mi>M</mi>
               <mo>-</mo>
               <mi>λ</mi>
               <mi>I</mi>
-              <mo>)</mo>
+              <mo class="bracket">)</mo>
             </mrow>
             <mo>=</mo>
             <mn>0</mn>

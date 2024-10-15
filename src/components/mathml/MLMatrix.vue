@@ -35,8 +35,3 @@ const rows = computed(() => {
   </mrow>
 </template>
 
-<style lang="scss">
-.bracket {
-  font-family: "Latin Modern Math";
-}
-</style>

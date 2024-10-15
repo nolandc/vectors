@@ -15,7 +15,9 @@
        url('/latinmodern-math.woff') format('woff');
 }
 
-
+math .bracket{
+  font-family: "Latin Modern Math";
+}
 
 body {
   margin: 0;

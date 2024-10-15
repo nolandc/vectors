@@ -12,11 +12,3 @@
   </mrow>
 </template>
 
-<style lang="scss">
-
-.ml-vector {
-  .bracket {
-    font-family: "Latin Modern Math";
-  }
-}
-</style>
