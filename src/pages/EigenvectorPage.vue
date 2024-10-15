@@ -52,7 +52,7 @@ provide('grid', grid)
         <ConstantInput v-if="eigenvalues[1] != undefined" label="e2" :color="Colors.gray" :value="eigenvalues[1]" :editable="false"/>
       </div>
     </VizDetails>    
-    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
+    <GridView :width="20" :height="20" :snap-increment="0.1">
       <template v-for="ev in eigenvectors">
         <LineView :vector="ev" :origin="ev.times(-1)" :stroke-dash-array="Math.abs(ev.unit().dotProduct(v.unit())) > 0.98 ? '0' : '10 3' " :color="Colors.lightGray"/>
       </template>

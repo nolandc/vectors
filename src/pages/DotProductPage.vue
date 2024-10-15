@@ -77,7 +77,7 @@ provide('grid', grid)
         <ConstantInput label="v̂&#xb7;ŵ" :color="Colors.gray" :value="unitDotProduct"/>
       </div>
     </VizDetails>    
-    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
+    <GridView :width="20" :height="20" :snap-increment="0.1">
       <ArcView 
         :start="v" 
         :end="w" 

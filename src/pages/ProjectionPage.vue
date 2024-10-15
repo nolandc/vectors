@@ -44,7 +44,7 @@ provide('grid', grid)
         <VectorInput label="p" :color="Colors.blue" :vector="p" :editable="false"/>
       </div>
     </VizDetails>
-    <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
+    <GridView :width="20" :height="20">
       <LineView :vector="p" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
       <RightAngleView 
         :v="v"

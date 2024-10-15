@@ -69,7 +69,7 @@ const reflection = {
         <ConstantInput label="det(M)" :value="m.determinant()" :editable="false"/>
       </div>
     </VizDetails>
-    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.5">
+    <GridView :width="20" :height="20" :snap-increment="0.5">
       <!-- Transformed vectors and parallelogram (in background) -->
       <PolygonView :points="transformedPoints" :color="'rgba(128, 128, 128, 0.1)'" />
       <VectorView :vector="mV" :color="Colors.gray" />

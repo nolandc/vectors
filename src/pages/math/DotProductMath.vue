@@ -14,7 +14,6 @@ interface Props {
 const props = defineProps<Props>();
 
 const dotProduct = computed(() => props.v.dotProduct(props.w));
-const unitDotProduct = computed(() => props.v.unit().dotProduct(props.w.unit()));
 </script>
 
 <template>

@@ -35,7 +35,7 @@ const { v, w } = useUrlState({
         <VectorInput label="v+w" color="#577590" :vector="v.plus(w)" :editable="false"/>
       </div>
     </VizDetails>
-    <GridView :width="20" :height="20" :pxWidth="600" :pxHeight="600">
+    <GridView :width="20" :height="20">
       <LineView :vector="v.plus(w)" :origin="v" :color="Colors.lightGray" strokeDashArray="10"/>
       <DraggableCircleView :vector="v" @onChanged="nv => v = nv" :color="Colors.red"/>
       <VectorView :vector="v" :color="Colors.red"/>

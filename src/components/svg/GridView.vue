@@ -23,8 +23,8 @@ const emit = defineEmits(['updated'])
 onMounted(() => {
   const resizeObserver = new ResizeObserver(entries => {
     for (let entry of entries) {
-      const { width, height } = entry.contentRect;
-      grid.value.setPixelSize(width, height);
+      const { width, right } = entry.contentRect;
+      grid.value.setPixelSize(width, right);
     }
   });
 
@@ -57,14 +57,12 @@ onMounted(() => {
 <style lang="scss">
 
 #svg-container {
-  min-width: 450px;
-  min-height: 450px;
   max-width: 650px;
   max-height: 650px;
+  min-width: 450px;
   aspect-ratio: 1; 
   margin-bottom: 40px;
   flex-grow: 1;
-  flex-basis: 1;
 
   @media screen and (max-width: 1200px) {
     min-width: unset;
@@ -83,7 +81,7 @@ onMounted(() => {
 
 #svg-grid {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
 }
 
 </style>

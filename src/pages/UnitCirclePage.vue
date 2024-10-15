@@ -50,7 +50,7 @@ provide('grid', grid)
         <VectorInput label="v̂" :color="Colors.blue" :vector="v.unit()" :editable="false"/>
       </div>
     </VizDetails>    
-    <GridView :width="6" :height="6" :pxWidth="600" :pxHeight="600" :snap-increment="0.1">
+    <GridView :width="6" :height="6" :snap-increment="0.1">
       <PolygonView :points="pointVectors" :color="Colors.lightBlue"/>
       <VectorView :vector="v" :color="Colors.red"/>
       <DraggableCircleView :vector="v" @onChanged="newV => v = newV" :color="Colors.red"/>

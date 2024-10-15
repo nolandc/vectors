@@ -51,7 +51,7 @@ const shear = {
         <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
       </div>
     </VizDetails>    
-    <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
+    <GridView :width="20" :height="20" :snap-increment="0.1">
       <VectorView :vector="v.multiplyByMatrix(m)" :color="Colors.green"/>
       <LabelView text="Mv" :position="v.multiplyByMatrix(m).divided(2)" :color="Colors.green"/>
 
