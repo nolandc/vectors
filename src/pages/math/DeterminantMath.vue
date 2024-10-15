@@ -21,7 +21,6 @@ const transformedArea = computed(() => {
   return Math.abs(mv.x * mw.y - mv.y * mw.x);
 });
 const scaleFactor = computed(() => props.m.determinant());
-const areaRatio = computed(() => transformedArea.value / area.value);
 </script>
 
 <template>

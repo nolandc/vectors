@@ -1,4 +1,4 @@
-import { ref, watch, onMounted, Directive } from 'vue';
+import { ref, watch, onMounted, Directive, Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { debounce } from 'lodash';
 import Vector from "../math/vector";
@@ -11,15 +11,25 @@ interface UrlStateConfig {
   }
 }
 
-export function useUrlState(config: UrlStateConfig) {
+type UrlStateReturn<T extends UrlStateConfig> = {
+  [K in keyof T]: T[K]['type'] extends 'vector'
+    ? Ref<Vector>
+    : T[K]['type'] extends 'matrix'
+    ? Ref<Matrix2x2>
+    : Ref<number>
+} & {
+  vStateLink: Directive<any, any>
+}
+
+export function useUrlState<T extends UrlStateConfig>(config: T): UrlStateReturn<T> {
   const router = useRouter();
   const route = useRoute();
 
-  const state: { [key: string]: any } = {};
+  const state = {} as UrlStateReturn<T>;
 
   // Initialize reactive references
   for (const [key, value] of Object.entries(config)) {
-    state[key] = ref(value.default);
+    state[key as keyof T] = ref(value.default) as any;
   }
 
   // Function to generate query params
@@ -102,7 +112,7 @@ export function useUrlState(config: UrlStateConfig) {
           event.preventDefault();
           for (const [key, value] of Object.entries(newState)) {
             if (key in state) {
-              state[key].value = value;
+              state[key].value = value as any;
             }
           }
           router.push({ query: query });

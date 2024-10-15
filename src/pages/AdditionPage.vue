@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { provide } from "vue";
 import GridView from "../components/svg/GridView.vue"
 import Vector from "../math/vector";
 import VectorView from "../components/svg/VectorView.vue";
@@ -10,7 +9,6 @@ import Colors from "../constants/Colors";
 import LabelView from "../components/svg/LabelView.vue"
 import Visualization from "../components/layout/Visualization.vue";
 import VizDetails from "../components/layout/VizDetails.vue"
-import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import MathDetails from '../components/layout/MathDetails.vue'
 import InlineColorLabel from "../components/InlineColorLabel.vue";

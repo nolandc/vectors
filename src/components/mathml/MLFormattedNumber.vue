@@ -8,7 +8,7 @@ const props = defineProps({
 });
 
 const formattedValue = computed(() => MathUtils.formatWithPadding(props.val, props.decimals));
-const totalChars = computed(() => (7 - (3 - props.decimals)).toString() + 'ch' )
+//const totalChars = computed(() => (7 - (3 - props.decimals)).toString() + 'ch' )
 </script>
 
 <template>
