@@ -21,7 +21,7 @@ defineProps({
 .vec-label {
     vertical-align: middle;
     display: inline-block;
-    width: 100px;
+    width: 75px;
     text-align: right;
     font-size: 17px;
 

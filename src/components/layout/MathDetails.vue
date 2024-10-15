@@ -48,7 +48,7 @@ if (tabs.value.length > 0) {
   padding: 0 30px;
   width: 440px;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1400px) {
     padding: 0 15px;
     width: 100%;
   }

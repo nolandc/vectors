@@ -60,11 +60,13 @@ onMounted(() => {
   width: 600px;
   height: 600px;
   aspect-ratio: 1; 
+  margin-bottom: 40px;
+
 
   @media screen and (max-width: 800px) {
+    order: 0;
     width: 100%;
     height: auto;
-    margin-bottom: 40px;
   }
 }
 
@@ -72,6 +74,5 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-
 
 </style>

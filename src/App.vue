@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Attribution from './components/layout/Attribution.vue';
 import NavMenu from './components/layout/NavMenu.vue'
 
 </script>
@@ -11,6 +12,7 @@ import NavMenu from './components/layout/NavMenu.vue'
         <component :is="Component"/>
       </RouterView>
     </div>
+    <Attribution/>
   </div>
 </template>
 
@@ -21,10 +23,13 @@ import NavMenu from './components/layout/NavMenu.vue'
   align-items: center;
   flex-direction: column;
   gap: 0;
-
-  @media screen and (max-width: 800px) {
+  min-height: 100vh;
+  @media screen and (max-width: 1400px) {
     padding: 0;
-    align-items: unset;
+  }
+  #main {
+    flex-grow: 1;
+    flex-shrink: 0;
   }
 }
 </style>

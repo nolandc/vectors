@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import Attribution from './Attribution.vue';
+</script>
+
 <template>
   <div id="visualization">
     <slot/>
@@ -8,9 +12,11 @@
   #visualization {
     display: flex;
     flex-direction: row;
-
-    @media screen and (max-width: 800px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    @media screen and (max-width: 1420px) {
       flex-direction: column;
+      align-items: center;
     }
   }
 </style>
