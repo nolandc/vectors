@@ -15,7 +15,6 @@ import Grid from "../grid";
 import { useUrlState } from '../logic/useURLState.ts'
 import InlineColorLabel from '../components/InlineColorLabel.vue';
 import MathDetails from '../components/layout/MathDetails.vue';
-import MLAlignedEquations from '../components/mathml/MLAlignedEquations.vue';
 import MLVectorVar from '../components/mathml/MLVectorVar.vue';
 import MLMatrix from '../components/mathml/MLMatrix.vue';
 import MLVector from '../components/mathml/MLVector.vue';

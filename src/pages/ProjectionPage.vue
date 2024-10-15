@@ -20,7 +20,6 @@ import MLFraction from "../components/mathml/MLFraction.vue";
 import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
 import MLDotProduct from "../components/mathml/MLDotProduct.vue";
 import MLNorm from "../components/mathml/MLNorm.vue";
-import MLAlignedEquations from "../components/mathml/MLAlignedEquations.vue";
 import RightAngleView from "../components/svg/RightAngleView.vue";
 import MLHeader from "../components/mathml/MLHeader.vue";
 

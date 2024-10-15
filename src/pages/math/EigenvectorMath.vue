@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import MLAlignedEquations from "../../components/mathml/MLAlignedEquations.vue";
 import MLVector from "../../components/mathml/MLVector.vue";
 import MLVectorVar from "../../components/mathml/MLVectorVar.vue";
 import MLFormattedNumber from "../../components/mathml/MLFormattedNumber.vue";

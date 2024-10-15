@@ -18,7 +18,6 @@ import MLVector from "../components/mathml/MLVector.vue";
 import MLVectorVar from "../components/mathml/MLVectorVar.vue";
 import MLFormattedNumber from "../components/mathml/MLFormattedNumber.vue";
 import InlineColorLabel from "../components/InlineColorLabel.vue";
-import MLAlignedEquations from "../components/mathml/MLAlignedEquations.vue";
 import MLFraction from "../components/mathml/MLFraction.vue";
 import MLNorm from "../components/mathml/MLNorm.vue";
 import MLHeader from "../components/mathml/MLHeader.vue";

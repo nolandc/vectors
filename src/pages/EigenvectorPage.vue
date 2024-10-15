@@ -72,7 +72,7 @@ provide('grid', grid)
         <ul>
           <li>An eigenspace is the set of all eigenvectors associated with a particular eigenvalue. The eigenspaces for <InlineColorLabel label="M" :color="Colors.blue"/> are represented as gray lines.</li>
           <li><InlineColorLabel label="e1" :color="Colors.blue"/> and <InlineColorLabel label="e2" :color="Colors.blue"/> are unit vectors in the eigenspaces for the matrix.</li>
-
+          <li>Note that there are some matrices that don't have real (non-complex) eigenvectors / eigenvalues. For instance, a vector transformed by a rotation or shear matrix will never align with its original direction.</li>
         </ul>
       </template>
       <template #math>
