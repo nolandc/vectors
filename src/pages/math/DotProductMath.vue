@@ -62,24 +62,6 @@ const unitDotProduct = computed(() => props.v.unit().dotProduct(props.w.unit()))
             <MLFormattedNumber :val="dotProduct" :decimals="2" />
           </mtd>
         </mtr>
-        <MLHeader label="dot product of unit vectors"/>
-        <mtr>
-          <mtd>
-            <mfrac>
-              <mrow>
-                <MLVectorVar variable="v" />
-                <mo>⋅</mo>
-                <MLVectorVar variable="w" />
-              </mrow>
-              <mrow>
-                <mo>|</mo><MLVectorVar variable="v" /><mo>|</mo>
-                <mo>|</mo><MLVectorVar variable="w" /><mo>|</mo>
-              </mrow>
-            </mfrac>
-            <mo>=</mo>
-            <MLFormattedNumber :val="unitDotProduct" :decimals="4" />
-          </mtd>
-        </mtr>
       </mtable>
     </math>
   </div>

@@ -9,6 +9,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: "Latin Modern Math";
+  src: url('/latinmodern-math.woff2') format('woff2'),
+       url('/latinmodern-math.woff') format('woff');
+}
+
 
 
 body {
@@ -18,7 +24,7 @@ body {
 }
 
 a {
-  color: #4361c5;
+  color: #577590;
 
   &:hover {
     color: #1b2958;

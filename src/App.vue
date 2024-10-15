@@ -28,6 +28,7 @@ import NavMenu from './components/layout/NavMenu.vue'
     padding: 0;
   }
   #main {
+    width: 100%;
     flex-grow: 1;
     flex-shrink: 0;
   }

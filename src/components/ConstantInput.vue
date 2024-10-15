@@ -65,10 +65,11 @@ const updateValue = (value: string) => {
 .constant-input {
     display: block;
     margin-bottom: 10px;
-    font-size: 20px;
-    font-family: Courier;
-
+    font-size: 18px;
+    font-family: Courier, monospace;
+    
     input {
+        font-family: "JetBrains Mono";
         vertical-align: middle;
         display: inline-block;
         width: 60px;

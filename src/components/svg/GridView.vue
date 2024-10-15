@@ -60,10 +60,11 @@ onMounted(() => {
   min-width: 450px;
   min-height: 450px;
   max-width: 650px;
-  max-width: 650px;
+  max-height: 650px;
   aspect-ratio: 1; 
   margin-bottom: 40px;
-  flex: 1 0;
+  flex-grow: 1;
+  flex-basis: 1;
 
   @media screen and (max-width: 1200px) {
     min-width: unset;

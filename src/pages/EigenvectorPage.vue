@@ -45,11 +45,11 @@ provide('grid', grid)
         <VectorInput label="v" :color="Colors.red" :vector="v" @updated="nv => v = nv"/>
         <MatrixInput :matrix="m" @updated="newM => m = newM"/>
         <VectorInput label="Mv" :color="Colors.green" :vector="v.multiplyByMatrix(m)" :editable="false"/>
-        <VectorInput label="ev1" :color="Colors.blue" :vector="eigenvectors[0].unit()" :editable="false"/>
-        <VectorInput label="ev2" :color="Colors.blue" :vector="eigenvectors[1].unit()" :editable="false"/>
+        <VectorInput label="ev1" :color="Colors.gray" :vector="eigenvectors[0].unit()" :editable="false"/>
+        <VectorInput label="ev2" :color="Colors.gray" :vector="eigenvectors[1].unit()" :editable="false"/>
         
-        <ConstantInput v-if="eigenvalues[0] != undefined" label="e1" :color="Colors.blue" :value="eigenvalues[0]" :editable="false"/>
-        <ConstantInput v-if="eigenvalues[1] != undefined" label="e2" :color="Colors.blue" :value="eigenvalues[1]" :editable="false"/>
+        <ConstantInput v-if="eigenvalues[0] != undefined" label="e1" :color="Colors.gray" :value="eigenvalues[0]" :editable="false"/>
+        <ConstantInput v-if="eigenvalues[1] != undefined" label="e2" :color="Colors.gray" :value="eigenvalues[1]" :editable="false"/>
       </div>
     </VizDetails>    
     <GridView :width="20" :height="20" :px-width="600" :px-height="600" :snap-increment="0.1">
@@ -71,7 +71,7 @@ provide('grid', grid)
         The corresponding eigenvalues represent the factor by which these vectors are scaled during the transformation.
         <ul>
           <li>An eigenspace is the set of all eigenvectors associated with a particular eigenvalue. The eigenspaces for <InlineColorLabel label="M" :color="Colors.blue"/> are represented as gray lines.</li>
-          <li><InlineColorLabel label="e1" :color="Colors.blue"/> and <InlineColorLabel label="e2" :color="Colors.blue"/> are unit vectors in the eigenspaces for the matrix.</li>
+          <li><InlineColorLabel label="ev1" :color="Colors.gray"/> and <InlineColorLabel label="ev2" :color="Colors.gray"/> are unit vectors in the eigenspaces for the matrix, while <InlineColorLabel label="e1" :color="Colors.gray"/> and <InlineColorLabel label="e2" :color="Colors.gray"/> are the eigenvalues.</li>
           <li>Note that there are some matrices that don't have real (non-complex) eigenvectors / eigenvalues. For instance, a vector transformed by a rotation or shear matrix will never align with its original direction.</li>
         </ul>
       </template>

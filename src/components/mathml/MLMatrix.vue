@@ -21,7 +21,7 @@ const rows = computed(() => {
 
 <template>
   <mrow>
-    <mo>[</mo>
+    <mo class="bracket">[</mo>
     <mtable rowspacing="4pt" columnspacing="1em">
       <mtr v-for="row in rows" :key="row.map(c => c.props.val || c.children).join(',')">
         <mtd v-for="cell in row" :key="cell.props.val || cell.children">
@@ -31,6 +31,12 @@ const rows = computed(() => {
         </mtd>
       </mtr>
     </mtable>
-    <mo>]</mo>
+    <mo class="bracket">]</mo>
   </mrow>
 </template>
+
+<style lang="scss">
+.bracket {
+  font-family: "Latin Modern Math";
+}
+</style>

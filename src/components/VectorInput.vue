@@ -88,9 +88,9 @@ const updateY = (value: string) => {
 .vector-input {
     display: block;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 18px;
     display: block;
-    font-family: Courier;
+    font-family: Courier, monospace;
 
     input {
         vertical-align: middle;
@@ -102,7 +102,9 @@ const updateY = (value: string) => {
         border-radius: 3px;
         text-align: center;
         border: 1px solid #ccc;
+        font-family: "JetBrains Mono";
     }
+
     .vector-notation {
         font-size: 30px;
         vertical-align: middle;

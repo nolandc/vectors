@@ -1,6 +1,6 @@
 <template>
-  <mrow>
-    <mo>[</mo>
+  <mrow class="ml-vector">
+    <mo stretchy="true" class="bracket">[</mo>
     <mtable rowspacing="0.2em" columnalign="center">
       <mtr v-for="(child, index) in $slots.default?.()" :key="index">
         <mtd>
@@ -8,6 +8,15 @@
         </mtd>
       </mtr>
     </mtable>
-    <mo>]</mo>
+    <mo class="bracket">]</mo>
   </mrow>
 </template>
+
+<style lang="scss">
+
+.ml-vector {
+  .bracket {
+    font-family: "Latin Modern Math";
+  }
+}
+</style>
