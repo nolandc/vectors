@@ -48,9 +48,15 @@ if (tabs.value.length > 0) {
   padding: 0 30px;
   width: 440px;
 
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1200px) {
     padding: 0 15px;
+    width: 600px;
+
   }
+  
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }  
 
   .tab-bar {
     display: flex;

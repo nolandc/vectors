@@ -57,11 +57,21 @@ onMounted(() => {
 <style lang="scss">
 
 #svg-container {
-  width: 600px;
-  height: 600px;
+  min-width: 450px;
+  min-height: 450px;
+  max-width: 650px;
+  max-width: 650px;
   aspect-ratio: 1; 
   margin-bottom: 40px;
+  flex: 1 0;
 
+  @media screen and (max-width: 1200px) {
+    min-width: unset;
+    min-height: unset;
+    width: 100%;
+    max-width: 550px;
+    max-height: 550px
+  }
 
   @media screen and (max-width: 800px) {
     order: 0;

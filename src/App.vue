@@ -24,7 +24,7 @@ import NavMenu from './components/layout/NavMenu.vue'
   flex-direction: column;
   gap: 0;
   min-height: 100vh;
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1200px) {
     padding: 0;
   }
   #main {

@@ -19,7 +19,7 @@
   span {
     margin: 0 3px;
   }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1200px) {
     display: flex;
     justify-content: center;
     margin-top: 30px;
